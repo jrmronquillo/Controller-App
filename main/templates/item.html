@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+        <div class = 'pane'>
+            <div class='flash'>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                                <li> <strong> {{ message }} </strong> </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% endwith %}
+            </div>
+        <div class='logout'>
+            <button class='logout-button' onClick="window.location='/gdisconnect'">Log out</button>
+        </div>
+        <h1>{{ category.name }}</h1>
+        <div class='creator'>
+            Category Creator: {{creator.name}}
+            <img src="{{creator.picture}}" heigh='42' width='42'>
+        </div>
+
+
+
+     <a href = "{{url_for('newItem', category_id=category.id)}}">Create New Item</a>
+    <br><a href = "{{url_for('showCategories')}}"> Back to Categories</a>
+    <h2>Items</h2>
+    <hr>
+
+    {% if items !=[] %}
+    </br></br>
+        {% for i in items %}
+            <div class="row">
+                <div class="col-sm-3" style="border-right:1px solid #000;height:100%">
+                    <p>{{i.name}}</p>
+                </div>
+                <div class="col-sm-6">
+                    <p>{{i.description}}</p>
+                </div>
+                    <a href='{{url_for('editItem', category_id=category.id, categoryitem_id=i.id)}}' >Edit</a>
+                </br>
+                <a href='{{url_for('deleteItem', category_id=category.id, categoryitem_id=i.id)}}' >Delete</a>
+                </br>
+                </br>
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+        <p> There are currently no category items. <p>
+    {% endif %}
+</div>
+{% endblock %}
