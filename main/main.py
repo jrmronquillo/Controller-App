@@ -431,9 +431,9 @@ def test():
         #print "num=" + num
         #print request.form['value']
         ##keySendv2("00-80-A3-A9-E3-7A", name, "1-16")
-        return render_template('test.html')
+        return render_template('controller_main.html')
     else:
-        return render_template('test.html')
+        return render_template('controller_main.html')
 
 @app.route('/test/<int:rack_id>/', methods=['GET', 'POST'])
 @app.route('/test/<int:rack_id>/<int:slot_id>', methods=['GET', 'POST'])
@@ -477,7 +477,7 @@ def testB(rack_id, slot_id="0"):
                 print "numeric command detected, iterating through numbers before sending commands"
                 for c in var1:
                     keySendv2(selectedRack, c, slotVar)
-                return render_template('test.html')
+                return render_template('controller_main.html')
             else:
                 print "command string detected, sending command directly"
                 keySendv2(selectedRack, var1, slotVar)
@@ -494,28 +494,28 @@ def testB(rack_id, slot_id="0"):
                 print 'valid letter input found, translating to t9'
                 for i in t9_trans.get(alphaVar):
                     keySendv2(selectedRack, i, slotVar)
-                return render_template('test.html') 
+                return render_template('controller_main.html') 
             else:
                 message = 'invalid input detected, command was not sent'
                 print message
-                return render_template('test.html', error=message)    
+                return render_template('controller_main.html', error=message)    
         else:
             message = 'Error with Post Data Input'
             print 'Error with Post Data Input'
-            return render_template('test.html', error=message)
+            return render_template('controller_main.html', error=message)
         #command = test['name']
         #if command.isnumeric():
-        #    for c in command:
+        #    for c in command
         #        keySendv2(selectedRack, c, slotVar)
-        #    return render_template('test.html')
+        #    return render_template('controller_main.html')
         #else:
         #    print 'case2'
         #    keySendv2(selectedRack, command, slotVar)
 
         #print "command:"+command
-        return render_template('test.html')
+        return render_template('controller_main.html')
     else:
-        return render_template('test.html')
+        return render_template('controller_main.html')
 
 
 
