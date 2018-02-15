@@ -241,7 +241,7 @@ def showItemsJSON(category_id):
 
 
 # show all categories
-@app.route('/')
+# @app.route('/')
 @app.route('/categories/')
 def showCategories():
     categories = session.query(Categories).all()
@@ -435,9 +435,10 @@ def test():
     else:
         return render_template('controller_main.html')
 
+@app.route('/')
 @app.route('/test/<int:rack_id>/', methods=['GET', 'POST'])
 @app.route('/test/<int:rack_id>/<int:slot_id>', methods=['GET', 'POST'])
-def testB(rack_id, slot_id="0"):
+def testB(rack_id=None, slot_id="0"):
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -455,7 +456,8 @@ def testB(rack_id, slot_id="0"):
     print "slot id:"+str(slot_id)
     selectedRack = rack_macs.get(str(rack_id))
     if not selectedRack:
-        return "Error: No valid Rack Selected"
+        print "No valid Rack Selected"
+        return render_template('index.html')
 
     if request.method == 'POST':
         test=request.form.to_dict()

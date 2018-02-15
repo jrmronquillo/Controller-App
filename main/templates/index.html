@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+<div class = 'logout'>
+    <button class='logout-button' onClick="javascript: window.location='/gdisconnect'">Log out</button>
+</div>
+<div class = 'controller'>
+    <button class='logout-button' onClick="javascript: window.location='/test'">Controller</button>
+</div>
+{% endblock %}
