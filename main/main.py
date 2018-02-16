@@ -406,6 +406,7 @@ def check():
 
 # Test page for development
 @app.route('/test', methods=['GET', 'POST'])
+@app.route('/test/', methods=['GET', 'POST'])
 @login_required
 def test():
     if request.method == 'POST':
@@ -419,6 +420,7 @@ def test():
             print "Rack was in request form"
         else:
             print "Rack was not found in request form"
+            error = "Rack was not selected, please select rack to continue."
         #rack=request.form['rack']
         #name=request.form['name']
         #name2=request.form['name2']
@@ -432,7 +434,7 @@ def test():
         #print "num=" + num
         #print request.form['value']
         ##keySendv2("00-80-A3-A9-E3-7A", name, "1-16")
-        return render_template('controller_main.html')
+        return render_template('controller_main.html', error=error)
     else:
         return render_template('controller_main.html')
 
