@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, User
+from database_setup import Base, Categories, CategoryItem, User, PostData
 
 from flask import session as login_session
 import random
@@ -349,6 +349,40 @@ def testB(rack_id=None, slot_id="0"):
         return render_template('controller_main.html')
     else:
         return render_template('controller_main.html')
+
+@app.route('/postTest', methods=['GET', 'POST'])
+@app.route('/postTest/', methods=['GET', 'POST'])
+def postTest():
+    #r = requests.post("http://localhost:5000/postTest", data={'foo': 'bar'})
+    #rint (r.text)
+
+    if request.method == 'POST':
+        print request.form['name']
+        newData = PostData(data=request.form['name'])
+        session.add(newData)
+        session.commit()
+    else:
+        print "Get request executed"
+        print request.args.get('name', '')
+
+    return render_template('postTest.html')
+    
+
+@app.route('/reporting', methods=['GET', 'POST'])
+@app.route('/reporting/', methods=['GET', 'POST'])
+def reporting():
+    #r =requests.post("http://localhost:5000/reporting", data={'foo': 'bar'})
+    #if request.method == 'POST':
+    #    data = request.form['foo']
+    #    print data
+    #    return "Post data detected"
+
+    data = session.query(PostData).all()
+    print "data:"+str(data) 
+    for item in data:
+        print item.id
+        print item.data
+    return render_template('reporting.html', data=data)
 
 
 

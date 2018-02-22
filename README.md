@@ -20,3 +20,8 @@ Resources
 -----
 Udacity (https://www.udacity.com/)
 
+
+Limitations
+----
+1. If the python API takes unreasonably long to respond, the web app will appear stuck and does not notify the user that there is an error case.
+

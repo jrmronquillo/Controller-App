@@ -7,6 +7,10 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+class PostData(Base):
+    __tablename__ = 'postData'
+    id = Column(Integer, primary_key=True)
+    data = Column(String(250), nullable=False)
 
 class User(Base):
     __tablename__ = 'user'

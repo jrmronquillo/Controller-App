@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+	<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+	</div>
+    <div class="error">
+        <h1 style="color:red;">{{error}}</h1>
+    </div>
+
+
+    {% if data != [] %}
+        {% for dat in data %}
+            {{dat.id}}
+            {{dat.data}}
+        {% endfor %}
+    {% else %}
+        <p> No Data <p>
+    {% endif %}
+
+
+
+
+
+</div>
+{% endblock %}
