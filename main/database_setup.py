@@ -12,6 +12,13 @@ class PostData(Base):
     id = Column(Integer, primary_key=True)
     data = Column(String(250), nullable=False)
 
+    @property
+    def serialize(self):
+        return {
+            'data': self.data,
+            'id': self.id,
+            }
+
 class User(Base):
     __tablename__ = 'user'
 

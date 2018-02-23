@@ -364,7 +364,9 @@ def postTest():
     else:
         print "Get request executed"
         print request.args.get('name', '')
-
+        newData = PostData(data=request.args.get('name', ''))
+        session.add(newData)
+        session.commit()
     return render_template('postTest.html')
     
 
@@ -376,13 +378,21 @@ def reporting():
     #    data = request.form['foo']
     #    print data
     #    return "Post data detected"
-
     data = session.query(PostData).all()
     print "data:"+str(data) 
     for item in data:
         print item.id
         print item.data
     return render_template('reporting.html', data=data)
+
+@app.route('/reporting/JSON')
+def reportingJSON():
+    data = session.query(PostData).all()
+
+    return jsonify(dataList=[i.serialize for i in data])
+
+
+
 
 
 

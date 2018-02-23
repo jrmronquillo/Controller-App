@@ -21,8 +21,10 @@
 
     {% if data != [] %}
         {% for dat in data %}
-            {{dat.id}}
-            {{dat.data}}
+            <div class="row">
+                {{dat.id}}
+                {{dat.data}}
+            </div>
         {% endfor %}
     {% else %}
         <p> No Data <p>
