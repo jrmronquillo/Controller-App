@@ -23,7 +23,7 @@ import time      # used to insert current date in email report
 import sys
 
 from handlers.decorators import (login_required, category_exists, item_exists,
-                                 user_created_category, user_created_item)
+                                 user_created_category, user_created_item, jsonp)
 
 app = Flask(__name__)
 
@@ -386,6 +386,7 @@ def reporting():
     return render_template('reporting.html', data=data)
 
 @app.route('/reporting/JSON')
+@jsonp
 def reportingJSON():
     data = session.query(PostData).all()
 
