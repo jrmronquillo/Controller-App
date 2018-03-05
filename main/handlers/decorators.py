@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import redirect, render_template, flash, url_for, current_app
+from flask import redirect, render_template, flash, url_for, current_app, request
 from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
