@@ -1,6 +1,7 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+import datetime
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -11,10 +12,14 @@ class PostData(Base):
     __tablename__ = 'postData'
     id = Column(Integer, primary_key=True)
     data = Column(String(250), nullable=False)
+    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    green = Column(String(250), nullable=False)
 
     @property
     def serialize(self):
         return {
+            'green': self.green,
+            'created_date': self.created_date,
             'data': self.data,
             'id': self.id,
             }

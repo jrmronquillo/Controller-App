@@ -358,13 +358,15 @@ def postTest():
 
     if request.method == 'POST':
         print request.form['name']
-        newData = PostData(data=request.form['name'])
+        newData = PostData(data=request.form['name'], green=True)
         session.add(newData)
         session.commit()
     else:
         print "Get request executed"
         print request.args.get('name', '')
-        newData = PostData(data=request.args.get('name', ''))
+        newData = PostData(data=request.args.get('name', ''), 
+                           green=request.args.get('green', '')
+                           )
         session.add(newData)
         session.commit()
     return render_template('postTest.html')
