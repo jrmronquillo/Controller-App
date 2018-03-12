@@ -21,6 +21,7 @@ import socket    # used for TCP/IP communication
 import smtplib   # used to send email report
 import time      # used to insert current date in email report
 import sys
+import os
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp)
@@ -393,6 +394,24 @@ def reportingJSON():
     data = session.query(PostData).all()
 
     return jsonify(dataList=[i.serialize for i in data])
+
+@app.route('/pythonTest')
+def pythonTest():
+    var = datetime.datetime.now().time()
+    var2 = datetime.datetime.now().strftime("%-m/%-d/%y")
+    return "python test executed: " + str(var)+ " " + str(var2)
+
+@app.route('/scriptStart/<int:script_id>/', methods=['GET','POST'])
+def scriptStart(script_id):
+    if request.method == 'POST':
+        p = os.popen('ls')
+        #print(p.read())
+        output = p.read()
+        print output
+        #"script start executed:"+str(p.read())+str(script_id)
+        return render_template('scriptStart.html', output=output)
+    else:
+        return render_template('scriptStart.html')
 
 
 

@@ -12,7 +12,7 @@ class PostData(Base):
     __tablename__ = 'postData'
     id = Column(Integer, primary_key=True)
     data = Column(String(250), nullable=False)
-    created_date = Column(DateTime, default=datetime.datetime.utcnow)
+    created_date = Column(DateTime, default=datetime.datetime.now())
     green = Column(String(250), nullable=False)
 
     @property
