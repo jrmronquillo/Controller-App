@@ -412,13 +412,17 @@ def scriptStart(script_id):
     else:
         return render_template('scriptStart.html')
 
+@app.route('/screenshot/', methods=['GET','POST'])
+def screenshot():
+    if request.method == 'POST':
+        # intent is to replace "ls" with screenshot command on server
+        p = subprocess.Popen("ls", shell=True)
+        output = p
+        print output
+        return render_template('screenshot.html', output=output)
+    else:
+        return render_template('screenshot.html')
 
-
-
-
-
-
-    
 
 
 
