@@ -22,6 +22,7 @@ import smtplib   # used to send email report
 import time      # used to insert current date in email report
 import sys
 import os
+import subprocess
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp)
@@ -404,11 +405,9 @@ def pythonTest():
 @app.route('/scriptStart/<int:script_id>/', methods=['GET','POST'])
 def scriptStart(script_id):
     if request.method == 'POST':
-        p = os.popen('ls')
-        #print(p.read())
-        output = p.read()
+        p = subprocess.Popen("ls", shell=True)
+        output = p
         print output
-        #"script start executed:"+str(p.read())+str(script_id)
         return render_template('scriptStart.html', output=output)
     else:
         return render_template('scriptStart.html')
