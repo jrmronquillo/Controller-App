@@ -8,6 +8,35 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+class TestCases(Base):
+    __tablename__ = 'testcases'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            }
+
+class TestSteps(Base):
+    __tablename__ = 'teststeps'
+    id = Column(Integer, primary_key=True)
+    step = Column(String(250), nullable=False)
+    testcase_id = Column(Integer, ForeignKey('testcases.id'))
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'step': self.step,
+            'testcase_id': self.testcase_id,
+        }
+
+
+
+
 class PostData(Base):
     __tablename__ = 'postData'
     id = Column(Integer, primary_key=True)
@@ -24,9 +53,9 @@ class PostData(Base):
             'id': self.id,
             }
 
+
 class User(Base):
     __tablename__ = 'user'
-
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)

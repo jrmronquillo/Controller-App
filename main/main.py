@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, User, PostData
+from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps
 
 from flask import session as login_session
 import random
@@ -416,15 +416,63 @@ def scriptStart(script_id):
 def screenshot():
     if request.method == 'POST':
         # intent is to replace "ls" with screenshot command on server
-        p = subprocess.Popen("ls", shell=True)
+        #data = request.form['name']
+        data=request.form.to_dict()
+        print data
+        if data:
+            screenshotName = data['name']
+            p = subprocess.Popen("touch %s" % screenshotName, shell=True)
+        else:
+            p = subprocess.Popen("touch screenshotDefault", shell=True)
         output = p
         print output
         return render_template('screenshot.html', output=output)
     else:
         return render_template('screenshot.html')
 
+@app.route('/testcases/', methods=['GET', 'POST'])
+def showTestCases():
+    test_cases = session.query(TestCases).all()
+    return render_template("testcases.html", test_cases=test_cases)
+
+@app.route('/testcase/new/', methods=['GET', 'POST'])
+def createTestCase():
+    if request.method == 'POST':
+        test=request.form['name']
+        testcase_info = TestCases(name=request.form['name'])
+        session.add(testcase_info)
+        session.commit()
+        return redirect(url_for('showTestCases'))
+    else:
+        return render_template('newtestcase.html')
 
 
+
+@app.route('/testcases/JSON')
+@jsonp
+def testcasesJSON():
+    testcases = session.query(TestCases).all()
+    return jsonify(testcaseList=[i.serialize for i in testcases])
+
+@app.route('/testcases/<int:testcase_id>/')
+@app.route('/testcases/<int:testcase_id>/steps/')
+def showCaseSteps(testcase_id):
+    items = session.query(TestSteps).filter_by(
+        testcase_id=testcase_id).all()
+    return render_template('steps.html', testcase_id=testcase_id, items=items)
+
+@app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
+def newStep(testcase_id):
+    if request.method == 'POST':
+        stepData = request.form['stepData']
+        newStep = TestSteps(testcase_id=testcase_id,
+                           step=stepData
+                           )
+        session.add(newStep)
+        session.commit()
+        return redirect(url_for('showCaseSteps'), testcase_id=testcase_id)
+    else: 
+        return render_template('newStep.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

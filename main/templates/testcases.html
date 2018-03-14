@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+	<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+	</div>
+    <div class="error">
+        <h1 style="color:red;">{{error}}</h1>
+    </div>
+
+    <a href="{{url_for('createTestCase')}}">New Test Case</a>
+
+
+    {% if test_cases != [] %}
+        {% for case in test_cases %}
+            <div class="row">
+                {{case.id}}
+                <a href="{{url_for('showCaseSteps', testcase_id=case.id)}}">{{case.name}}</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p> No Data <p>
+    {% endif %}
+
+
+
+
+
+
+
+</div>
+{% endblock %}
