@@ -26,6 +26,7 @@
             <div class="row">
                 {{case.id}}
                 <a href="{{url_for('showCaseSteps', testcase_id=case.id)}}">{{case.name}}</a>
+                {{case.path}}
             </div>
         {% endfor %}
     {% else %}

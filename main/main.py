@@ -402,22 +402,35 @@ def pythonTest():
     var2 = datetime.datetime.now().strftime("%-m/%-d/%y")
     return "python test executed: " + str(var)+ " " + str(var2)
 
-@app.route('/scriptStart/<int:script_id>/', methods=['GET','POST'])
-def scriptStart(script_id):
+@app.route('/scriptStart/', methods=['GET','POST'])
+def scriptStart():
     if request.method == 'POST':
         # need function to take script_id and return test script name from DB
-        print script_id
-        test_cases = session.query(TestCases).filter_by(id=script_id).all()
-        if test_cases:
-            for i in test_cases:
-                print i.name
+        # POST version:
+        script_id = request.form['script_id']
+        if script_id:
+            test_cases = session.query(TestCases).filter_by(id=script_id).all()
+            if test_cases:
+                for i in test_cases:
+                    name = i.name
+                    path = i.path
+                    commandString = "stbt run "+path
+                    print commandString
+                    p = subprocess.Popen(commandString, shell=True)
+            else:
+                message = "Did not find any matching test cases with that id, did not run script"
+                print message
+                return message
         else:
-            print "did not find any matching test cases with that id"
-
-        p = subprocess.Popen("ls", shell=True)
-        output = p
-        print output
-        return render_template('scriptStart.html', output=output)
+            message = "script_id needed to start script"
+            print message
+            return message
+        # p = subprocess.Popen("stbt run /home/e2e/e2ehost29_local/sanityAutomation/host_main_29/
+        # Scoreguide/test.py")
+        # p = subprocess.Popen("ls", shell=True)
+        #output = p
+        #print output
+        return render_template('scriptStart.html', output=p)
     else:
         return render_template('scriptStart.html')
 
@@ -447,14 +460,22 @@ def showTestCases():
 @app.route('/testcase/new/', methods=['GET', 'POST'])
 def createTestCase():
     if request.method == 'POST':
-        test=request.form['name']
-        testcase_info = TestCases(name=request.form['name'])
+        if 'name' in request.form:
+            print "found name"
+        else:
+            print "request.form was null"
+            return "request.form was null"
+        
+        scriptname=request.form['name']
+        print "default path is being used"
+        defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"
+        completePath = defaultPath + "/"+ scriptname + "/" + "test.py"
+        testcase_info = TestCases(name=request.form['name'], path=completePath)
         session.add(testcase_info)
         session.commit()
         return redirect(url_for('showTestCases'))
     else:
         return render_template('newtestcase.html')
-
 
 
 @app.route('/testcases/JSON')

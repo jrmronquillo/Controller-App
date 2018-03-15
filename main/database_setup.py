@@ -12,12 +12,14 @@ class TestCases(Base):
     __tablename__ = 'testcases'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    path = Column(String(250), nullable=False)
 
     @property
     def serialize(self):
         return {
             'id': self.id,
             'name': self.name,
+            'path': self.path,
             }
 
 class TestSteps(Base):
