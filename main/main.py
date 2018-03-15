@@ -405,6 +405,15 @@ def pythonTest():
 @app.route('/scriptStart/<int:script_id>/', methods=['GET','POST'])
 def scriptStart(script_id):
     if request.method == 'POST':
+        # need function to take script_id and return test script name from DB
+        print script_id
+        test_cases = session.query(TestCases).filter_by(id=script_id).all()
+        if test_cases:
+            for i in test_cases:
+                print i.name
+        else:
+            print "did not find any matching test cases with that id"
+
         p = subprocess.Popen("ls", shell=True)
         output = p
         print output
@@ -461,6 +470,7 @@ def showCaseSteps(testcase_id):
         testcase_id=testcase_id).all()
     return render_template('steps.html', testcase_id=testcase_id, items=items)
 
+
 @app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
 def newStep(testcase_id):
     if request.method == 'POST':
@@ -473,6 +483,13 @@ def newStep(testcase_id):
         return redirect(url_for('showCaseSteps'), testcase_id=testcase_id)
     else: 
         return render_template('newStep.html')
+
+@app.route('/testcases/<int:testcase_id>/steps/JSON')
+@jsonp
+def stepsJSON(testcase_id):
+    items = session.query(TestSteps).filter_by(
+        testcase_id=testcase_id).all()
+    return jsonify(teststeps=[i.serialize for i in items])
 
 @app.errorhandler(404)
 def page_not_found(e):
