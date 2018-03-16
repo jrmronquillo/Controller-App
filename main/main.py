@@ -25,7 +25,8 @@ import os
 import subprocess
 
 from handlers.decorators import (login_required, category_exists, item_exists,
-                                 user_created_category, user_created_item, jsonp)
+                                 user_created_category, user_created_item, jsonp, 
+                                 testcase_exists)
 
 app = Flask(__name__)
 
@@ -468,7 +469,7 @@ def createTestCase():
         
         scriptname=request.form['name']
         print "default path is being used"
-        defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"
+        defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28"
         completePath = defaultPath + "/"+ scriptname + "/" + "test.py"
         testcase_info = TestCases(name=request.form['name'], path=completePath)
         session.add(testcase_info)
@@ -511,6 +512,22 @@ def stepsJSON(testcase_id):
     items = session.query(TestSteps).filter_by(
         testcase_id=testcase_id).all()
     return jsonify(teststeps=[i.serialize for i in items])
+
+@app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
+@testcase_exists
+def deleteTestCase(testcase_id):
+    testcaseToDelete = session.query(TestCases).filter_by(id=testcase_id).first()
+    if request.method == 'POST':
+        # if testcaseToDelete:
+        session.delete(testcaseToDelete)
+        session.commit()
+        return redirect(url_for('showTestCases'))    
+        # else:
+        #    return "error with finding test case in DB"
+    else:
+        return render_template('deleteTestCase.html')
+
+
 
 @app.errorhandler(404)
 def page_not_found(e):

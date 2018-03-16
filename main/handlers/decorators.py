@@ -44,6 +44,23 @@ def category_exists(function):
             return redirect(url_for('showCategories'))
     return wrapper
 
+def testcase_exists(function):
+    """
+    Validation that Category exists in DB
+    """
+    @wraps(function)
+    def wrapper(testcase_id):
+        testcaseToDelete = session.query(Categories).filter_by(
+                           id=testcase_id).first()
+        if testcaseToDelete:
+            return function(testcase_id)
+        else:
+            print "testcase id not found in DB"
+            flash("Failed to show/modify testcase because testcase ID was "
+                  "not found")
+            # return render_template('404.html'), 404
+            return redirect(url_for('showTestCases'))
+    return wrapper
 
 def item_exists(function):
     """
