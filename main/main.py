@@ -482,8 +482,23 @@ def createTestCase():
 @app.route('/testcases/JSON')
 @jsonp
 def testcasesJSON():
-    testcases = session.query(TestCases).all()
+    #testcases = session.query(TestCases).all()
+    #return jsonify(testcaseList=[i.serialize for i in testcases])
+    testcaseToDelete = session.query(TestCasesV2).all()
+    for i in testcaseToDelete:
+        session.delete(i)
+        session.commit()
+    p = subprocess.check_output("ls", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
+    print p.splitlines()
+    fileArray = p.splitlines()
+    for file in fileArray:
+        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
+        testcase_info = TestCasesV2(name=file, path=completePath)
+        session.add(testcase_info)
+        session.commit()
+    testcases = session.query(TestCasesV2).all()
     return jsonify(testcaseList=[i.serialize for i in testcases])
+
 
 @app.route('/testcases/<int:testcase_id>/')
 @app.route('/testcases/<int:testcase_id>/steps/')
@@ -533,7 +548,7 @@ def checkForFiles():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    p = subprocess.check_output("ls")
+    p = subprocess.check_output("ls", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
