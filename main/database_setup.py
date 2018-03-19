@@ -22,6 +22,20 @@ class TestCases(Base):
             'path': self.path,
             }
 
+class TestCasesV2(Base):
+    __tablename__ = 'testcasesv2'
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    path = Column(String(250), nullable=False)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'path': self.path,
+            }
+
 class TestSteps(Base):
     __tablename__ = 'teststeps'
     id = Column(Integer, primary_key=True)

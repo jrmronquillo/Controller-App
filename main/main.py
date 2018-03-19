@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps
+from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps, TestCasesV2
 
 from flask import session as login_session
 import random
@@ -526,6 +526,29 @@ def deleteTestCase(testcase_id):
         #    return "error with finding test case in DB"
     else:
         return render_template('deleteTestCase.html')
+
+@app.route('/checkforfiles/', methods=['GET', 'POST'])
+def checkForFiles():
+    testcaseToDelete = session.query(TestCasesV2).all()
+    for i in testcaseToDelete:
+        session.delete(i)
+        session.commit()
+    p = subprocess.check_output("ls")
+    print p.splitlines()
+    fileArray = p.splitlines()
+    for file in fileArray:
+        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
+        testcase_info = TestCasesV2(name=file, path=completePath)
+        session.add(testcase_info)
+        session.commit()
+    return "checkforfiles executed"
+
+@app.route('/testcasesv2/JSON')
+@jsonp
+def testcasesv2JSON():
+    testcasesv2 = session.query(TestCasesV2).all()
+    return jsonify(testcaseList=[i.serialize for i in testcasesv2])
+
 
 
 
