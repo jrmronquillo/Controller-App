@@ -502,17 +502,23 @@ def createTestCase():
             print "request.form was null"
             return "request.form was null"
         
-        scriptname=request.form['name']
+        scriptname=str(request.form['name'])
+        # replaces whitespace with underscore, to avoid error when creating linux directory
+        editScriptname=scriptname.replace(" ", "_")
+        print editScriptname
         print "default path is being used"
         defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28"
         proddirPath = defaultPath + "/"+ scriptname + "/" + "test.py"
-        testdirPath = scriptname
+        testdirPath = editScriptname
         command = "mkdir %s" % testdirPath
+        print command
+
         # command = "mkdir %s" % proddirPath
         p = subprocess.check_output(command, shell=True)
 
         # below is deprecated, no longer necessary to store name in DB manually. 
-        # test
+        # /testcases/JSON will instead check available files in
+        # main directory and store representation in DB automatically.
         #
         # testcase_info = TestCases(name=request.form['name'], path=completePath)
         # session.add(testcase_info)
