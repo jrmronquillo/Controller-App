@@ -609,7 +609,13 @@ def deleteTestCase(testcase_id):
         # delete file from directory
         fileToDelete =  testcaseToDelete.name
         print fileToDelete
+        
+        # prod
+        # command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/autmation_main_28/%s" %s fileToDelete 
+        
+        # test (local)
         command = "rm -r %s" % fileToDelete
+        
         p = subprocess.check_output(command, shell=True)
         
         #delete file from DB
