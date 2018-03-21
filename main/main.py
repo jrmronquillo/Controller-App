@@ -460,8 +460,8 @@ def showTestCases():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    # p = subprocess.check_output("ls", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
-    p = subprocess.check_output("ls")
+    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
+    p = subprocess.check_output("ls -tr", shell=True)
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
@@ -505,10 +505,18 @@ def createTestCase():
         scriptname=request.form['name']
         print "default path is being used"
         defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28"
-        completePath = defaultPath + "/"+ scriptname + "/" + "test.py"
-        testcase_info = TestCases(name=request.form['name'], path=completePath)
-        session.add(testcase_info)
-        session.commit()
+        proddirPath = defaultPath + "/"+ scriptname + "/" + "test.py"
+        testdirPath = scriptname
+        command = "mkdir %s" % testdirPath
+        # command = "mkdir %s" % proddirPath
+        p = subprocess.check_output(command, shell=True)
+
+        # below is deprecated, no longer necessary to store name in DB manually. 
+        # test
+        #
+        # testcase_info = TestCases(name=request.form['name'], path=completePath)
+        # session.add(testcase_info)
+        # session.commit()
         return redirect(url_for('showTestCases'))
     else:
         return render_template('newtestcase.html')
@@ -576,7 +584,7 @@ def deleteTestCase(testcase_id):
         # delete file from directory
         fileToDelete =  testcaseToDelete.name
         print fileToDelete
-        command = "rm %s" % fileToDelete
+        command = "rm -r %s" % fileToDelete
         p = subprocess.check_output(command, shell=True)
         
         #delete file from DB
