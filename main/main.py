@@ -460,8 +460,12 @@ def showTestCases():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
+    # prod
+    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    
+    # test
     p = subprocess.check_output("ls -tr", shell=True)
+    
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
@@ -481,8 +485,12 @@ def testcasesJSON():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    # p = subprocess.check_output("ls", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
-    p = subprocess.check_output("ls")
+    # prod    
+    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    
+    # test (local)
+    p = subprocess.check_output("ls -tr", shell=True)
+    
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
@@ -503,17 +511,23 @@ def createTestCase():
             return "request.form was null"
         
         scriptname=str(request.form['name'])
+        
         # replaces whitespace with underscore, to avoid error when creating linux directory
         editScriptname=scriptname.replace(" ", "_")
         print editScriptname
         print "default path is being used"
         defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28"
-        proddirPath = defaultPath + "/"+ scriptname + "/" + "test.py"
+        completePath = defaultPath + "/"+ scriptname + "/" + "test.py"
+        proddirPath = defaultPath+ "/" + scriptname
         testdirPath = editScriptname
-        command = "mkdir %s" % testdirPath
-        print command
-
+        
+        # prod
         # command = "mkdir %s" % proddirPath
+        
+        # test (local)
+        command = "mkdir %s" % testdirPath
+        
+        print command
         p = subprocess.check_output(command, shell=True)
 
         # below is deprecated, no longer necessary to store name in DB manually. 
@@ -572,8 +586,13 @@ def deleteTestCase(testcase_id):
         session.commit()
     
     # check what files are in the directory using 'ls' command
-    # p = subprocess.check_output("ls /home/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
-    p = subprocess.check_output("ls")
+    
+    # prod
+    # p = subprocess.check_output("ls -tr /home/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    
+    # test (local)
+    p = subprocess.check_output("ls -tr")
+    
     print p.splitlines()
 
     # take the available file names and store them in the DB
