@@ -548,14 +548,41 @@ def stepsJSON(testcase_id):
 @app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
 @testcase_exists
 def deleteTestCase(testcase_id):
-    testcaseToDelete = session.query(TestCases).filter_by(id=testcase_id).first()
+    # make sure db is accurate by clearing the db and repopulating it to represent the files
+    # in the directory
+    
+    # clear the DB
+    testcaseToDelete = session.query(TestCasesV2).all()
+    for i in testcaseToDelete:
+        session.delete(i)
+        session.commit()
+    
+    # check what files are in the directory using 'ls' command
+    # p = subprocess.check_output("ls /home/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    p = subprocess.check_output("ls")
+    print p.splitlines()
+
+    # take the available file names and store them in the DB
+    fileArray = p.splitlines()
+    for file in fileArray:
+        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
+        testcase_info = TestCasesV2(name=file, path=completePath)
+        session.add(testcase_info)
+        session.commit()
+
+    # initialize object for designated testcase_id    
+    testcaseToDelete = session.query(TestCasesV2).filter_by(id=testcase_id).first()
     if request.method == 'POST':
-        # if testcaseToDelete:
+        # delete file from directory
+        fileToDelete =  testcaseToDelete.name
+        print fileToDelete
+        command = "rm %s" % fileToDelete
+        p = subprocess.check_output(command, shell=True)
+        
+        #delete file from DB
         session.delete(testcaseToDelete)
         session.commit()
         return redirect(url_for('showTestCases'))    
-        # else:
-        #    return "error with finding test case in DB"
     else:
         return render_template('deleteTestCase.html')
 

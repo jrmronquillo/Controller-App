@@ -3,7 +3,7 @@ from flask import redirect, render_template, flash, url_for, current_app, reques
 from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, TestCases
+from database_setup import Base, Categories, CategoryItem, TestCases, TestCasesV2
 
 engine = create_engine('sqlite:///catalogwithusers.db')
 Base.metadata.bind = engine
@@ -50,7 +50,7 @@ def testcase_exists(function):
     """
     @wraps(function)
     def wrapper(testcase_id):
-        testcaseToDelete = session.query(TestCases).filter_by(
+        testcaseToDelete = session.query(TestCasesV2).filter_by(
                            id=testcase_id).first()
         if testcaseToDelete:
             return function(testcase_id)
