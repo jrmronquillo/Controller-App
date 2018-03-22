@@ -464,7 +464,7 @@ def showTestCases():
     # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
     
     # test
-    p = subprocess.check_output("ls -tr", shell=True)
+    p = subprocess.check_output("ls -tr testDIR/", shell=True)
     
     print p.splitlines()
     fileArray = p.splitlines()
@@ -489,7 +489,7 @@ def testcasesJSON():
     # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
     
     # test (local)
-    p = subprocess.check_output("ls -tr", shell=True)
+    p = subprocess.check_output("ls -tr testDIR/", shell=True)
     
     print p.splitlines()
     fileArray = p.splitlines()
