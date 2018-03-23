@@ -444,9 +444,17 @@ def screenshot():
         print data
         if data:
             screenshotName = data['name']
-            p = subprocess.Popen("touch %s" % screenshotName, shell=True)
+            # prod:
+            p = subprocess.Popen("stbt screenshot %s" % screenshotName, shell=True)
+
+            # test:
+            # p = subprocess.Popen("touch %s" % screenshotName, shell=True)
         else:
-            p = subprocess.Popen("touch screenshotDefault", shell=True)
+            # prod:
+            p = subprocess.Popen("stbt screenshot", shell=True)
+            
+            # test:
+            # p = subprocess.Popen("touch screenshotDefault", shell=True)
         output = p
         print output
         return render_template('screenshot.html', output=output)
