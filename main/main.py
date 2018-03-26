@@ -29,7 +29,7 @@ from handlers.decorators import (login_required, category_exists, item_exists,
                                  testcase_exists)
 # separate config file to distinguish between test and production configurations
 import testConfig
-#import prodConfig
+import prodConfig
 
 config = testConfig
 
@@ -476,23 +476,24 @@ def showTestCases():
     
     # test
     # p = subprocess.check_output("ls -tr testDIR/", shell=True)
-    p = subprocess.check_output("ls", shell=True)
+    # print p
     commands = config.config['testcases_config']
+    
     print commands
     print commands[0]["list_command"]
 
     listCommand = commands[0]["list_command"]
-
-    #print p.splitlines()
-    #fileArray = p.splitlines()
-    #for file in fileArray:
-    #    completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-    #    testcase_info = TestCasesV2(name=file, path=completePath)
-    #    session.add(testcase_info)
-    #    session.commit()
-    #test_cases = session.query(TestCasesV2).all()
-    #return render_template("testcases.html", test_cases=test_cases)
-    return 'test cases executed'
+    p = subprocess.check_output(listCommand, shell=True)
+    print p.splitlines()
+    fileArray = p.splitlines()
+    for file in fileArray:
+        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
+        testcase_info = TestCasesV2(name=file, path=completePath)
+        session.add(testcase_info)
+        session.commit()
+    test_cases = session.query(TestCasesV2).all()
+    return render_template("testcases.html", test_cases=test_cases)
+    
 @app.route('/testcases/JSON')
 @jsonp
 def testcasesJSON():
