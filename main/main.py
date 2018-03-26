@@ -27,6 +27,12 @@ import subprocess
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
                                  testcase_exists)
+# separate config file to distinguish between test and production configurations
+import testConfig
+#import prodConfig
+
+config = testConfig
+
 
 app = Flask(__name__)
 
@@ -410,7 +416,7 @@ def scriptStart():
         # POST version:
         script_id = request.form['script_id']
         if script_id:
-            test_cases = session.query(TestCases).filter_by(id=script_id).all()
+            test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
             if test_cases:
                 for i in test_cases:
                     name = i.name
@@ -437,24 +443,21 @@ def scriptStart():
 
 @app.route('/screenshot/', methods=['GET','POST'])
 def screenshot():
+    commands = config.config['screenshot_config']
+    command =  commands[0]['command']
+    defaultCommand = commands[0]['defaultCommand']
     if request.method == 'POST':
-        # intent is to replace "ls" with screenshot command on server
-        #data = request.form['name']
         data=request.form.to_dict()
-        print data
         if data:
             screenshotName = data['name']
-            # prod:
-            p = subprocess.Popen("stbt screenshot %s" % screenshotName, shell=True)
-
-            # test:
-            # p = subprocess.Popen("touch %s" % screenshotName, shell=True)
-        else:
-            # prod:
-            p = subprocess.Popen("stbt screenshot", shell=True)
+            completeCommand = str(command) + "%s%s"  % (screenshotName, ".png")
+            print completeCommand
             
-            # test:
-            # p = subprocess.Popen("touch screenshotDefault", shell=True)
+            # with configs:
+            p = subprocess.Popen(completeCommand, shell=True)
+        else:
+            p = subprocess.Popen(defaultCommand, shell=True)
+            
         output = p
         print output
         return render_template('screenshot.html', output=output)
@@ -472,18 +475,24 @@ def showTestCases():
     # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
     
     # test
-    p = subprocess.check_output("ls -tr testDIR/", shell=True)
-    
-    print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
-    test_cases = session.query(TestCasesV2).all()
-    return render_template("testcases.html", test_cases=test_cases)
+    # p = subprocess.check_output("ls -tr testDIR/", shell=True)
+    p = subprocess.check_output("ls", shell=True)
+    commands = config.config['testcases_config']
+    print commands
+    print commands[0]["list_command"]
 
+    listCommand = commands[0]["list_command"]
+
+    #print p.splitlines()
+    #fileArray = p.splitlines()
+    #for file in fileArray:
+    #    completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
+    #    testcase_info = TestCasesV2(name=file, path=completePath)
+    #    session.add(testcase_info)
+    #    session.commit()
+    #test_cases = session.query(TestCasesV2).all()
+    #return render_template("testcases.html", test_cases=test_cases)
+    return 'test cases executed'
 @app.route('/testcases/JSON')
 @jsonp
 def testcasesJSON():
@@ -502,7 +511,7 @@ def testcasesJSON():
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
+        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
         testcase_info = TestCasesV2(name=file, path=completePath)
         session.add(testcase_info)
         session.commit()
@@ -596,10 +605,10 @@ def deleteTestCase(testcase_id):
     # check what files are in the directory using 'ls' command
     
     # prod
-    # p = subprocess.check_output("ls -tr /home/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    p = subprocess.check_output("ls -tr /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
     
     # test (local)
-    p = subprocess.check_output("ls -tr")
+    # p = subprocess.check_output("ls -tr")
     
     print p.splitlines()
 
@@ -619,10 +628,10 @@ def deleteTestCase(testcase_id):
         print fileToDelete
         
         # prod
-        # command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/autmation_main_28/%s" %s fileToDelete 
+        command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/%s" %s fileToDelete 
         
         # test (local)
-        command = "rm -r %s" % fileToDelete
+        # command = "rm -r %s" % fileToDelete
         
         p = subprocess.check_output(command, shell=True)
         
