@@ -628,7 +628,7 @@ def deleteTestCase(testcase_id):
         print fileToDelete
         
         # prod
-        command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/%s" %s fileToDelete 
+        command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/%s" % fileToDelete 
         
         # test (local)
         # command = "rm -r %s" % fileToDelete
