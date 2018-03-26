@@ -471,12 +471,8 @@ def showTestCases():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    # prod
-    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
-    
-    # test
-    # p = subprocess.check_output("ls -tr testDIR/", shell=True)
-    # print p
+  
+    # grab designated command from config file
     commands = config.config['testcases_config']
     
     print commands
@@ -503,12 +499,11 @@ def testcasesJSON():
     for i in testcaseToDelete:
         session.delete(i)
         session.commit()
-    # prod    
-    # p = subprocess.check_output("ls -tr", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
+    commands = config.config['testcases_config']
+    listCommand = commands[0]["list_command"]
     
-    # test (local)
-    p = subprocess.check_output("ls -tr testDIR/", shell=True)
-    
+    # use config file
+    p = subprocess.check_output(listCommand, shell=True)
     print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
