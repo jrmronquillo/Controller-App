@@ -526,21 +526,14 @@ def createTestCase():
         scriptname=str(request.form['name'])
         
         # replaces whitespace with underscore, to avoid error when creating linux directory
-        editScriptname=scriptname.replace(" ", "_")
-        print editScriptname
-        print "default path is being used"
-        defaultPath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28"
-        completePath = defaultPath + "/"+ scriptname + "/" + "test.py"
-        proddirPath = defaultPath+ "/" + scriptname
-        testdirPath = editScriptname
+        editedScriptname=scriptname.replace(" ", "_")
+        print editedScriptname
         
-        # prod
-        # command = "mkdir %s" % proddirPath
+        path = config.config['createtestcase_config'][0]['dir_path']
+        complete_path = str(path) + editedScriptname  
+        command = "mkdir %s" % complete_path
         
-        # test (local)
-        command = "mkdir %s" % testdirPath
-        
-        print command
+        #print command
         p = subprocess.check_output(command, shell=True)
 
         # below is deprecated, no longer necessary to store name in DB manually. 
@@ -599,12 +592,10 @@ def deleteTestCase(testcase_id):
         session.commit()
     
     # check what files are in the directory using 'ls' command
+    listCommand = config.config['testcases_config'][0]['list_command']
     
     # prod
-    p = subprocess.check_output("ls -tr /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/", shell=True)
-    
-    # test (local)
-    # p = subprocess.check_output("ls -tr")
+    p = subprocess.check_output(listCommand, shell=True)
     
     print p.splitlines()
 
@@ -624,10 +615,8 @@ def deleteTestCase(testcase_id):
         print fileToDelete
         
         # prod
-        command = "rm -r /home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/%s" % fileToDelete 
-        
-        # test (local)
-        # command = "rm -r %s" % fileToDelete
+        commandPath = config.config['deletetestcase_config'][0]['delete_command']
+        command = commandPath + "%s" % fileToDelete 
         
         p = subprocess.check_output(command, shell=True)
         

@@ -6,10 +6,22 @@ config = {
              
                 }
             ],
-            
+
             "testcases_config" : [
             	{
             		"list_command": "ls -tr testDIR/"
+            	}
+            ],
+
+            "createtestcase_config" : [
+            	{
+            		"dir_path" : "testDIR/"
+            	}
+            ], 
+
+            "deletetestcase_config" : [
+            	{
+            		"delete_command" : "rm -r testDIR/"
             	}
             ]
         }
