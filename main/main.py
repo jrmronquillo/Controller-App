@@ -480,7 +480,7 @@ def showTestCases():
 
     listCommand = commands[0]["list_command"]
     p = subprocess.check_output(listCommand, shell=True)
-    print p.splitlines()
+    # print p.splitlines()
     fileArray = p.splitlines()
     for file in fileArray:
         completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
@@ -614,7 +614,7 @@ def deleteTestCase(testcase_id):
         fileToDelete =  testcaseToDelete.name
         print fileToDelete
         
-        # prod
+        # create command using providing configurations
         commandPath = config.config['deletetestcase_config'][0]['delete_command']
         command = commandPath + "%s" % fileToDelete 
         
@@ -627,21 +627,12 @@ def deleteTestCase(testcase_id):
     else:
         return render_template('deleteTestCase.html')
 
-@app.route('/checkforfiles/', methods=['GET', 'POST'])
-def checkForFiles():
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
-    p = subprocess.check_output("ls", cwd="/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/")
-    print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
-    return "checkforfiles executed"
+@app.route('/tester/', methods=['GET', 'POST'])
+def testerAPI():
+    print os.path.dirname('testDIR/')
+    #just adding some text
+    return "tester executed"
+
 
 @app.route('/testcasesv2/JSON')
 @jsonp
