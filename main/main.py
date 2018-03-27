@@ -631,6 +631,7 @@ def deleteTestCase(testcase_id):
 def testerAPI():
     print os.path.dirname('testDIR/')
     #just adding some text
+    #adding text for branchB
     return "tester executed"
 
 
