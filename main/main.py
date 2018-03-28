@@ -439,32 +439,14 @@ def screenshot():
 @clear_db
 @update_DB_with_files
 def showTestCases():  
-    # print p.splitlines()
-    #fileArray = p.splitlines()
-    #for file in fileArray:
-    #    completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-    #    testcase_info = TestCasesV2(name=file, path=completePath)
-    #    session.add(testcase_info)
-    #    session.commit()
     test_cases = session.query(TestCasesV2).all()
     return render_template("testcases.html", test_cases=test_cases)
     
 @app.route('/testcases/JSON')
 @jsonp
 @clear_db
+@update_DB_with_files
 def testcasesJSON():
-    commands = config.config['testcases_config']
-    listCommand = commands[0]["list_command"]
-    
-    # use config file
-    p = subprocess.check_output(listCommand, shell=True)
-    print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
     testcases = session.query(TestCasesV2).all()
     return jsonify(testcaseList=[i.serialize for i in testcases])
 
@@ -536,34 +518,19 @@ def stepsJSON(testcase_id):
 @app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
 @testcase_exists
 @clear_db
+@update_DB_with_files
 def deleteTestCase(testcase_id):
-    
-    # check what files are in the directory using 'ls' command
-    listCommand = config.config['testcases_config'][0]['list_command']
-    
-    p = subprocess.check_output(listCommand, shell=True)
-    
-    print p.splitlines()
-
-    # take the available file names and store them in the DB
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
-
     # initialize object for designated testcase_id    
     testcaseToDelete = session.query(TestCasesV2).filter_by(id=testcase_id).first()
     if request.method == 'POST':
         # delete file from directory
-        fileToDelete =  testcaseToDelete.name
+        fileToDelete =  str(testcaseToDelete.name).replace(" ","\ ")
         print fileToDelete
         
         # create command using providing configurations
         commandPath = config.config['deletetestcase_config'][0]['delete_command']
         command = commandPath + "%s" % fileToDelete 
-        
+        print command
         p = subprocess.check_output(command, shell=True)
         
         #delete file from DB
