@@ -472,10 +472,19 @@ def createTestCase():
         return render_template('newtestcase.html')
 
 @app.route('/testcases/<int:testcase_id>/')
-@app.route('/testcases/<int:testcase_id>/steps/')
+@app.route('/testcases/<int:testcase_id>/steps/', methods=['GET', 'POST'])
 def showCaseSteps(testcase_id):
     items = session.query(TestSteps).filter_by(
         testcase_id=testcase_id).all()
+
+    if request.method == 'POST':
+        stepData = request.form['keypress']
+        newStep = TestSteps(testcase_id=testcase_id,
+                           step=stepData
+                           )
+        session.add(newStep)
+        session.commit()
+        return redirect(url_for('showCaseSteps', testcase_id=testcase_id))
     return render_template('steps.html', testcase_id=testcase_id, items=items)
 
 @app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
@@ -487,7 +496,7 @@ def newStep(testcase_id):
                            )
         session.add(newStep)
         session.commit()
-        return redirect(url_for('showCaseSteps'), testcase_id=testcase_id)
+        return redirect(url_for('showCaseSteps', testcase_id=testcase_id))
     else: 
         return render_template('newStep.html')
 

@@ -27,6 +27,7 @@ class TestCasesV2(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     path = Column(String(250), nullable=False)
+    testcaseSteps = relationship('TestSteps', cascade='save-update, merge, delete')
 
     @property
     def serialize(self):
@@ -40,7 +41,7 @@ class TestSteps(Base):
     __tablename__ = 'teststeps'
     id = Column(Integer, primary_key=True)
     step = Column(String(250), nullable=False)
-    testcase_id = Column(Integer, ForeignKey('testcases.id'))
+    testcase_id = Column(Integer, ForeignKey('testcasesv2.id'))
 
     @property
     def serialize(self):
