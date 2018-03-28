@@ -131,3 +131,17 @@ def jsonp(func):
         else:
             return func(*args, **kwargs)
     return decorated_function
+
+def clear_db(function):
+    """
+    clear the db to avoid mismatches
+    """
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        print "wrapper stuff happened"
+        testcasesToClear = session.query(TestCasesV2).all()
+        for i in testcasesToClear:
+            session.delete(i)
+            session.commit()
+        return function(*args, **kwargs)
+    return wrapper

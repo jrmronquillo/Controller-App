@@ -26,7 +26,7 @@ import subprocess
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
-                                 testcase_exists)
+                                 testcase_exists, clear_db)
 # separate config file to distinguish between test and production configurations
 import testConfig
 import prodConfig
@@ -50,11 +50,6 @@ session = DBSession()
 
 
 def keySendv2(rack,key,slot):
-    #rack = "00-80-A3-A9-E3-7A"
-    #key = 'menu'
-    #slot = "1-16"
-    #def jKeyPress(rack, key, slot):
-    #Prepare 3-byte control message for transmission
     TCP_IP = '10.23.223.36'
     TCP_PORT = 40000
     BUFFER_SIZE = 1024
@@ -66,7 +61,6 @@ def keySendv2(rack,key,slot):
     data = p.recv(BUFFER_SIZE)
     p.close()
     print "Return Data: " + str(data) + key
-    #jKeyPress("00-80-A3-A9-C3-7A", "menu", "1-16")
     return "keySend Output"
 
 
@@ -257,19 +251,6 @@ def test():
         else:
             print "Rack was not found in request form"
             error = "Rack was not selected, please select rack to continue."
-        #rack=request.form['rack']
-        #name=request.form['name']
-        #name2=request.form['name2']
-        #print name
-        #print name2
-        #print rack
-        #print request.method
-        #num=request.form['num']
-        #print rack
-        #print rack
-        #print "num=" + num
-        #print request.form['value']
-        ##keySendv2("00-80-A3-A9-E3-7A", name, "1-16")
         return render_template('controller_main.html', error=error)
     else:
         return render_template('controller_main.html')
@@ -345,16 +326,6 @@ def testB(rack_id=None, slot_id="0"):
             message = 'Error with Post Data Input'
             print 'Error with Post Data Input'
             return render_template('controller_main.html', error=message)
-        #command = test['name']
-        #if command.isnumeric():
-        #    for c in command
-        #        keySendv2(selectedRack, c, slotVar)
-        #    return render_template('controller_main.html')
-        #else:
-        #    print 'case2'
-        #    keySendv2(selectedRack, command, slotVar)
-
-        #print "command:"+command
         return render_template('controller_main.html')
     else:
         return render_template('controller_main.html')
@@ -465,13 +436,8 @@ def screenshot():
         return render_template('screenshot.html')
 
 @app.route('/testcases/', methods=['GET', 'POST'])
-def showTestCases():
-    # clear db to prepare it for a new file query
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
-  
+@clear_db
+def showTestCases():  
     # grab designated command from config file
     commands = config.config['testcases_config']
     
@@ -492,13 +458,8 @@ def showTestCases():
     
 @app.route('/testcases/JSON')
 @jsonp
+@clear_db
 def testcasesJSON():
-    #testcases = session.query(TestCases).all()
-    #return jsonify(testcaseList=[i.serialize for i in testcases])
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
     commands = config.config['testcases_config']
     listCommand = commands[0]["list_command"]
     
