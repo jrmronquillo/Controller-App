@@ -611,9 +611,9 @@ def deleteTestCase(testcase_id):
     testcaseToDelete = session.query(TestCasesV2).filter_by(id=testcase_id).first()
     if request.method == 'POST':
         # delete file from directory
-        fileToDelete =  testcaseToDelete.name
+        fileToDelete =  str(testcaseToDelete.name).replace(" ", "\ ")
         print fileToDelete
-        
+        print "sss"
         # create command using providing configurations
         commandPath = config.config['deletetestcase_config'][0]['delete_command']
         command = commandPath + "%s" % fileToDelete 
