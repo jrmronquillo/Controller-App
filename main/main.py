@@ -26,7 +26,7 @@ import subprocess
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
-                                 testcase_exists)
+                                 testcase_exists, clear_db, update_DB_with_files)
 # separate config file to distinguish between test and production configurations
 import testConfig
 import prodConfig
@@ -50,11 +50,6 @@ session = DBSession()
 
 
 def keySendv2(rack,key,slot):
-    #rack = "00-80-A3-A9-E3-7A"
-    #key = 'menu'
-    #slot = "1-16"
-    #def jKeyPress(rack, key, slot):
-    #Prepare 3-byte control message for transmission
     TCP_IP = '10.23.223.36'
     TCP_PORT = 40000
     BUFFER_SIZE = 1024
@@ -66,7 +61,6 @@ def keySendv2(rack,key,slot):
     data = p.recv(BUFFER_SIZE)
     p.close()
     print "Return Data: " + str(data) + key
-    #jKeyPress("00-80-A3-A9-C3-7A", "menu", "1-16")
     return "keySend Output"
 
 
@@ -257,19 +251,6 @@ def test():
         else:
             print "Rack was not found in request form"
             error = "Rack was not selected, please select rack to continue."
-        #rack=request.form['rack']
-        #name=request.form['name']
-        #name2=request.form['name2']
-        #print name
-        #print name2
-        #print rack
-        #print request.method
-        #num=request.form['num']
-        #print rack
-        #print rack
-        #print "num=" + num
-        #print request.form['value']
-        ##keySendv2("00-80-A3-A9-E3-7A", name, "1-16")
         return render_template('controller_main.html', error=error)
     else:
         return render_template('controller_main.html')
@@ -345,16 +326,6 @@ def testB(rack_id=None, slot_id="0"):
             message = 'Error with Post Data Input'
             print 'Error with Post Data Input'
             return render_template('controller_main.html', error=message)
-        #command = test['name']
-        #if command.isnumeric():
-        #    for c in command
-        #        keySendv2(selectedRack, c, slotVar)
-        #    return render_template('controller_main.html')
-        #else:
-        #    print 'case2'
-        #    keySendv2(selectedRack, command, slotVar)
-
-        #print "command:"+command
         return render_template('controller_main.html')
     else:
         return render_template('controller_main.html')
@@ -384,11 +355,6 @@ def postTest():
 @app.route('/reporting', methods=['GET', 'POST'])
 @app.route('/reporting/', methods=['GET', 'POST'])
 def reporting():
-    #r =requests.post("http://localhost:5000/reporting", data={'foo': 'bar'})
-    #if request.method == 'POST':
-    #    data = request.form['foo']
-    #    print data
-    #    return "Post data detected"
     data = session.query(PostData).all()
     print "data:"+str(data) 
     for item in data:
@@ -412,8 +378,6 @@ def pythonTest():
 @app.route('/scriptStart/', methods=['GET','POST'])
 def scriptStart():
     if request.method == 'POST':
-        # need function to take script_id and return test script name from DB
-        # POST version:
         script_id = request.form['script_id']
         if script_id:
             test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
@@ -432,11 +396,6 @@ def scriptStart():
             message = "script_id needed to start script"
             print message
             return message
-        # p = subprocess.Popen("stbt run /home/e2e/e2ehost29_local/sanityAutomation/host_main_29/
-        # Scoreguide/test.py")
-        # p = subprocess.Popen("ls", shell=True)
-        #output = p
-        #print output
         return render_template('scriptStart.html', output=p)
     else:
         return render_template('scriptStart.html')
@@ -465,52 +424,17 @@ def screenshot():
         return render_template('screenshot.html')
 
 @app.route('/testcases/', methods=['GET', 'POST'])
-def showTestCases():
-    # clear db to prepare it for a new file query
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
-  
-    # grab designated command from config file
-    commands = config.config['testcases_config']
-    
-    print commands
-    print commands[0]["list_command"]
-
-    listCommand = commands[0]["list_command"]
-    p = subprocess.check_output(listCommand, shell=True)
-    # print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
+@clear_db
+@update_DB_with_files
+def showTestCases():  
     test_cases = session.query(TestCasesV2).all()
     return render_template("testcases.html", test_cases=test_cases)
     
 @app.route('/testcases/JSON')
 @jsonp
+@clear_db
+@update_DB_with_files
 def testcasesJSON():
-    #testcases = session.query(TestCases).all()
-    #return jsonify(testcaseList=[i.serialize for i in testcases])
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
-    commands = config.config['testcases_config']
-    listCommand = commands[0]["list_command"]
-    
-    # use config file
-    p = subprocess.check_output(listCommand, shell=True)
-    print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
     testcases = session.query(TestCasesV2).all()
     return jsonify(testcaseList=[i.serialize for i in testcases])
 
@@ -525,9 +449,9 @@ def createTestCase():
         
         scriptname=str(request.form['name'])
         
-        # replaces whitespace with underscore, to avoid error when creating linux directory
+        # replaces whitespace with underscore, to avoid error with any modifications of linux directory
         editedScriptname=scriptname.replace(" ", "_")
-        print editedScriptname
+        # print editedScriptname
         
         path = config.config['createtestcase_config'][0]['dir_path']
         complete_path = str(path) + editedScriptname  
@@ -547,17 +471,12 @@ def createTestCase():
     else:
         return render_template('newtestcase.html')
 
-
-
-
-
 @app.route('/testcases/<int:testcase_id>/')
 @app.route('/testcases/<int:testcase_id>/steps/')
 def showCaseSteps(testcase_id):
     items = session.query(TestSteps).filter_by(
         testcase_id=testcase_id).all()
     return render_template('steps.html', testcase_id=testcase_id, items=items)
-
 
 @app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
 def newStep(testcase_id):
@@ -581,43 +500,27 @@ def stepsJSON(testcase_id):
 
 @app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
 @testcase_exists
+@clear_db
+@update_DB_with_files
 def deleteTestCase(testcase_id):
-    # make sure db is accurate by clearing the db and repopulating it to represent the files
-    # in the directory
-    
-    # clear the DB
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
-    
-    # check what files are in the directory using 'ls' command
-    listCommand = config.config['testcases_config'][0]['list_command']
-    
-    # prod
-    p = subprocess.check_output(listCommand, shell=True)
-    
-    print p.splitlines()
-
-    # take the available file names and store them in the DB
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
-
     # initialize object for designated testcase_id    
     testcaseToDelete = session.query(TestCasesV2).filter_by(id=testcase_id).first()
     if request.method == 'POST':
         # delete file from directory
+<<<<<<< HEAD
         fileToDelete =  str(testcaseToDelete.name).replace(" ", "\ ")
         print fileToDelete
         print "sss"
         # create command using providing configurations
+=======
+        fileToDelete =  str(testcaseToDelete.name).replace(" ","\ ")
+        print fileToDelete
+        
+        # create command using provided configurations
+>>>>>>> refactor_duplicate_code
         commandPath = config.config['deletetestcase_config'][0]['delete_command']
         command = commandPath + "%s" % fileToDelete 
-        
+        print command
         p = subprocess.check_output(command, shell=True)
         
         #delete file from DB
@@ -633,14 +536,6 @@ def testerAPI():
     #just adding some text
     #adding text for branchB
     return "tester executed"
-
-
-@app.route('/testcasesv2/JSON')
-@jsonp
-def testcasesv2JSON():
-    testcasesv2 = session.query(TestCasesV2).all()
-    return jsonify(testcaseList=[i.serialize for i in testcasesv2])
-
 
 
 
