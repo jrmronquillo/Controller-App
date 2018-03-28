@@ -355,11 +355,6 @@ def postTest():
 @app.route('/reporting', methods=['GET', 'POST'])
 @app.route('/reporting/', methods=['GET', 'POST'])
 def reporting():
-    #r =requests.post("http://localhost:5000/reporting", data={'foo': 'bar'})
-    #if request.method == 'POST':
-    #    data = request.form['foo']
-    #    print data
-    #    return "Post data detected"
     data = session.query(PostData).all()
     print "data:"+str(data) 
     for item in data:
@@ -383,8 +378,6 @@ def pythonTest():
 @app.route('/scriptStart/', methods=['GET','POST'])
 def scriptStart():
     if request.method == 'POST':
-        # need function to take script_id and return test script name from DB
-        # POST version:
         script_id = request.form['script_id']
         if script_id:
             test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
@@ -403,11 +396,6 @@ def scriptStart():
             message = "script_id needed to start script"
             print message
             return message
-        # p = subprocess.Popen("stbt run /home/e2e/e2ehost29_local/sanityAutomation/host_main_29/
-        # Scoreguide/test.py")
-        # p = subprocess.Popen("ls", shell=True)
-        #output = p
-        #print output
         return render_template('scriptStart.html', output=p)
     else:
         return render_template('scriptStart.html')
@@ -461,9 +449,9 @@ def createTestCase():
         
         scriptname=str(request.form['name'])
         
-        # replaces whitespace with underscore, to avoid error when creating linux directory
+        # replaces whitespace with underscore, to avoid error with any modifications of linux directory
         editedScriptname=scriptname.replace(" ", "_")
-        print editedScriptname
+        # print editedScriptname
         
         path = config.config['createtestcase_config'][0]['dir_path']
         complete_path = str(path) + editedScriptname  
@@ -483,17 +471,12 @@ def createTestCase():
     else:
         return render_template('newtestcase.html')
 
-
-
-
-
 @app.route('/testcases/<int:testcase_id>/')
 @app.route('/testcases/<int:testcase_id>/steps/')
 def showCaseSteps(testcase_id):
     items = session.query(TestSteps).filter_by(
         testcase_id=testcase_id).all()
     return render_template('steps.html', testcase_id=testcase_id, items=items)
-
 
 @app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
 def newStep(testcase_id):
@@ -527,7 +510,7 @@ def deleteTestCase(testcase_id):
         fileToDelete =  str(testcaseToDelete.name).replace(" ","\ ")
         print fileToDelete
         
-        # create command using providing configurations
+        # create command using provided configurations
         commandPath = config.config['deletetestcase_config'][0]['delete_command']
         command = commandPath + "%s" % fileToDelete 
         print command
@@ -546,14 +529,6 @@ def testerAPI():
     #just adding some text
     #adding text for branchB
     return "tester executed"
-
-
-@app.route('/testcasesv2/JSON')
-@jsonp
-def testcasesv2JSON():
-    testcasesv2 = session.query(TestCasesV2).all()
-    return jsonify(testcaseList=[i.serialize for i in testcasesv2])
-
 
 
 
