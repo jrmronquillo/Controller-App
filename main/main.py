@@ -542,15 +542,16 @@ def stepsJSON(testcase_id):
 
 @app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
 @testcase_exists
+@clear_db
 def deleteTestCase(testcase_id):
     # make sure db is accurate by clearing the db and repopulating it to represent the files
     # in the directory
     
     # clear the DB
-    testcaseToDelete = session.query(TestCasesV2).all()
-    for i in testcaseToDelete:
-        session.delete(i)
-        session.commit()
+    # testcaseToDelete = session.query(TestCasesV2).all()
+    # for i in testcaseToDelete:
+    #     session.delete(i)
+    #     session.commit()
     
     # check what files are in the directory using 'ls' command
     listCommand = config.config['testcases_config'][0]['list_command']
