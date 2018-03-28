@@ -26,7 +26,7 @@ import subprocess
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
-                                 testcase_exists, clear_db)
+                                 testcase_exists, clear_db, update_DB_with_files)
 # separate config file to distinguish between test and production configurations
 import testConfig
 import prodConfig
@@ -437,22 +437,15 @@ def screenshot():
 
 @app.route('/testcases/', methods=['GET', 'POST'])
 @clear_db
+@update_DB_with_files
 def showTestCases():  
-    # grab designated command from config file
-    commands = config.config['testcases_config']
-    
-    print commands
-    print commands[0]["list_command"]
-
-    listCommand = commands[0]["list_command"]
-    p = subprocess.check_output(listCommand, shell=True)
     # print p.splitlines()
-    fileArray = p.splitlines()
-    for file in fileArray:
-        completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
-        testcase_info = TestCasesV2(name=file, path=completePath)
-        session.add(testcase_info)
-        session.commit()
+    #fileArray = p.splitlines()
+    #for file in fileArray:
+    #    completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
+    #    testcase_info = TestCasesV2(name=file, path=completePath)
+    #    session.add(testcase_info)
+    #    session.commit()
     test_cases = session.query(TestCasesV2).all()
     return render_template("testcases.html", test_cases=test_cases)
     
@@ -544,19 +537,10 @@ def stepsJSON(testcase_id):
 @testcase_exists
 @clear_db
 def deleteTestCase(testcase_id):
-    # make sure db is accurate by clearing the db and repopulating it to represent the files
-    # in the directory
-    
-    # clear the DB
-    # testcaseToDelete = session.query(TestCasesV2).all()
-    # for i in testcaseToDelete:
-    #     session.delete(i)
-    #     session.commit()
     
     # check what files are in the directory using 'ls' command
     listCommand = config.config['testcases_config'][0]['list_command']
     
-    # prod
     p = subprocess.check_output(listCommand, shell=True)
     
     print p.splitlines()

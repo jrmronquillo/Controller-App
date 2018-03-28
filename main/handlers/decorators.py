@@ -4,6 +4,12 @@ from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Categories, CategoryItem, TestCases, TestCasesV2
+import subprocess
+
+import prodConfig
+import testConfig
+
+config = testConfig
 
 engine = create_engine('sqlite:///catalogwithusers.db')
 Base.metadata.bind = engine
@@ -142,6 +148,30 @@ def clear_db(function):
         testcasesToClear = session.query(TestCasesV2).all()
         for i in testcasesToClear:
             session.delete(i)
+            session.commit()
+        return function(*args, **kwargs)
+    return wrapper
+
+def update_DB_with_files(function):
+    """
+    update db with current files detected in directory
+    """
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        print "wrapper stuff happened"
+         # grab designated command from config file
+        commands = config.config['testcases_config']
+    
+        print commands
+        print commands[0]["list_command"]
+
+        listCommand = commands[0]["list_command"]
+        p = subprocess.check_output(listCommand, shell=True)
+        fileArray = p.splitlines()
+        for file in fileArray:
+            completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
+            testcase_info = TestCasesV2(name=file, path=completePath)
+            session.add(testcase_info)
             session.commit()
         return function(*args, **kwargs)
     return wrapper
