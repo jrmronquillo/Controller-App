@@ -56,6 +56,7 @@ def keySendv2(rack,key,slot):
     MESSAGE = 'MAC="' + rack + '" dataset="RC71" signal="' + key + '" output="' + slot + '" \n'
     #Open socket, send message, close scoket
     p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    p.settimeout(5)
     p.connect((TCP_IP, TCP_PORT))
     p.send(MESSAGE)
     data = p.recv(BUFFER_SIZE)
@@ -525,9 +526,7 @@ def deleteTestCase(testcase_id):
 
 @app.route('/tester/', methods=['GET', 'POST'])
 def testerAPI():
-    print os.path.dirname('testDIR/')
-    #just adding some text
-    #adding text for branchB
+    #if request.method == 'POST':      
     return "tester executed"
 
 
