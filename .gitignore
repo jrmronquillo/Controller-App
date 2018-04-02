@@ -2,3 +2,4 @@
 client_secrets.json
 config.py
 *.pyc
+catalogwithusers.db
