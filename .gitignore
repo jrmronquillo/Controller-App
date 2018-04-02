@@ -1,5 +1,6 @@
 #git ignore
 client_secrets.json
 config.py
+database_setup.pyc
 *.pyc
 catalogwithusers.db
