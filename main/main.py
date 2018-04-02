@@ -339,14 +339,19 @@ def postTest():
 
     if request.method == 'POST':
         print request.form['name']
-        newData = PostData(data=request.form['name'], green=True)
+        timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
+        print timeVar  
+        newData = PostData(data=request.form['name'], green=True, formatted_date=timeVar)
         session.add(newData)
         session.commit()
     else:
         print "Get request executed"
+        timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
+        print timeVar  
         print request.args.get('name', '')
         newData = PostData(data=request.args.get('name', ''), 
-                           green=request.args.get('green', '')
+                           green=request.args.get('green', ''),
+                           formatted_date=timeVar
                            )
         session.add(newData)
         session.commit()
@@ -526,8 +531,10 @@ def deleteTestCase(testcase_id):
 
 @app.route('/tester/', methods=['GET', 'POST'])
 def testerAPI():
-    #if request.method == 'POST':      
-    return "tester executed"
+    #if request.method == 'POST':
+    timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
+    print timeVar      
+    return str(timeVar)
 
 
 
