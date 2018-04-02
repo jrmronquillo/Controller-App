@@ -16,6 +16,8 @@ from flask import make_response
 import requests
 
 import datetime
+import pytz
+import tzlocal
 
 import socket    # used for TCP/IP communication
 import smtplib   # used to send email report
@@ -339,9 +341,14 @@ def postTest():
 
     if request.method == 'POST':
         print request.form['name']
-        timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
-        print timeVar  
-        newData = PostData(data=request.form['name'], green=True, formatted_date=timeVar)
+
+        d = datetime.datetime.now()
+        d_utc = datetime.datetime.utcnow()
+        localTZ = tzlocal.get_localzone()
+        tt = d_utc.replace(tzinfo=pytz.utc).astimezone(localTZ).strftime("%b %-d %H:%M:%S")
+        print tt
+
+        newData = PostData(data=request.form['name'], green=True, formatted_date=tt)
         session.add(newData)
         session.commit()
     else:
@@ -546,9 +553,12 @@ def deleteTestCase(testcase_id):
 @app.route('/tester/', methods=['GET', 'POST'])
 def testerAPI():
     #if request.method == 'POST':
-    timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
-    print timeVar      
-    return str(timeVar)
+    d = datetime.datetime.now()
+    d_utc = datetime.datetime.utcnow()
+    localTZ = tzlocal.get_localzone()
+    tt = d_utc.replace(tzinfo=pytz.utc).astimezone(localTZ).strftime("%b %-d %H:%M:%S")
+    print tt
+    return tt
 
 
 
