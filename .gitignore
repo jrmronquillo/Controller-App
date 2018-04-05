@@ -4,3 +4,4 @@ config.py
 main/database_setup.pyc
 *.pyc
 catalogwithusers.db
+main/catalogwithusers.db
