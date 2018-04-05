@@ -169,7 +169,7 @@ def update_DB_with_files(function):
         p = subprocess.check_output(listCommand, shell=True)
         fileArray = p.splitlines()
         for file in fileArray:
-            completePath = "/home/e2e/e2ehost29_local/sanityAutomation/automation_main_28/"+file+"/test.py"
+            completePath = "/home/e2e/e2ehost_local/sanityAutomation/automation_main_28/"+file+"/test.py"
             testcase_info = TestCasesV2(name=file, path=completePath)
             session.add(testcase_info)
             session.commit()
