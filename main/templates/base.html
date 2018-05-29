@@ -13,13 +13,27 @@
     function test(name){
         alert('drop down change detected');
     }
+
+    function toggleDisplay(){
+        var x = document.getElementsByClassName("slot-drawer");
+        var i;
+        if (x[0].style.display === 'none'){
+            for(i=0; i<x.length; i++){
+                x[i].style.display = 'block';
+            } 
+        } else {
+            for(i=0; i<x.length; i++){
+                x[i].style.display = 'none';
+            }
+        }
+    }
 </script>
 
     <title>{% block title %}{% endblock %} Catalog App</title>
     {% endblock %}
 </head>
 <body>
-    <div class='container'>
+    <div class='container-fluid'>
         <div class='row no-gutters'>
             <div class='col-sm-4'>
                 <h1 class='text-muted'>APP</h1>

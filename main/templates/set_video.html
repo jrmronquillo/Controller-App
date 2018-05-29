@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+	<h1>Video Configs</h1>
+
+	<form action="#" method = 'post' class="create-button">
+		<input type='hidden' name="multiviewerProfile" value="defaultConf">
+		<input type='submit' value='default'>
+	</form>
+
+	<form action="#" method = 'post' class="create-button">
+		<input type='hidden' name="multiviewerProfile" value="allserversConf">
+		<input type='submit' value='all servers'>
+	</form>
+
+	<form action="#" method = 'post' class="create-button">
+		<input type='hidden' name="multiviewerProfile" value="allclientsConf">
+		<input type='submit' value='all clients'>
+	</form>
+
+	<form action="#" method = 'post' class="create-button">
+		<input type='hidden' name="multiviewerProfile" value="quadConf">
+		<input type='submit' value='quad conf'>
+	</form>
+</div>
+
+{% endblock %}

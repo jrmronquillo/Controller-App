@@ -17,6 +17,7 @@
     <div class="error">
         <h1 style="color:red;">{{error}}</h1>
     </div>
+    
 		<div class='row'>
 			<div class='col-sm-2'>
 				<a href="{{url_for('testB', rack_id='0')}}"><h4>A00</h4></a>
@@ -26,96 +27,135 @@
 			</div>
 			<div class='col-sm-2'>   
                 <a href="{{url_for('testB', rack_id='2')}}"><h4>A02</h4></a>
+                <div class="slot-drawer" style="display:none;">
+                    <a href="{{url_for('testB', rack_id='2', slot_id='1')}}"><p>slot 1</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='2')}}"><p>slot 2</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='3')}}"><p>slot 3</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='4')}}"><p>slot 4</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='5')}}"><p>slot 5</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='6')}}"><p>slot 6</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='7')}}"><p>slot 7</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='8')}}"><p>slot 8</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='9')}}"><p>slot 9</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='10')}}"><p>slot 10</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='11')}}"><p>slot 11</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='12')}}"><p>slot 12</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='13')}}"><p>slot 13</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='14')}}"><p>slot 14</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='15')}}"><p>slot 15</p></a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='16')}}"><p>slot 16</p></a>
+                </div>
             </div>
             <div class='col-sm-2'>  
                 <a href="{{url_for('testB', rack_id='3')}}"><h4>A03</h4></a>
+                
+                <div class="slot-drawer" style="display:none;">
+                    <a href="{{url_for('testB', rack_id='3', slot_id='1')}}"><p>slot 1</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='2')}}"><p>slot 2</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='3')}}"><p>slot 3</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='4')}}"><p>slot 4</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='5')}}"><p>slot 5</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='6')}}"><p>slot 6</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='7')}}"><p>slot 7</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='8')}}"><p>slot 8</p></a>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='9')}}"><p>slot 9</p></a>
+                </div>
+            </div>
+            <div class='col-sm-2'>
+                <a href="{{url_for('testB', rack_id='3', slot_id='1,2,8,9')}}">Quadrant Servers</a>
+                <a href="{{url_for('testB', rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}">Quadrant Clients</a>
+                <a href="{{url_for('testB', quad='true')}}">All Quad STB's</a>
+            </div>
+            <div class='col-sm-2'>
+                <a h
+                <button onclick="toggleDisplay()">Slots</button>
             </div>
 		</div>
 			<hr>
             <div class='button-container'>
-            <div class='row'>
-            	<div class="col-sm-4">
-            		<form action="#" method = 'post'>
+            <div class='row no-gutters'>
+            	<div class="col-sm-3">
+            		<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='guide'>
                 		<input type='submit' value='guide' class='create-button button'>
                 	</form>
                 </div>
                
-                <div class="col-sm-4">
-         			<form action="#" method = 'post'>
+                <div class="col-sm-3">
+         			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='menu'>
                 		<input type='submit' value='menu' class='create-button'>
                 	</form>
    				</div>
-   				<div class="col-sm-4">
-   					<form action="#" method = 'post'>
+   				<div class="col-sm-3">
+   					<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='exit'>
                 		<input type='submit' value='exit' class='create-button'>
          			</form>
          		</div>
             </div>
 
-            <div class="row">
-                <div class="col-sm-4">
-                    <form action="#" method = 'post'>
+            <div class="row no-gutters">
+                <div class="col-sm-3">
+                    <form action="#" method = 'post' class="create-button">
                         <input type ='hidden' size='20' name='name' value='info'>
                         <input type='submit' value='info' class='create-button'>
                     </form>
                 </div>
-           		<div class="col-sm-4">
-                	<form action="#" method = 'post'>
+           		<div class="col-sm-3">
+                	<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='upArrow'>
                 		<input type='submit' value='upArrow' class='create-button'>
             		</form>
             	</div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                 </div>	
             </div>
 
           
-            <div class='row'>
-            	<div class="col-sm-4">
-            		<form action="#" method = 'post'>
+            <div class='row no-gutters'>
+            	<div class="col-sm-3">
+            		<form action="#" method = 'post' class="create-button">
             	       <input type ='hidden' size='20' name='name' value='leftArrow'>
                 		<input type='submit' value='leftArrow' class='create-button'>
             	 	</form>
             	 </div>
-            	 <div class="col-sm-4">
-                	<form action="#" method = 'post'>
+            	 <div class="col-sm-3">
+                	<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='select'>
                 		<input type='submit' value='select' class='create-button'>
                 	</form>
                 </div>
-                <div class="col-sm-4">
-               		<form action="#" method = 'post'>
+                <div class="col-sm-3">
+               		<form action="#" method = 'post' class="create-button">
                			<input type ='hidden' size='20' name='name' value='rightArrow'>
                 		<input type='submit' value='rightArrow' class='create-button'>
             		</form>
             	</div>
             </div>
            
-        	<div class='row'>
-        		<div class="col-sm-4">
+        	<div class='row no-gutters'>
+        		<div class="col-sm-3">
         		</div>
-        		<div class="col-sm-4">
-        			<form action="#" method = 'post'>
+        		<div class="col-sm-3">
+        			<form action="#" method = 'post' class="create-button">
         				<input type ='hidden' size='20' name='name' value='downArrow'>
                 		<input type='submit' value='downArrow' class='create-button'>
         			</form>
         		</div>
-        		<div class="col-sm-4">
+        		<div class="col-sm-3">
         		</div>
         	</div>
             
             <hr>
         	
             <div class='row'>
-        		<div class="col-sm-4">
+        		<div class="col-sm-3">
         		</div>
-        		<div class="col-sm-4">
+        		<div class="col-sm-3">
         		</div>
-        		<div class='col-sm-4'>
-        			<form action="#" method = 'post'>
+        		<div class='col-sm-3'>
+        			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='chanUp'>
                 		<input type='submit' value='chanUp' class='create-button'>
          			</form>
@@ -123,21 +163,21 @@
         	</div>
 
         	<div class='row'>
-        		<div class="col-sm-4">
-        			<form action="#" method = 'post'>
+        		<div class="col-sm-3">
+        			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='red'>
                 		<input type='submit' value='red' class='create-button'>
          			</form>
         		</div>
-        		<div class="col-sm-4">
-        			<form action="#" method = 'post'>
+        		<div class="col-sm-3">
+        			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='stop'>
                 		<input type='submit' value='stop' class='create-button'>
          			</form>
         		</div>
 
-       			<div class='col-sm-4'>
-        			<form action="#" method = 'post'>
+       			<div class='col-sm-3'>
+        			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='chanDown'>
                 		<input type='submit' value='chanDown' class='create-button'>
          			</form>
@@ -146,20 +186,20 @@
 
 
 			<div class="row">        
-         		<div class="col-sm-4">
-         			<form action="#" method = 'post'>
+         		<div class="col-sm-3">
+         			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='rewind'>
                	 		<input type='submit' value='rewind' class='create-button'>
          			</form>
          		</div>
-         		<div class="col-sm-4">
-         			<form action="#" method = 'post'>
+         		<div class="col-sm-3">
+         			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='play'>
                	 		<input type='submit' value='play' class='create-button'>
          			</form>
          		</div>
-         		<div class="col-sm-4">
-         			<form action="#" method = 'post'>
+         		<div class="col-sm-3">
+         			<form action="#" method = 'post' class="create-button">
                 		<input type ='hidden' size='20' name='name' value='fastForward'>
                	 		<input type='submit' value='fastForward' class='create-button'>
          			</form>
@@ -167,20 +207,20 @@
          	</div>
 
                 <div class="row">        
-                <div class="col-sm-4">
-                    <form action="#" method = 'post'>
+                <div class="col-sm-3">
+                    <form action="#" method = 'post' class="create-button">
                         <input type ='hidden' size='20' name='name' value='record'>
                         <input type='submit' value='record' class='create-button'>
                     </form>
                 </div>
-                <div class="col-sm-4">
-                    <form action="#" method = 'post'>
+                <div class="col-sm-3">
+                    <form action="#" method = 'post' class="create-button">
                         <input type ='hidden' size='20' name='name' value='prev'>
                         <input type='submit' value='previous' class='create-button'>
                     </form>
                 </div>
-                <div class="col-sm-4">
-                    <form action="#" method = 'post'>
+                <div class="col-sm-3">
+                    <form action="#" method = 'post' class="create-button">
                         <input type ='hidden' size='20' name='name' value='fastForward'>
                         <input type='submit' value='fastForward' class='create-button'>
                     </form>
@@ -190,20 +230,20 @@
 <!-- Table for Alphabet input buttons -->
 			<div class="col-sm-6">
                 <div class="row">        
-         		    <div class="col-sm-4 test-border">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3 test-border">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='1'>
                	 		    <input type='submit' value='1' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='2'>
                	 		    <input type='submit' value='2' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='3'>
                	 		    <input type='submit' value='3' class='create-button'>
          			    </form>
@@ -211,20 +251,20 @@
          	    </div>
 
          	    <div class="row">        
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='4'>
                	 		    <input type='submit' value='4' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='5'>
                	 		    <input type='submit' value='5' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='6'>
                	 		    <input type='submit' value='6' class='create-button'>
          			    </form>
@@ -232,20 +272,20 @@
          	    </div>
 
          	    <div class="row">        
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='7'>
                	 		    <input type='submit' value='7' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='8'>
                	 		    <input type='submit' value='8' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='9'>
                	 		    <input type='submit' value='9' class='create-button'>
          			    </form>
@@ -254,55 +294,55 @@
 
 
          	    <div class="row">        
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                             <input type ='hidden' size='20' name='name' value='dash'>
                             <input type='submit' value='dash' class='create-button'>
                         </form>
          		    </div>
-         		    <div class="col-sm-4">
-         			    <form action="#" method = 'post'>
+         		    <div class="col-sm-3">
+         			    <form action="#" method = 'post' class="create-button">
                 		    <input type ='hidden' size='20' name='name' value='0'>
                	 		    <input type='submit' value='0' class='create-button'>
          			    </form>
          		    </div>
-         		    <div class="col-sm-4">
+         		    <div class="col-sm-3">
          		    </div>
          	    </div>
                 <hr>
                 <div class="row">
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='a'>
                             <input type='submit' value='a' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='b'>
                             <input type='submit' value='b' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='c'>
                             <input type='submit' value='c' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='d'>
                             <input type='submit' value='d' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='e'>
                             <input type='submit' value='e' class='create-button'>
                         </form>
                     </div> 
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='f'>
                             <input type='submit' value='f' class='create-button'>
                         </form>
@@ -311,37 +351,37 @@
                 
                 <div class="row">
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='g'>
                             <input type='submit' value='g' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='h'>
                             <input type='submit' value='h' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='i'>
                             <input type='submit' value='i' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='j'>
                             <input type='submit' value='j' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='k'>
                             <input type='submit' value='k' class='create-button'>
                         </form>
                     </div> 
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='l'>
                             <input type='submit' value='l' class='create-button'>
                         </form>
@@ -350,37 +390,37 @@
              
                 <div class="row">
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='m'>
                             <input type='submit' value='m' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='n'>
                             <input type='submit' value='n' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='o'>
                             <input type='submit' value='o' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='p'>
                             <input type='submit' value='p' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='q'>
                             <input type='submit' value='q' class='create-button'>
                         </form>
                     </div> 
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='r'>
                             <input type='submit' value='r' class='create-button'>
                         </form>
@@ -389,37 +429,37 @@
             
                 <div class="row">
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='s'>
                             <input type='submit' value='s' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='t'>
                             <input type='submit' value='t' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='u'>
                             <input type='submit' value='u' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='v'>
                             <input type='submit' value='v' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='w'>
                             <input type='submit' value='w' class='create-button'>
                         </form>
                     </div> 
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='x'>
                             <input type='submit' value='x' class='create-button'>
                         </form>
@@ -428,37 +468,37 @@
                 
                 <div class="row">
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='y'>
                             <input type='submit' value='y' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value='z'>
                             <input type='submit' value='z' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value=''>
                             <input type='submit' value='' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value=''>
                             <input type='submit' value='' class='create-button'>
                         </form>
                     </div>
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value=''>
                             <input type='submit' value='' class='create-button'>
                         </form>
                     </div> 
                     <div class="col-sm-2">
-                        <form action="#" method = 'post'>
+                        <form action="#" method = 'post' class="create-button">
                             <input type = 'hidden' name='name2' value=''>
                             <input type='submit' value='' class='create-button'>
                         </form>

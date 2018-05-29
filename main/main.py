@@ -51,12 +51,59 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+import telnetlib
+import socket
+def setVideo(config):
+    print config
+    channel = {"1":"128", "2":"129", "3":"130", "4":"131",
+           "5":"132", "6":"133", "7":"134", "8":"135",
+                   "9":"136", "10":"137", "11":"138", "12":"139",
+                   "13":"140", "14":"141", "15":"142", "16":"143"}
+    rs = []
+    racks = []
+    slots = []
+    # generate rack representation in a list
+    for i in range (12):
+        racks.append("r"+str(i+1))
+    print racks
+    for j in range(16):
+        slots.append("s"+str(j+1))
+    print slots
+    for k in racks:
+        for l in slots:
+            rs.append(k+l)
+    print rs
+    routerInputs = []   
+    for key, value in config.items():
+        print key
+        print value
+        routerPort = str(channel[key])
+        sourcePosition = str(rs.index(value))
+        print routerPort + " " + sourcePosition
+        routerInputs.append(routerPort + " " + sourcePosition)
+    print routerInputs
+    tn = telnetlib.Telnet("10.23.223.202", "9990")
+    tn.write("VIDEO OUTPUT ROUTING:\n")
+    for route in routerInputs:  
+        print route     
+        tn.write(route)
+        #tn.write("128 32")
+        tn.write("\n")
+    tn.write("\n")
+    #tn.get_socket().shutdown(socket.SOCK_WR)
+    tn.read_until("ACK", 2)
+    tn.close()
+
+    return "routeVideo function executed!"
+# customConfig = {"1":"r2s10", "2":"r2s11"}
+# setVideo(customConfig)
+
 def keySendv2(rack,key,slot):
     TCP_IP = '10.23.223.36'
     TCP_PORT = 40000
     BUFFER_SIZE = 1024
     MESSAGE = 'MAC="' + rack + '" dataset="RC71" signal="' + key + '" output="' + slot + '" \n'
-    #Open socket, send message, close scoket
+    # Open socket, send message, close scoket
     p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     p.settimeout(5)
     p.connect((TCP_IP, TCP_PORT))
@@ -240,7 +287,7 @@ def check():
 # Test page for development
 @app.route('/test', methods=['GET', 'POST'])
 @app.route('/test/', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def test():
     if request.method == 'POST':
         print 'test'
@@ -258,11 +305,61 @@ def test():
     else:
         return render_template('controller_main.html')
 
+@app.route('/setVideo/', methods=['GET', 'POST'])
+def configVideo():
+    defaultConf = {
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5","6":"r4s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
+                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"
+                }
+    allclientsConf = {
+                    "1":"r2s1", "2":"r2s2", "3":"r2s3", "4":"r2s4",
+                    "5":"r2s5", "6":"r2s6", "7":"r2s7", "8":"r2s8",
+                    "9":"r2s9", "10":"r2s10", "11":"r2s11", "12":"r2s12",
+                    "13":"r2s13", "14":"r2s14", "15":"r2s15", "16":"r2s16"
+    }
+
+    allserversConf = {
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5", "6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r3s9", "10":"r3s10", "11":"r3s11", "12":"r3s12",
+                    "13":"r3s13", "14":"r3s14", "15":"r3s15", "16":"r3s16"   
+    }
+
+    quadConf = {
+                    "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
+                    "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
+                    "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s5"   
+    }
+
+    if request.method == 'POST':
+        postData = request.form['multiviewerProfile']
+        if postData == "defaultConf":
+            setVideo(defaultConf)
+            print "default conf"
+        elif postData == "allserversConf":
+            setVideo(allserversConf)
+            print "all servers conf"
+        elif postData == "allclientsConf":
+            setVideo(allclientsConf)
+            print "all clients conf"
+        elif postData == "quadConf":
+            setVideo(quadConf)
+            print "quad conf"
+        print "attempted to set video configs"
+        return render_template('set_video.html')
+    else:
+        return render_template('set_video.html')
+
 @app.route('/')
+@app.route('/test/<string:quad>/', methods=['GET', 'POST'])
 @app.route('/test/<int:rack_id>/', methods=['GET', 'POST'])
-@app.route('/test/<int:rack_id>/<int:slot_id>', methods=['GET', 'POST'])
-@login_required
-def testB(rack_id=None, slot_id="0"):
+@app.route('/test/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
+
+# login_required
+def testB(rack_id=None, slot_id="0", quad=None):
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -276,14 +373,17 @@ def testB(rack_id=None, slot_id="0"):
                  "20":"00-80-A3-9D-86-D1", "21":"00-80-A3-9D-86-D0",
                  "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
                  "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0"}
+    
+
     print rack_macs.get(str(rack_id))
     print "slot id:"+str(slot_id)
     selectedRack = rack_macs.get(str(rack_id))
-    if not selectedRack:
-        print "No valid Rack Selected"
-        return render_template('index.html')
+    #if not selectedRack:
+    #    print "No valid Rack Selected"
+    #    return render_template('controller_main.html')
 
     if request.method == 'POST':
+       
         test=request.form.to_dict()
         print "POST Data:"+str(test)
         
@@ -297,6 +397,14 @@ def testB(rack_id=None, slot_id="0"):
             slotVar = "1-16"
         var1 = test.get('name', '')
         alphaVar = test.get('name2', '')
+        #------
+        print quad
+        if quad == 'true':
+            keySendv2(rack_macs["3"], var1, '1,2,9,8')
+            keySendv2(rack_macs["2"], var1, '1,2,3,4,5,6,9,10,11,14,15,16')
+            return render_template('controller_main.html')
+        #------
+
         if var1:
             print 'detected value in var1'
             if var1.isnumeric():
@@ -332,6 +440,29 @@ def testB(rack_id=None, slot_id="0"):
         return render_template('controller_main.html')
     else:
         return render_template('controller_main.html')
+
+@app.route('/keySendTest')
+@app.route('/keysendTest/', methods=['GET', 'POST'])
+def keySendTest():
+    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
+                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
+                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
+                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+                 "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
+                 "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
+                 "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
+                 "14":"00-80-A3-9D-86-D2", "15":"00-80-A3-9E-67-3B",
+                 "16":"00-80-A3-9E-67-36", "17":"00-80-A3-9E-67-32",
+                 "18":"00-80-A3-9D-86-D6", "19":"00-80-A3-9D-86-D3",
+                 "20":"00-80-A3-9D-86-D1", "21":"00-80-A3-9D-86-D0",
+                 "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
+                 "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0"}
+    print "key Send Test!"
+    rack = rack_macs["3"]
+    slotVar = "1,2,8,9"
+    print rack, slotVar
+    keySendv2(rack, "menu", slotVar)
+    return "keysend Test!"
 
 @app.route('/postTest', methods=['GET', 'POST'])
 @app.route('/postTest/', methods=['GET', 'POST'])
