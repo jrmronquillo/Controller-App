@@ -27,7 +27,7 @@
 			</div>
 			<div class='col-sm-2'>   
                 <a href="{{url_for('testB', rack_id='2')}}"><h4>A02</h4></a>
-                <div class="slot-drawer" style="display:none;">
+                <div class="slot-drawer">
                     <a href="{{url_for('testB', rack_id='2', slot_id='1')}}"><p>slot 1</p></a>
                     <a href="{{url_for('testB', rack_id='2', slot_id='2')}}"><p>slot 2</p></a>
                     <a href="{{url_for('testB', rack_id='2', slot_id='3')}}"><p>slot 3</p></a>
@@ -49,7 +49,7 @@
             <div class='col-sm-2'>  
                 <a href="{{url_for('testB', rack_id='3')}}"><h4>A03</h4></a>
                 
-                <div class="slot-drawer" style="display:none;">
+                <div class="slot-drawer">
                     <a href="{{url_for('testB', rack_id='3', slot_id='1')}}"><p>slot 1</p></a>
                     <a href="{{url_for('testB', rack_id='3', slot_id='2')}}"><p>slot 2</p></a>
                     <a href="{{url_for('testB', rack_id='3', slot_id='3')}}"><p>slot 3</p></a>
@@ -511,7 +511,7 @@
             <div class="row">
                 <form action="#" method = 'post'>
                     <h3>Channel Tune:</h3>
-                    <input type ='text' size='20' name='name' required>
+                    <input type ='text' size='20' name='name' value="201" required>
                     <input type='submit' value='submit' class=''>
                 </form>
             </div>

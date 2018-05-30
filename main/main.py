@@ -98,6 +98,30 @@ def setVideo(config):
 # customConfig = {"1":"r2s10", "2":"r2s11"}
 # setVideo(customConfig)
 
+def configMultiviewer(mode):
+    tn = telnetlib.Telnet("10.23.223.93", "9990")
+    tn.write("CONFIGURATION:\n")
+    if mode == "true":
+        tn.write("Solo enabled: true\n")
+    elif mode == "false":
+        tn.write("Solo enabled: false\n")
+    else:
+        return "error"
+    tn.write("\n")
+    tn.read_until("ACK", 2)
+    tn.close()
+    return "config multiviewer!"
+
+def setSolo(position):
+    print position 
+    tn = telnetlib.Telnet("10.23.223.93", "9990")
+    tn.write("VIDEO OUTPUT ROUTING:\n")
+    # 16 position
+    msg = "16 "+str(position)+"\n"
+    tn.write(msg)
+    tn.write("\n")
+    return "set solo executed"
+
 def keySendv2(rack,key,slot):
     TCP_IP = '10.23.223.36'
     TCP_PORT = 40000
@@ -331,11 +355,13 @@ def configVideo():
                     "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s5"   
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
     }
 
     if request.method == 'POST':
-        postData = request.form['multiviewerProfile']
+        postData =  request.form.get('multiviewerProfile')
+        print postData
+        soloConfig = request.form.get('soloConfig')
         if postData == "defaultConf":
             setVideo(defaultConf)
             print "default conf"
@@ -348,16 +374,34 @@ def configVideo():
         elif postData == "quadConf":
             setVideo(quadConf)
             print "quad conf"
+        elif postData == "solo":
+            configMultiviewer("true")
+            print "configMultiviewer attempted!"
+        elif postData == "nosolo":
+            configMultiviewer("false")
+            print "configMutliviewer attempted!"
+        else:
+            print "error with multiviewerProfile"
+        
+        print "solo config:"
+        print soloConfig
+        acceptedInput = [
+                         "0","1", "2", "3", "4", "5", "6", "7", "8",
+                         "9", "10", "11", "12", "13", "14", "15"
+                        ]
+        if soloConfig in acceptedInput:
+            setSolo(soloConfig)
+        else:
+            print "Error with input to for Solo Route Change"
         print "attempted to set video configs"
         return render_template('set_video.html')
     else:
         return render_template('set_video.html')
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 @app.route('/test/<string:quad>/', methods=['GET', 'POST'])
 @app.route('/test/<int:rack_id>/', methods=['GET', 'POST'])
 @app.route('/test/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
-
 # login_required
 def testB(rack_id=None, slot_id="0", quad=None):
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
@@ -378,9 +422,9 @@ def testB(rack_id=None, slot_id="0", quad=None):
     print rack_macs.get(str(rack_id))
     print "slot id:"+str(slot_id)
     selectedRack = rack_macs.get(str(rack_id))
-    #if not selectedRack:
-    #    print "No valid Rack Selected"
-    #    return render_template('controller_main.html')
+    if not selectedRack:
+        print "No valid Rack Selected"
+        return render_template('controller_main.html')
 
     if request.method == 'POST':
        
