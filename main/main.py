@@ -53,8 +53,12 @@ session = DBSession()
 
 import telnetlib
 import socket
+
 def setVideo(config):
+    # config variable designed be a dictionary of video routes
     print config
+
+    # map am integer from 1-16 to desginated router channel
     channel = {"1":"128", "2":"129", "3":"130", "4":"131",
            "5":"132", "6":"133", "7":"134", "8":"135",
                    "9":"136", "10":"137", "11":"138", "12":"139",
@@ -73,6 +77,8 @@ def setVideo(config):
         for l in slots:
             rs.append(k+l)
     print rs
+
+    # generate message to to send to video router
     routerInputs = []   
     for key, value in config.items():
         print key
@@ -82,15 +88,15 @@ def setVideo(config):
         print routerPort + " " + sourcePosition
         routerInputs.append(routerPort + " " + sourcePosition)
     print routerInputs
+
+    # connect to video router and send generated message
     tn = telnetlib.Telnet("10.23.223.202", "9990")
     tn.write("VIDEO OUTPUT ROUTING:\n")
     for route in routerInputs:  
         print route     
         tn.write(route)
-        #tn.write("128 32")
         tn.write("\n")
     tn.write("\n")
-    #tn.get_socket().shutdown(socket.SOCK_WR)
     tn.read_until("ACK", 2)
     tn.close()
 
@@ -120,6 +126,11 @@ def setSolo(position):
     msg = "16 "+str(position)+"\n"
     tn.write(msg)
     tn.write("\n")
+    # auto set solo to on
+    tn.write("CONFIGURATION:\n")
+    tn.write("Solo enabled: true\n")
+    tn.write("\n")
+    tn.close()
     return "set solo executed"
 
 def keySendv2(rack,key,slot):
@@ -137,6 +148,11 @@ def keySendv2(rack,key,slot):
     print "Return Data: " + str(data) + key
     return "keySend Output"
 
+def keySendv3(commandParams):
+    for i in commandParams:
+        print i
+        # keySendv2(rack,key, slot)
+ 
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -358,6 +374,13 @@ def configVideo():
                     "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
     }
 
+    b12 = {
+        "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
+                    "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
+                    "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"  
+    }
+
     if request.method == 'POST':
         postData =  request.form.get('multiviewerProfile')
         print postData
@@ -399,11 +422,16 @@ def configVideo():
         return render_template('set_video.html')
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/test/<string:quad>/', methods=['GET', 'POST'])
-@app.route('/test/<int:rack_id>/', methods=['GET', 'POST'])
-@app.route('/test/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
+@app.route('/controller/')
+@app.route('/controller/<string:button_set>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:button_set>/<string:quad>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
 # login_required
-def testB(rack_id=None, slot_id="0", quad=None):
+def testB(button_set="main", rack_id=None, slot_id="0", quad='noQuad'):
+    print "button_set:"
+    print button_set 
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -416,21 +444,51 @@ def testB(rack_id=None, slot_id="0", quad=None):
                  "18":"00-80-A3-9D-86-D6", "19":"00-80-A3-9D-86-D3",
                  "20":"00-80-A3-9D-86-D1", "21":"00-80-A3-9D-86-D0",
                  "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
-                 "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0"}
+                 "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0",
+                 "26":"00-80-A3-9E-67-3A"}
     
+    #if button_set == "letters":
+    #    return render_template("controller_main_letters.html", button_set=button_set, quad=quad)
+    #elif button_set == "numbers":
+    #    return render_template('controller_numbers.html', button_set=button_set, quad=quad)
+    #else:
+    #    return render_template('controller_main.html', button_set=button_set, quad=quad)
+
 
     print rack_macs.get(str(rack_id))
     print "slot id:"+str(slot_id)
     selectedRack = rack_macs.get(str(rack_id))
     if not selectedRack:
-        print "No valid Rack Selected"
-        return render_template('controller_main.html')
+        print "checking quad"
+        if quad != "true":
+            print "No valid Rack Selected"
+            flash("Please select Rack" )
+            return render_template('controller_main.html', button_set=button_set, quad=quad)
+
+
+    
 
     if request.method == 'POST':
        
         test=request.form.to_dict()
         print "POST Data:"+str(test)
         
+        # function for implementing sending to two racks at once
+        #ke
+        #ksTest = request.form.get('keySendTest')
+        #print ksTest
+        #if ksTest == "qwerty":
+        #    testList = {
+        #                "rack":"rack1",
+        ##                "command":"menu",
+        #                "slot":"1"
+        #                }
+                        
+        #    keySendv3(testList)
+        #    return "kstest executed"
+
+
+
         # Validation for slot id
         if slot_id != "0":
             print "slot id detected"
@@ -440,25 +498,45 @@ def testB(rack_id=None, slot_id="0", quad=None):
             print "no slot id detected, sending command to all stbs in rack"
             slotVar = "1-16"
         var1 = test.get('name', '')
+        print "var1:"
+        print var1
         alphaVar = test.get('name2', '')
+        
+
         #------
-        print quad
-        if quad == 'true':
-            keySendv2(rack_macs["3"], var1, '1,2,9,8')
-            keySendv2(rack_macs["2"], var1, '1,2,3,4,5,6,9,10,11,14,15,16')
-            return render_template('controller_main.html')
+        print "quad mode:" + str(quad)
+        #if quad == 'true':
+        #    print rack_macs["3"]
+        #    keySendv2(rack_macs["3"], var1, '1,2,9,8')
+        #    keySendv2(rack_macs["2"], var1, '1,2,3,4,5,6,9,10,11,14,15,16')
+        #    return render_template('controller_main.html')
         #------
 
         if var1:
             print 'detected value in var1'
             if var1.isnumeric():
                 print "numeric command detected, iterating through numbers before sending commands"
-                for c in var1:
-                    keySendv2(selectedRack, c, slotVar)
-                return render_template('controller_main.html')
+                print "quad mode:" + str(quad)
+                if quad == 'true':
+                    print rack_macs["3"]
+                    for c in var1:
+                        keySendv2(rack_macs["3"], c, '1,2,9,8')
+                        keySendv2(rack_macs["2"], c, '1,2,3,4,5,6,9,10,11,14,15,16')
+                    return render_template('controller_main.html', button_set=button_set, quad=quad)
+                else:
+                    for c in var1:
+                        keySendv2(selectedRack, c, slotVar)
+                    return render_template('controller_main.html', button_set=button_set, quad=quad)
             else:
                 print "command string detected, sending command directly"
-                keySendv2(selectedRack, var1, slotVar)
+                if quad == 'true':
+                    keySendv2(rack_macs["3"], var1, '1,2,9,8')
+                    keySendv2(rack_macs["2"], var1, '1,2,3,4,5,6,9,10,11,14,15,16')
+                    #return render_template('controller_main.html')
+                else:
+                    print "slot var:"
+                    print slotVar
+                    keySendv2(selectedRack, var1, slotVar)
         elif alphaVar:
             print 'name2 contents: '+ alphaVar
             t9_trans = {"a":"2", "b":"22", "c":"222", "d":"3", "e":"33",
@@ -472,18 +550,19 @@ def testB(rack_id=None, slot_id="0", quad=None):
                 print 'valid letter input found, translating to t9'
                 for i in t9_trans.get(alphaVar):
                     keySendv2(selectedRack, i, slotVar)
-                return render_template('controller_main.html') 
+                return render_template('controller_main.html', button_set=button_set, quad=quad) 
             else:
                 message = 'invalid input detected, command was not sent'
                 print message
-                return render_template('controller_main.html', error=message)    
+                return render_template('controller_main.html', button_set=button_set, quad=quad, error=message)    
         else:
             message = 'Error with Post Data Input'
             print 'Error with Post Data Input'
-            return render_template('controller_main.html', error=message)
-        return render_template('controller_main.html')
+            return render_template('controller_main.html', button_set=button_set, quad=quad, error=message)
+        return render_template('controller_main.html', button_set=button_set, quad=quad)
     else:
-        return render_template('controller_main.html')
+        print "error test"
+        return render_template('controller_main.html', button_set=button_set, quad=quad)
 
 @app.route('/keySendTest')
 @app.route('/keysendTest/', methods=['GET', 'POST'])

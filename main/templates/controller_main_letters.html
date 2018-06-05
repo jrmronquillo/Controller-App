@@ -1,0 +1,426 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+	<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+	</div>
+    <div class="error">
+        <h1 style="color:red;">{{error}}</h1>
+    </div>
+    
+		<div class='row'>
+            <div class='col-sm-6'>
+    			<div class='col-sm-2'>
+    				<a href="{{url_for('testB', rack_id='0')}}"><h4>A00</h4></a>
+    			</div>
+    			<div class='col-sm-2'>
+    				<a href="{{url_for('testB', rack_id='1')}}"><h4>A01</h4></a>
+    			</div>
+    			<div class='col-sm-2'>   
+                    <a href="{{url_for('testB', rack_id='2')}}"><h4>A02</h4></a>
+                    <div class="slot-drawer">
+                        <a href="{{url_for('testB', rack_id='2', slot_id='1')}}"><p>slot 1</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='2')}}"><p>slot 2</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='3')}}"><p>slot 3</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='4')}}"><p>slot 4</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='5')}}"><p>slot 5</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='6')}}"><p>slot 6</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='7')}}"><p>slot 7</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='8')}}"><p>slot 8</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='9')}}"><p>slot 9</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='10')}}"><p>slot 10</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='11')}}"><p>slot 11</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='12')}}"><p>slot 12</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='13')}}"><p>slot 13</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='14')}}"><p>slot 14</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='15')}}"><p>slot 15</p></a>
+                        <a href="{{url_for('testB', rack_id='2', slot_id='16')}}"><p>slot 16</p></a>
+                    </div>
+                </div>
+                <div class='col-sm-2'>  
+                    <a href="{{url_for('testB', rack_id='3')}}"><h4>A03</h4></a>
+                    
+                    <div class="slot-drawer">
+                        <a href="{{url_for('testB', rack_id='3', slot_id='1')}}"><p>slot 1</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='2')}}"><p>slot 2</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='3')}}"><p>slot 3</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='4')}}"><p>slot 4</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='5')}}"><p>slot 5</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='6')}}"><p>slot 6</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='7')}}"><p>slot 7</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='8')}}"><p>slot 8</p></a>
+                        <a href="{{url_for('testB', rack_id='3', slot_id='9')}}"><p>slot 9</p></a>
+                    </div>
+                </div>
+                 <div class='col-sm-2'>
+                    <a href="{{url_for('testB', rack_id='21')}}"><h4>B12</h4></a>
+                </div>
+                 <div class='col-sm-2'>
+                    <a href="{{url_for('testB', rack_id='26')}}"><h4>WS 1</h4></a>
+                </div>
+                <div class='col-sm-2'>
+                    <a href="{{url_for('testB', rack_id='3', slot_id='1,2,8,9')}}">Quadrant Servers</a>
+                    <a href="{{url_for('testB', rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}">Quadrant Clients</a>
+                    
+                </div>
+                <div class='col-sm-2'>
+                    <button onclick="toggleDisplay()">Slots</button>
+                </div>
+                <hr>
+
+                <table class="table">
+                    <th><a href="{{url_for('testB', quad='true')}}">All Quad STB's</a></th>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='3', slot_id='8')}}">STB 1</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='14')}}">STB 5</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='3', slot_id='1')}}">STB 9</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='1')}}">STB 13</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='15')}}">STB 2</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='16')}}">STB 6</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='2')}}">STB 10</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='3')}}">STB 14</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='3', slot_id='9')}}">STB 3</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='9')}}">STB 7</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='3', slot_id='2')}}">STB 11</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='4')}}">STB 15</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='10')}}">STB 4</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='11')}}">STB 8</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='5')}}">STB 12</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='2', slot_id='6')}}">STB 16</a>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+                <table class="table">
+                    <th>HS17</th>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='1')}}">Client 1</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='2')}}">Client 2</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='4')}}">Client 4</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='5')}}">Client 5</a>
+                        </td>   
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='3')}}">Client 3</a>
+                        </td>
+                        <td>
+                            <a href="#">Empty</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='6')}}">Client 6</a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', rack_id='26', slot_id='7')}}">Client 7</a>
+                        </td>
+                    </tr>
+                </table>
+
+            </div> <!-- this closes the left half 'col-sm-6' div -->
+            <div class ='col-sm-6'>
+                 <div class='button-container'>
+                 	<a href= "{{url_for('testB', button_set='main')}}">navigation!</a>
+                    <a href= "{{url_for('testB', button_set='numbers')}}">numbers!</a>
+                        <hr>
+                        <div class='letter-container alpha-buttons'>
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='a'>
+                                        <input type='submit' value='a' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='b'>
+                                        <input type='submit' value='b' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='c'>
+                                        <input type='submit' value='c' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='d'>
+                                        <input type='submit' value='d' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='e'>
+                                        <input type='submit' value='e' class='create-button'>
+                                    </form>
+                                </div> 
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='f'>
+                                        <input type='submit' value='f' class='create-button'>
+                                    </form>
+                                </div>              
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='g'>
+                                        <input type='submit' value='g' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='h'>
+                                        <input type='submit' value='h' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='i'>
+                                        <input type='submit' value='i' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='j'>
+                                        <input type='submit' value='j' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='k'>
+                                        <input type='submit' value='k' class='create-button'>
+                                    </form>
+                                </div> 
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='l'>
+                                        <input type='submit' value='l' class='create-button'>
+                                    </form>
+                                </div>              
+                            </div>
+                         
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='m'>
+                                        <input type='submit' value='m' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='n'>
+                                        <input type='submit' value='n' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='o'>
+                                        <input type='submit' value='o' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='p'>
+                                        <input type='submit' value='p' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='q'>
+                                        <input type='submit' value='q' class='create-button'>
+                                    </form>
+                                </div> 
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='r'>
+                                        <input type='submit' value='r' class='create-button'>
+                                    </form>
+                                </div>              
+                            </div>
+                        
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='s'>
+                                        <input type='submit' value='s' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='t'>
+                                        <input type='submit' value='t' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='u'>
+                                        <input type='submit' value='u' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='v'>
+                                        <input type='submit' value='v' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='w'>
+                                        <input type='submit' value='w' class='create-button'>
+                                    </form>
+                                </div> 
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='x'>
+                                        <input type='submit' value='x' class='create-button'>
+                                    </form>
+                                </div>              
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='y'>
+                                        <input type='submit' value='y' class='create-button'>
+                                    </form>
+                                </div>
+                                <div class="col-sm-2">
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='z'>
+                                        <input type='submit' value='z' class='create-button'>
+                                    </form>
+                                </div>
+                        </div>
+                            <div class="col-sm-2">
+                                <form action="#" method = 'post' class="create-button">
+                                    <input type = 'hidden' name='name2' value=''>
+                                    <input type='submit' value='' class='create-button'>
+                                </form>
+                            </div>
+                            <div class="col-sm-2">
+                                <form action="#" method = 'post' class="create-button">
+                                    <input type = 'hidden' name='name2' value=''>
+                                    <input type='submit' value='' class='create-button'>
+                                </form>
+                            </div>
+                            <div class="col-sm-2">
+                                <form action="#" method = 'post' class="create-button">
+                                    <input type = 'hidden' name='name2' value=''>
+                                    <input type='submit' value='' class='create-button'>
+                                </form>
+                            </div> 
+                            <div class="col-sm-2">
+                                <form action="#" method = 'post' class="create-button">
+                                    <input type = 'hidden' name='name2' value=''>
+                                    <input type='submit' value='' class='create-button'>
+                                </form>
+                            </div>              
+                        </div>      
+                  </div>
+                  <!-- End of Alphabet Table --> 
+                  
+                <div class="col-sm-6">
+                    <div class="row">
+                        <form action="#" method = 'post'>
+                            <h3>Channel Tune:</h3>
+                            <input type ='text' size='20' name='name' value="201" required>
+                            <input type='submit' value='submit' class=''>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <input type='text' size='25' placeholder='Dropdown for Keywords'>
+                        <select>
+                            <option value="widget">
+                        </select>
+                    </div>
+
+                     <div class="row">
+                        <form action="#" method = 'post'>
+                            <input type="radio" name="name" value="111"> 111<br>
+                            <input type="radio" name="name" value="201"> 201<br>
+                            <input type="radio" name="name" value="205"> 205<br>
+                            <input type="radio" name="name" value="206"> 206<br>
+                            <input type="radio" name="name" value="361"> 361<br>
+                            <input type="radio" name="name" value="362"> 362<br>
+                            <input type="radio" name="name" value="500"> 500<br>
+                            <input type="radio" name="name" value="800"> 800<br>
+                            <input type='submit' value='submit'>
+                        </form>
+                    </div>
+                </div>
+
+
+
+                <!-- End of Container -->
+                </div>
+            </div>
+        </div> <!-- this closes the 'row' div -->
+
+            
+			
+
+           
+        
+
+
+
+
+</div>
+{% endblock %}

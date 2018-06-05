@@ -27,9 +27,39 @@
             }
         }
     }
+
+    function displayIntegerButtons(){
+        var x = document.getElementsByClassName("main-buttons");
+        var y = document.getElementsByClassName("integer-buttons");
+        var z = document.getElementsByClassName("alpha-buttons");
+        x[0].style.display = 'none';
+        y[0].style.display = 'block';
+        z[0].style.display = 'block';
+    }
+
+     function displayMainButtons(){
+        var x = document.getElementsByClassName("main-buttons");
+        var y = document.getElementsByClassName("integer-buttons");
+        var z = document.getElementsByClassName("alpha-buttons");
+        x[0].style.display = 'block';
+        y[0].style.display = 'none';
+        z[0].style.display = 'none';
+    }
+
+     function displayAlphaButtons(){
+        var x = document.getElementsByClassName("main-buttons");
+        var y = document.getElementsByClassName("integer-buttons");
+        var z = document.getElementsByClassName("alpha-buttons");
+        x[0].style.display = 'none';
+        y[0].style.display = 'block';
+        z[0].style.display = 'block';
+    }
+
+
+    
 </script>
 
-    <title>{% block title %}{% endblock %} Catalog App</title>
+    <title>{% block title %}{% endblock %} Controller App</title>
     {% endblock %}
 </head>
 <body>
