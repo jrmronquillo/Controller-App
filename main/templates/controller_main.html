@@ -82,18 +82,18 @@
                  <div class='col-sm-2'>
                     <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26')}}"><h4>WS 1</h4></a>
                 </div>
-                <div class='col-sm-2'>
-                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='1,2,8,9')}}">Quadrant Servers</a>
-                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}">Quadrant Clients</a>
-                    
-                </div>
-                <div class='col-sm-2'>
+                <div class='row'>
                     <button onclick="toggleDisplay()">Slots</button>
                 </div>
                 <hr>
 
                 <table class="table">
-                    <th><a href="{{url_for('testB', button_set=button_set, quad='true')}}">All Quad STB's</a></th>
+                    <tr>
+                        <a href="{{url_for('testB', button_set=button_set, quad='true')}}">All Quad STB's | </a>
+                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='1,2,8,9')}}">All Servers | </a>
+                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}">All Clients</a>
+                    </tr>
+                    
                     <tr>
                         <td>
                             <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='8')}}">STB 1</a>
@@ -151,9 +151,9 @@
                         </td>
                     </tr>
                 </table>
-                <hr>
+
                 <table class="table">
-                    <th>HS17</th>
+                    <tr><a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26')}}">HS17</a></tr>
                     <tr>
                         <td>
                             <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='1')}}">Client 1</a>
@@ -184,6 +184,11 @@
                         </td>
                     </tr>
                 </table>
+            <div class="row">
+                <button class="create-button">
+                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='16')}}">Dev Box</a>
+                </button>
+            </div>
 
             </div> <!-- this closes the left half 'col-sm-6' div -->
             <div class ='col-sm-6'>
@@ -191,6 +196,26 @@
                     <a href="{{url_for('testB', button_set='main', quad=quad)}}"><button>Navigation</button></a>
                     <a href= "{{url_for('testB', button_set='letters', quad=quad)}}"><button>Letters</button></a>
                     <a href= "{{url_for('testB', button_set='numbers', quad=quad)}}"><button>Numbers</button></a>
+                    <div class="row">
+                        <h4>Channel Tune:</h4>
+                        <form action="#" method = 'post'>
+                            <input type="radio" name="name" value="111"> 111
+                            <input type="radio" name="name" value="201"> 201
+                            <input type="radio" name="name" value="205"> 205
+                            <input type="radio" name="name" value="206"> 206
+                            <input type="radio" name="name" value="361"> 361
+                            <input type="radio" name="name" value="362"> 362
+                            <input type="radio" name="name" value="500"> 500
+                            <input type="radio" name="name" value="800"> 800
+                            <input type='submit' value='submit'>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <form action="#" method = 'post'>
+                            <input type ='text' size='20' name='name' placeholder="Channel Number" required>
+                            <input type='submit' value='submit' class=''>
+                        </form>
+                    </div>
                     <div class='row no-gutters main-buttons' style="display:{{navigationz}};">
                     <table class="table">
                         <tr>
@@ -612,36 +637,6 @@
                              
                         </div>      
                   <!-- End of Alphabet Table --> 
-                  
-                <div class="col-sm-6">
-                    <div class="row">
-                        <form action="#" method = 'post'>
-                            <h3>Channel Tune:</h3>
-                            <input type ='text' size='20' name='name' value="201" required>
-                            <input type='submit' value='submit' class=''>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <input type='text' size='25' placeholder='Dropdown for Keywords'>
-                        <select>
-                            <option value="widget">
-                        </select>
-                    </div>
-
-                     <div class="row">
-                        <form action="#" method = 'post'>
-                            <input type="radio" name="name" value="111"> 111<br>
-                            <input type="radio" name="name" value="201"> 201<br>
-                            <input type="radio" name="name" value="205"> 205<br>
-                            <input type="radio" name="name" value="206"> 206<br>
-                            <input type="radio" name="name" value="361"> 361<br>
-                            <input type="radio" name="name" value="362"> 362<br>
-                            <input type="radio" name="name" value="500"> 500<br>
-                            <input type="radio" name="name" value="800"> 800<br>
-                            <input type='submit' value='submit'>
-                        </form>
-                    </div>
-                </div>
 
 
 

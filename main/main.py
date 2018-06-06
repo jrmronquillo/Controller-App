@@ -587,6 +587,16 @@ def keySendTest():
     keySendv2(rack, "menu", slotVar)
     return "keysend Test!"
 
+@app.route('/shef', methods=['GET', 'POST'])
+@app.route('/shef/', methods=['GET', 'POST'])
+def shefCommands():
+    return render_template('shef.html')
+
+@app.route('/sampleApp', methods=['GET', 'POST'])
+@app.route('/sampleApp', methods=['GET', 'POST'])
+def sampleApp():
+    return render_template('sampleApp.html')
+
 @app.route('/postTest', methods=['GET', 'POST'])
 @app.route('/postTest/', methods=['GET', 'POST'])
 def postTest():
