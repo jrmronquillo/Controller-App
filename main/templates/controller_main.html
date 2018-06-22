@@ -15,205 +15,239 @@
 
 	</div>
     <div class='row'>
+        {% if quad == 'true' %}
+            {% set allQuadButton = 'btn-primary' %}
+            {% set allServersButton = 'btn-default' %}
+            {% set allClientsButton = 'btn-default' %}
+        {% elif (rack_id == 3) and (slot_id =="1,2,8,9") %}
+            {% set allQuadButton = 'btn-default' %}
+            {% set allServersButton = 'btn-primary' %}
+            {% set allClientsButton = 'btn-default' %}
+        {% elif ((rack_id == 2) and (slot_id=="1,2,3,4,5,6,9,10,11,14,15,16")) %}
+            {% set allQuadButton = 'btn-default' %}
+            {% set allServersButton = 'btn-default' %}
+            {% set allClientsButton = 'btn-primary' %}
+        {% else %}
+            {% set allQuadButton = 'btn-default' %}
+            {% set allServersButton = 'btn-default' %}
+            {% set allClientsButton = 'btn-default' %}
+        {% endif %}
+
         {% if button_set == 'main' %}
             {% set navigationz = 'block' %}
+            {% set navColor = 'btn-primary' %}
             {% set letterz = 'none' %}
+            {% set letterColor = 'btn-default' %}
             {% set numberz = 'none' %}
+            {% set numberColor = 'btn-default' %}
         {% elif button_set == 'letters' %}
             {% set navigationz = 'none' %}
+            {% set navColor = 'btn-default' %}
             {% set letterz = 'block' %}
+            {% set letterColor = 'btn-primary' %}
             {% set numberz = 'none' %}
+            {% set numberColor = 'btn-default' %}
         {% elif button_set == 'numbers' %}
             {% set navigationz = 'none' %}
+            {% set navColor = 'btn-default' %}
             {% set letterz = 'none' %}
+            {% set letterColor = 'btn-default' %}
             {% set numberz = 'block' %}
+            {% set numberColor = 'btn-primary' %}
          {% endif %}
     </div>
     <div class="error">
         <h1 style="color:red;">{{error}}</h1>
     </div>
+    <div class="controller-main-bg"></div>
+    <div class="controller-main-content">
 		<div class='row'>
-            <div class='col-sm-6'>
-    			<div class='col-sm-2'>
-    				<a href="{{url_for('testB', button_set=button_set, quad='none', rack_id='0')}}"><h4>A00</h4></a>
-    			</div>
-    			<div class='col-sm-2'>
-    				<a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='1')}}"><h4>A01</h4></a>
-    			</div>
-    			<div class='col-sm-2'>   
-                    <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2')}}"><h4>A02</h4></a>
-                    <div class="slot-drawer">
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='1')}}"><p>slot 1</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='2')}}"><p>slot 2</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='3')}}"><p>slot 3</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='4')}}"><p>slot 4</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='5')}}"><p>slot 5</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='6')}}"><p>slot 6</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='7')}}"><p>slot 7</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='8')}}"><p>slot 8</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='9')}}"><p>slot 9</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='10')}}"><p>slot 10</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='11')}}"><p>slot 11</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='12')}}"><p>slot 12</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='13')}}"><p>slot 13</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='14')}}"><p>slot 14</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='15')}}"><p>slot 15</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='16')}}"><p>slot 16</p></a>
-                    </div>
-                </div>
-                <div class='col-sm-2'>  
-                    <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3')}}"><h4>A03</h4></a>
-                    
-                    <div class="slot-drawer">
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='1')}}"><p>slot 1</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='2')}}"><p>slot 2</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='3')}}"><p>slot 3</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='4')}}"><p>slot 4</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='5')}}"><p>slot 5</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='6')}}"><p>slot 6</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='7')}}"><p>slot 7</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='8')}}"><p>slot 8</p></a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='9')}}"><p>slot 9</p></a>
-                    </div>
-                </div>
-                 <div class='col-sm-2'>
-                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='21')}}"><h4>B12</h4></a>
-                </div>
-                 <div class='col-sm-2'>
-                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26')}}"><h4>WS 1</h4></a>
-                </div>
-                <div class='row'>
-                    <button onclick="toggleDisplay()">Slots</button>
-                </div>
-                <hr>
-
+            <div class='col-sm-6 stb-selection'>
+    			<table class="table" id="stb-table">
+                    <tr>
+                        <td>
+        				    <a href="{{url_for('testB', button_set=button_set, quad='none', rack_id='0')}}" class="btn btn-secondary"><h4>A00</h4></a>
+        			    </td>
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='1')}}" class="btn btn-secondary"><h4>A01</h4></a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2')}}" class="btn btn-secondary"><h4>A02</h4></a>
+                            <div class="slot-drawer">
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1')}}"><p>slot 1</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='2')}}"><p>slot 2</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='3')}}"><p>slot 3</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='4')}}"><p>slot 4</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='5')}}"><p>slot 5</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='6')}}"><p>slot 6</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='7')}}"><p>slot 7</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='8')}}"><p>slot 8</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='9')}}"><p>slot 9</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='10')}}"><p>slot 10</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='11')}}"><p>slot 11</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='12')}}"><p>slot 12</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='13')}}"><p>slot 13</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='14')}}"><p>slot 14</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='15')}}"><p>slot 15</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='16')}}"><p>slot 16</p></a></button>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3')}}" class="btn btn-secondary"><h4>A03</h4></a>
+                            <div class="slot-drawer">
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1')}}"><p>slot 1</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='2')}}"><p>slot 2</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='3')}}"><p>slot 3</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='4')}}"><p>slot 4</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='5')}}"><p>slot 5</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='6')}}"><p>slot 6</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='7')}}"><p>slot 7</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='8')}}"><p>slot 8</p></a></button>
+                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='9')}}"><p>slot 9</p></a></button>
+                            </div>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='21')}}" class="btn btn-secondary"><h4>B12</h4></a>
+                        </td>
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26')}}" class="btn btn-secondary"><h4>WS 1</h4></a>
+                        </td>
+                        <td>
+                            <button onclick="toggleDisplay()" class="create-button">Slots</button>
+                        </td>
+                    </tr>
+    			
+                </table>
+            
                 <table class="table">
                     <tr>
-                        <a href="{{url_for('testB', button_set=button_set, quad='true')}}">All Quad STB's | </a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='1,2,8,9')}}">All Servers | </a>
-                        <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}">All Clients</a>
+                        <a href="{{url_for('testB', button_set=button_set, quad='true')}}" class='btn {{allQuadButton}}'>All Quad STB's</a>
+                        <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1,2,8,9')}}" class="btn {{allServersButton}}">All Servers</a>
+                        <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}" class="btn {{allClientsButton}}">All Clients</a>
                     </tr>
                     
                     <tr>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='8')}}">STB 1</a>
+                           <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='8')}}">STB 1</a></button></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='14')}}">STB 5</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='14')}}">STB 5</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='1')}}">STB 9</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1')}}">STB 9</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='1')}}">STB 13</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='15')}}">STB 2</a>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='16')}}">STB 6</a>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='2')}}">STB 10</a>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='3')}}">STB 14</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1')}}">STB 13</a></button>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='9')}}">STB 3</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='15')}}">STB 2</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='9')}}">STB 7</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='16')}}">STB 6</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='3', slot_id='2')}}">STB 11</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='2')}}">STB 10</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='4')}}">STB 15</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='3')}}">STB 14</a></button>
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='10')}}">STB 4</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='9')}}">STB 3</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='11')}}">STB 8</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='9')}}">STB 7</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='5')}}">STB 12</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='2')}}">STB 11</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='2', slot_id='6')}}">STB 16</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='4')}}">STB 15</a></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='10')}}">STB 4</a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='11')}}">STB 8</a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='5')}}">STB 12</a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='6')}}">STB 16</a></button>
                         </td>
                     </tr>
                 </table>
 
                 <table class="table">
-                    <tr><a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26')}}">HS17</a></tr>
+                    <tr><button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26')}}">HS17</a></button></tr>
                     <tr>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='1')}}">Client 1</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='1')}}">Client 1</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='2')}}">Client 2</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='2')}}">Client 2</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='4')}}">Client 4</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='4')}}">Client 4</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='5')}}">Client 5</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='5')}}">Client 5</a></button>
                         </td>   
 
                     </tr>
                     <tr>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='3')}}">Client 3</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='3')}}">Client 3</a></button>
                         </td>
                         <td>
-                            <a href="#">Empty</a>
+                            <a href="#">Empty</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='6')}}">Client 6</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='6')}}">Client 6</a></button>
                         </td>
                         <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='7')}}">Client 7</a>
+                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='7')}}">Client 7</a></button>
                         </td>
                     </tr>
+                    <tr>
+                        <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='16')}}">Dev Box</a></button>
+                    </tr>
                 </table>
-            <div class="row">
-                <button class="create-button">
-                    <a href="{{url_for('testB', button_set=button_set, quad=quad, rack_id='26', slot_id='16')}}">Dev Box</a>
-                </button>
-            </div>
 
             </div> <!-- this closes the left half 'col-sm-6' div -->
             <div class ='col-sm-6'>
                  <div class='button-container'>
-                    <a href="{{url_for('testB', button_set='main', quad=quad)}}"><button>Navigation</button></a>
-                    <a href= "{{url_for('testB', button_set='letters', quad=quad)}}"><button>Letters</button></a>
-                    <a href= "{{url_for('testB', button_set='numbers', quad=quad)}}"><button>Numbers</button></a>
+                    <a href="{{url_for('testB', button_set='main', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{navColor}}"> Navigation</a>
+                    <a href= "{{url_for('testB', button_set='letters', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{letterColor}}">Letters</a>
+                    <a href= "{{url_for('testB', button_set='numbers', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{ numberColor }}">Numbers</a>
                     <div class="row">
+
                         <h4>Channel Tune:</h4>
                         <form action="#" method = 'post'>
-                            <input type="radio" name="name" value="111"> 111
-                            <input type="radio" name="name" value="201"> 201
-                            <input type="radio" name="name" value="205"> 205
-                            <input type="radio" name="name" value="206"> 206
-                            <input type="radio" name="name" value="361"> 361
-                            <input type="radio" name="name" value="362"> 362
-                            <input type="radio" name="name" value="500"> 500
-                            <input type="radio" name="name" value="800"> 800
-                            <input type='submit' value='submit'>
+                            <fieldset>
+                                <input type="radio" name="name" value="111"> 111
+                                <input type="radio" name="name" value="201"> 201
+                                <input type="radio" name="name" value="205"> 205
+                                <input type="radio" name="name" value="206"> 206
+                                <input type="radio" name="name" value="361"> 361
+                                <input type="radio" name="name" value="362"> 362
+                                <input type="radio" name="name" value="391"> 391
+                                <input type="radio" name="name" value="500"> 500
+                                <input type="radio" name="name" value="800"> 800
+                                <input type='submit' value='send' class="create-button">
+                            </fieldset>
                         </form>
                     </div>
                     <div class="row">
                         <form action="#" method = 'post'>
                             <input type ='text' size='20' name='name' placeholder="Channel Number" required>
-                            <input type='submit' value='submit' class=''>
+                            <input type='submit' value='send' class='create-button'>
                         </form>
                     </div>
                     <div class='row no-gutters main-buttons' style="display:{{navigationz}};">
@@ -295,9 +329,9 @@
                     <table class="table">
                         <tr>
                             <td>
-                                <form action="#" method = 'post' class="create-button">
+                                <form action="#" method = 'post' class="create-button-red">
                                     <input type ='hidden' size='20' name='name' value='red'>
-                                    <input type='submit' value='red' class='create-button'>
+                                    <input type='submit' value='red' class='create-button-red'>
                                 </form>
                             </td>
                             <td>
@@ -463,6 +497,70 @@
                     </table>
                 </div>
                         <hr>
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='q'>
+                                        <input type='submit' value='q' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='w'>
+                                        <input type='submit' value='w' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='e'>
+                                        <input type='submit' value='e' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='r'>
+                                        <input type='submit' value='r' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='t'>
+                                        <input type='submit' value='t' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='y'>
+                                        <input type='submit' value='y' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='u'>
+                                        <input type='submit' value='u' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='i'>
+                                        <input type='submit' value='i' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='o'>
+                                        <input type='submit' value='o' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='p'>
+                                        <input type='submit' value='p' class='create-button'>
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
                         <div class='letter-container alpha-buttons' style='display: {{letterz}};'>
                             <div class="row">
                                 <div class="col-sm-2">
@@ -634,8 +732,14 @@
                                     </form>
                                 </div>
                             </div>
-                             
-                        </div>      
+                             <form action="#" method = 'post'>
+                                <fieldset>
+                                    <input type="radio" name="keyword" value="widgettestmon"> widgettestmon
+                                    <input type="radio" name="keyword" value="widgetsoff"> widgetsoff
+                                    <input type="radio" name="keyword" value="widgettestbon"> widgettestbonfle
+                                    <input type='submit' value='submit'>
+                                </fieldset>
+                        </div>  
                   <!-- End of Alphabet Table --> 
 
 
@@ -644,7 +748,7 @@
                 </div>
             </div>
         </div> <!-- this closes the 'row' div -->
-
+    </div> <!-- this closes the 'controller-main-content' div -->
             
 			
 

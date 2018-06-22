@@ -16,6 +16,7 @@
 
     function toggleDisplay(){
         var x = document.getElementsByClassName("slot-drawer");
+        x[0].style.display === 'none';
         var i;
         if (x[0].style.display === 'none'){
             for(i=0; i<x.length; i++){
@@ -55,6 +56,16 @@
         z[0].style.display = 'block';
     }
 
+    function toggleMenu(x) {
+        x.classList.toggle("change");
+        var y = document.getElementsByClassName("navbar");
+        var i;
+        if (y[0].style.display === 'none' || y[0].style.display === ''){
+            y[0].style.display = 'block'; 
+        } else {
+            y[0].style.display = 'none';
+        }
+    }
 
     
 </script>
@@ -63,10 +74,18 @@
     {% endblock %}
 </head>
 <body>
-    <div class='container-fluid'>
-        <div class='row no-gutters'>
-            <div class='col-sm-4'>
+    <div class="hamburger-container" onclick="toggleMenu(this)">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </div>
+    <div class='container-fluid '>
+        <div class='row no-gutters navbar'>
+            <div class='col-sm-2'>
                 <h1 class='text-muted'>APP</h1>
+            </div>
+            <div class='col-sm-2'>
+                <h3><a href='/testingPage'>Test</a></h3>
             </div>
             <div class='col-sm-2'>
                 <h3><a href='/sampleApp'>Sample App</a></h3>
