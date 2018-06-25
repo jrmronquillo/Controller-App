@@ -752,8 +752,31 @@ def screenshot():
 @clear_db
 @update_DB_with_files
 def showTestCases():  
-    test_cases = session.query(TestCasesV2).all()
-    return render_template("testcases.html", test_cases=test_cases)
+    if request.method == 'POST':
+        script_id = request.form['script_id']
+        if script_id:
+            test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
+            if test_cases:
+                for i in test_cases:
+                    name = i.name
+                    path = i.path
+                    commandString = "stbt run "+path
+                    print commandString
+                    p = subprocess.Popen(commandString, shell=True)
+            else:
+                message = "Did not find any matching test cases with that id, did not run script"
+                print message
+                return message
+        else:
+            message = "script_id needed to start script"
+            print message
+            return message
+        return render_template('testcases.html', output=p)
+    else:
+        test_cases = session.query(TestCasesV2).all()
+        return render_template("testcases.html", test_cases=test_cases)
+
+
     
 @app.route('/testcases/JSON')
 @jsonp
@@ -872,6 +895,9 @@ def testerAPI():
     print tt
     return tt
 
+@app.route('/automation/', methods=['GET', 'POST'])
+def automation():
+    return render_template('automation.html')
 
 
 @app.errorhandler(404)
