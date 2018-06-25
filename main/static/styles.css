@@ -1,3 +1,16 @@
+
+#chTextBox {
+  color: #000000 !important;
+}
+
+#chtune-title{
+  color: #FFF;
+}
+
+.controller-main-content{
+  color: #000000 !important;
+}
+
 .create-button {
    border: 1px solid #268fcc;
    background: #3e779d;
@@ -84,6 +97,10 @@
    background-image: -ms-linear-gradient(top, #65a9d7 0%, #E75636 100%);
    color: #fff;
    }
+
+fieldset{
+  color: #FFF;
+}
 
 
 .login-button, .logout-button, .delete-button, .edit-button {
