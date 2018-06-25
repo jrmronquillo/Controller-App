@@ -763,7 +763,7 @@ def showTestCases():
                     commandString = "stbt run "+path
                     print commandString
                     p = subprocess.Popen(commandString, shell=True)
-                    return render_template('reporting.html', test_cases=test_cases)
+                    return redirect(url_for('reporting'))
             else:
                 message = "Did not find any matching test cases with that id, did not run script"
                 print message
