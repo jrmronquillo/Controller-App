@@ -28,7 +28,7 @@
                 <td>{{dat.created_time}}</td>
                 <td>{{dat.formatted_date}}</td>
                 <td>{{dat.green}}</td>
-                <td><img src="/static/images/rustic_wallpaper.jpg"/></td>
+                <td><img src="/static/images/rustic_wallpaper.jpg?{{data.created_date}}{{dat.create_time}}"/></td>
             </tr>
         {% endfor %}
     {% else %}
