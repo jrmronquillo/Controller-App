@@ -17,7 +17,7 @@
     <div class="error">
         <h1 style="color:red;">{{error}}</h1>
     </div>
-
+    {{tme}}
     <table class="table">
     {% if data != [] %}
         {% for dat in data %}
@@ -28,7 +28,7 @@
                 <td>{{dat.created_time}}</td>
                 <td>{{dat.formatted_date}}</td>
                 <td>{{dat.green}}</td>
-                <td><img src="/static/images/rustic_wallpaper.jpg?{{data.created_date}}{{dat.create_time}}"/></td>
+                <td><img src="/static/images/rustic_wallpaper.jpg?{{tme}}"/></td>
             </tr>
         {% endfor %}
     {% else %}

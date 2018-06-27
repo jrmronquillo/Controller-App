@@ -681,11 +681,14 @@ def postTest():
 @app.route('/reporting/', methods=['GET', 'POST'])
 def reporting():
     data = session.query(PostData).all()
-    print "data:"+str(data) 
+    print "data:"+str(data)
+    # using current time to pass into jinja template, so that it can be used to append
+    # img url to make it unique and therefore avoid the img-caching issue
+    print datetime.datetime.now().time()  
     for item in data:
         print item.id
         print item.data
-    return render_template('reporting.html', data=data)
+    return render_template('reporting.html', data=data, tme=datetime.datetime.now().time())
 
 @app.route('/reporting/JSON')
 @jsonp
