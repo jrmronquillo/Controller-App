@@ -28,15 +28,18 @@
                 <td>{{dat.created_time}}</td>
                 <td>{{dat.formatted_date}}</td>
                 <td>{{dat.green}}</td>
-                <td><img src="/static/images/rustic_wallpaper.jpg?{{tme}}"/></td>
+                <td></td>
             </tr>
         {% endfor %}
     {% else %}
         <p> No Data </p>
     {% endif %}
     </table>
-
-
+    <hr>
+    <div id="failure_screenshot_display">
+        <h2> Screenshot after Failure</h2>
+        <img src="/static/images/rustic_wallpaper.jpg?{{tme}}" class="img-responsive"/>
+    </div>
 
 
 </div>
