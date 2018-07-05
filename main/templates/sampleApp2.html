@@ -4,7 +4,7 @@
 	<title>Sample App</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<style>
-		.container-full {
+		.contain-full {
 			position: fixed;
 			top:0px;
 			left:0px;
@@ -14,23 +14,25 @@
 			height: 100%;
 			text-align: center;
 		}
-		.main-title, #key-down {
-			top: 90%;
+		.header{
+			vertical-align: top;
+		}
+		.main-title, #key-down, .main {
+			margin-top: 300px;
 			color:white;
-			font-size:72px;
-			vertical-align: middle;
-			line-height: 90px;
-			
+			font-size:25px;
 		}
 		#button1{
+			justify-content: right;
 			background-color: red;
 			width: 100px;
 			height: 50px;
 			border-radius: 10px;
 			color: white;
+			margin-right: 0px;
 		}
-		h2{
-			margin-top:20%;
+		.footer{
+			align-content: flex-end;
 		}
 	</style>
 	<script type="text/javascript">
@@ -48,6 +50,9 @@
 			//Fall through like it does below.
 			switch(code){
         case 13: // Select / Enter
+        case 32: 
+        	alert("test");
+        	break;
         case 48 : // 0
         case 49 : // 1
         case 50 : // 2
@@ -113,15 +118,20 @@
 	</script>
 </head>
 <body>
-	<div class="container-full">
-		<h2 style='color:white'>SampleApp </h2>
-		<p style='color:white'>Lorem ipsum Lorem Ipsum</p>
-		<h1 class="main-title">Lorem:</h1>
-		<div id="key-down"></div>
-		<div id='myiframe'>
+	<div class="contain-full">
+		<div class="header">
+			<h2 style='color:white'> App </h2>
+			<div id="key-down"></div>
+			<div id='myiframe'>
 		</div>
-		<button id="button1" type="button" class="btn btn-outline-primary">Lorem</button>
-		<button id="exit" type="button" class="btn btn-outline-primary" onclick="exiter()">exit</button>
+		<div class="main">
+			<p style='color:white'>By clicking SELECT, you agree to the Terms & Conditions and Privacy Policy.</p>
+			
+			</div>
+		</div>
+		<div class="footer">
+			<button id="button1" type="button" class="btn btn-outline-primary">Select</button>
+		</div>
 	</div>
 	<script type="text/javascript" src="app.js"></script>
 </body>
