@@ -36,7 +36,7 @@
                     <td class='col-sm-1'><a href="{{url_for('showCaseSteps', testcase_id=case.id)}}">{{case.name}}</a></td>
                     <td class='col-sm-1'>
                         <form action="#" method = 'post' class="create-button">
-                            <input type ='hidden' size='20' name='name' value='{{case.id}}'>
+                            <input type ='hidden' size='20' name='script_id' value='{{case.id}}'>
                             <input type='submit' value='{{case.name}}' class='create-button'>
                         </form>
                     </td>

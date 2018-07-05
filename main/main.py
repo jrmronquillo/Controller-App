@@ -58,11 +58,14 @@ def setVideo(config):
     # config variable designed be a dictionary of video routes
     print config
 
-    # map am integer from 1-16 to desginated router channel
+    # map am integer from 1-16 to designated router channel
     channel = {"1":"128", "2":"129", "3":"130", "4":"131",
            "5":"132", "6":"133", "7":"134", "8":"135",
                    "9":"136", "10":"137", "11":"138", "12":"139",
                    "13":"140", "14":"141", "15":"142", "16":"143"}
+    
+    
+
     rs = []
     racks = []
     slots = []
@@ -89,10 +92,17 @@ def setVideo(config):
         routerInputs.append(routerPort + " " + sourcePosition)
     print routerInputs
 
-    # connect to video router and send generated message
+    # connect to video route and multiviewer
+    # video route
     tn = telnetlib.Telnet("10.23.223.202", "9990")
+    
+
+
+    # send generated message to video router
+    
     tn.write("VIDEO OUTPUT ROUTING:\n")
-    for route in routerInputs:  
+    for index,route in enumerate(routerInputs):  
+        print index
         print route     
         tn.write(route)
         tn.write("\n")
@@ -100,9 +110,44 @@ def setVideo(config):
     tn.read_until("ACK", 2)
     tn.close()
 
+
     return "routeVideo function executed!"
 # customConfig = {"1":"r2s10", "2":"r2s11"}
 # setVideo(customConfig)
+def setLabels(labelArr):
+    print labelArr
+    stbModels = {"r3s1":"H44-500", "r3s2":"HR54-700", "r3s3":"HR54-500",
+                 "r3s4":"HR54-200", "r3s5":"HR44-700", 
+                 "r3s6":"HR44-500", "r3s7":"HR44-200",
+                 "r3s8":"HR34-700", "r2s1":"C51-100",
+                 "r2s2":"C41-500", "r2s3":"C41-700",
+                 "r2s4":"C51-500", "r2s5":"C51-700",
+                 "r2s6":"C61W-700", "r2s7":"C51-500",
+                 "r2s8":"C41-700", "r2s9":"C51-100",
+                 "r2s10":"C41-500", "r2s11":"C41w-100",
+                 "r2s12":"C41-500", "r2s13":"C41-700",
+                 "r2s14":"C31-700", "r2s15":"C41-700",
+                 "r2s16":"C41-700", "r1s1":"Rack1 - STB1",
+                 "r1s2":"Rack1 - STB2", "r1s3":"Rack1 - STB3",
+                 "r1s4":"Rack1 - STB4", "r1s5":"Rack1 - STB5",
+                 "r1s6":"Rack1 - STB6", "r1s7":"Rack1 - STB6",
+                 "r1s8":"Rack1 - STB 8"}
+    tnMV = telnetlib.Telnet("10.23.223.93", "9990")
+    tnMV.write("INPUT LABELS:\n")
+    for key,value in labelArr.items():
+        print key
+        multiviewerPos = int(key)-1
+        print value
+        labelName = stbModels.get(value,"default")
+        commandStr = str(multiviewerPos) + " " + labelName
+        print commandStr
+        tnMV.write(commandStr)
+        tnMV.write("\n")
+    tnMV.write("\n")
+    # multiviewer
+    
+
+    return "set labels executed!!"
 
 def configMultiviewer(mode):
     tn = telnetlib.Telnet("10.23.223.93", "9990")
@@ -358,9 +403,9 @@ def testingPage2():
 def configVideo():
     defaultConf = {
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
-                    "5":"r3s5","6":"r4s6", "7":"r3s7", "8":"r3s8",
-                    "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
-                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"
+                    "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r2s1", "10":"r2s2", "11":"r2s3", "12":"r2s4",
+                    "13":"r2s5", "14":"r2s6", "15":"r2s7", "16":"r2s8"
                 }
     allclientsConf = {
                     "1":"r2s1", "2":"r2s2", "3":"r2s3", "4":"r2s4",
@@ -372,8 +417,8 @@ def configVideo():
     allserversConf = {
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
                     "5":"r3s5", "6":"r3s6", "7":"r3s7", "8":"r3s8",
-                    "9":"r3s9", "10":"r3s10", "11":"r3s11", "12":"r3s12",
-                    "13":"r3s13", "14":"r3s14", "15":"r3s15", "16":"r3s16"   
+                    "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
+                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"   
     }
 
     quadConf = {
@@ -396,15 +441,19 @@ def configVideo():
         soloConfig = request.form.get('soloConfig')
         if postData == "defaultConf":
             setVideo(defaultConf)
+            setLabels(defaultConf)
             print "default conf"
         elif postData == "allserversConf":
             setVideo(allserversConf)
+            setLabels(allserversConf)
             print "all servers conf"
         elif postData == "allclientsConf":
             setVideo(allclientsConf)
+            setLabels(allclientsConf)
             print "all clients conf"
         elif postData == "quadConf":
             setVideo(quadConf)
+            setLabels(quadConf)
             print "quad conf"
         elif postData == "solo":
             configMultiviewer("true")
@@ -644,6 +693,11 @@ def shefCommands():
 @app.route('/sampleApp', methods=['GET', 'POST'])
 def sampleApp():
     return render_template('sampleApp.html')
+
+@app.route('/sampleApp2', methods=['GET', 'POST'])
+@app.route('/sampleApp2', methods=['GET', 'POST'])
+def sampleApp2():
+    return render_template('sampleApp2.html')
 
 @app.route('/postTest', methods=['GET', 'POST'])
 @app.route('/postTest/', methods=['GET', 'POST'])

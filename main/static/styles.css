@@ -1,4 +1,7 @@
 
+.active{
+  background-color: black;
+}
 #chTextBox {
   color: #000000 !important;
 }
@@ -6,6 +9,7 @@
 #chtune-title{
   color: #FFF;
 }
+
 
 .controller-main-content{
   color: #000000 !important;
@@ -132,8 +136,11 @@ strong{
 }
 
 td{
+
   text-align: center;
 }
+
+
 
 .containz{
   position: absolute;
