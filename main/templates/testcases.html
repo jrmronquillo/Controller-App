@@ -21,6 +21,8 @@
         <form action="#" method = 'post'>
             <div class='row'>
                 <input type='text' name='script_id' placeholder='script_id' pattern="\d+" required>
+                <input type='text' name='rack' placeholder="rack" pattern="^[a-zA-Z]\d{2}$">
+                <input type='text' name='slot' placeholder="slot" pattern="\d+">
                 <input type='submit' value='Start Script' class='create-button'>
             </div>
         </form>
