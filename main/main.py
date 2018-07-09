@@ -811,13 +811,15 @@ def screenshot():
 def showTestCases():  
     if request.method == 'POST':
         script_id = request.form['script_id']
+        rack = request.form['rack']
+        slot = request.form['slot']
         if script_id:
             test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
             if test_cases:
                 for i in test_cases:
                     name = i.name
                     path = i.path
-                    commandString = "stbt run "+path
+                    commandString = "stbt run "+path+" "+rack+" "+slot
                     print commandString
                     p = subprocess.Popen(commandString, shell=True)
                     return redirect(url_for('reporting'))
