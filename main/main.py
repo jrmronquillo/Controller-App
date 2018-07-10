@@ -699,6 +699,11 @@ def sampleApp():
 def sampleApp2():
     return render_template('sampleApp2.html')
 
+@app.route('/sampleApp2/page1')
+@app.route('/sampleApp2/page1/')
+def page2():
+    return "page 2"
+
 @app.route('/postTest', methods=['GET', 'POST'])
 @app.route('/postTest/', methods=['GET', 'POST'])
 def postTest():
