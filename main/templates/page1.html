@@ -56,7 +56,6 @@
 
 		.tiles{
 			display:flex;
-			background-color: #fff;
   			min-width: 100%;
   			min-height: 200px;
   			flex-wrap: nowrap;
@@ -64,12 +63,28 @@
 		}
 		
 		.tile{
-			background-color: #e74c3c;
-  			min-width: 100px;
+			background-color: #CBCBCB;
+  			min-width: 120px;
   			min-height: 200px;
-  			margin: 5px;
-  			overflow-x: auto;
+  			margin: 10px;
+  			/*overflow-x: auto;*/
 			}
+
+		.tile:hover{
+			background-color: #CBCBCB;
+  			min-width: 120px;
+  			min-height: 200px;
+  			margin: 10px;
+  			border-style: solid;
+		}
+
+		.tile:focus{
+			background-color: #CBCBCB;
+  			min-width: 120px;
+  			min-height: 200px;
+  			margin: 10px;
+  			border-style: solid;
+		}
 
 		
 	</style>
@@ -153,6 +168,27 @@
 		 function exiter(){
 		 	navigator.exit();
 		 };
+
+		 window.onload = function(){
+		 	document.getElementById('tile1').focus();
+		 };
+
+		 function makeFocus(tileId){
+		 	for(var i=1; i < document.getElementsByClassName('tile').length; i++){
+		 		//alert('test'+String(i));
+		 		if(tileId == 'tile'+String(i)){
+		 			document.getElementById(tileId).style.border = "thick solid #0000FF";
+		 		} else {
+		 			document.getElementById('tile'+String(i)).style.border = "none";
+		 		}
+		 		//document.getElementById('tile'+String(i)).style.border = "dashed";
+		 	};
+		 	//document.getElementById('tile2').style.border = "none";
+		 	//document.getElementById(tileId).style.border = "thick solid #0000FF";
+		 	//alert(document.getElementsByClassName('tile').length);
+		 	
+		 }
+
 	</script>
 </head>
 <body>
@@ -160,8 +196,8 @@
 	<div class="contain-full">
 		<div class="header">
 			<div class = 'row'>
-				<div class='col-sm-3'>
-					<img src="https://placeimg.com/300/100/any">
+				<div class='col-sm-4'>
+					<img src="https://placeimg.com/300/100/any" class='img-responsive'>
 				</div>
 				<div class='col-sm-2 nav-bar-text align-text-bottom'>
 					For You
@@ -174,17 +210,18 @@
 				</div>
 			</div>
 			<hr>
-
+			<div id="key-down"></div>
 			<div class = "row">
-				<div class="col-sm-4">
+				<div class="col-xs-4 text-align-left">
 					<h2>Live Stations</h2>
 				</div>
 			</div>
 			<div class="row tiles">
 				<div class = "row flex-row flex-nowrap tiles">
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
+					<a href="#"><div class = 'tile' ></div></a>
+					<a href="#"><div class = 'tile' ></div></a>
+					<div class = 'tile' id='tile1' onclick="makeFocus('tile1');"></div>
+					<div class = 'tile' id='tile2' onclick="makeFocus('tile2');"></div>
 					<div class = 'tile'></div>
 					<div class = 'tile'></div>
 					<div class = 'tile'></div>
