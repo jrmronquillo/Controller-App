@@ -702,7 +702,7 @@ def sampleApp2():
 @app.route('/sampleApp2/page1')
 @app.route('/sampleApp2/page1/')
 def page2():
-    return "page 2"
+    return render_template('page1.html')
 
 @app.route('/postTest', methods=['GET', 'POST'])
 @app.route('/postTest/', methods=['GET', 'POST'])
