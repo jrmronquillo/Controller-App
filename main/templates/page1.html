@@ -95,6 +95,16 @@
 		  navigator.setResolution(1920, 1080);
 		}
 
+	 
+
+
+	    function moveRight(){
+	    		alert('move right 1');
+	    }
+
+	  
+	    var xpos = 0;
+	    var ypos = 0;
 		function keyHandler(e){
 			var code = e.keyCode
 				, container = document.getElementById('key-down');
@@ -106,6 +116,77 @@
         case 32: //spacebar
         		window.location.href = "/sampleApp2/page1/";
         		break;
+       	case 37: //left key
+       			xpos--;
+       			console.log('x:'+xpos);
+       			console.log('y:'+ypos);
+       			if (xpos<1){
+       				xpos=document.getElementsByClassName('tile').length+1;
+       			}
+       			if (ypos==0){
+       				makeUnderline('nav'+String(xpos));
+       			} else {
+       				makeFocus('tile'+String(xpos));
+       			}
+       			break;
+       	case 38: //up key
+       		ypos--;
+       		xpos=1;
+       		console.log('x:'+xpos);
+       		console.log('y:'+ypos);
+   			if (ypos<0){
+   				ypos=1;
+   			}
+   			console.log('yposAFter:'+String(ypos));
+
+   			if(ypos == 0){
+       				makeUnderline('nav'+String(xpos));
+       			} else {
+       				makeFocus('tile'+String(xpos));
+       			}
+   			//makeUnderline('nav1');
+   			break;
+       		
+       	case 39: //right key
+       			xpos++;
+       			console.log('x:'+xpos);
+       			console.log('y:'+ypos);
+       			//if (xpos>document.getElementsByClassName('tile').length){
+       			//	xpos=1;
+       			//}
+       			if (ypos==0){
+       				if (xpos>document.getElementsByClassName('nav-bar-text').length+1){
+       					xpos=1;	
+       				}
+       				makeUnderline('nav'+String(xpos));	
+       			} else {
+       				console.log('???');
+       				if(xpos>document.getElementsByClassName('tile').length+1){
+       					xpos=1;
+       					ypos=1;
+       				}       				
+       				makeFocus('tile'+String(xpos));
+       			}
+       			console.log('xposAFter:'+String(xpos));
+       			console.log('yposAfter:'+String(ypos));
+       			break;
+       	case 40: //down key
+       			
+       			xpos=1;
+       			ypos++;
+       			console.log('x:'+xpos);
+       			console.log('y:'+ypos);
+       			console.log('yposAFter:'+ypos);
+       			if (ypos>1){
+       				// if y position is greater than 1, set back to 0
+       				ypos=0;
+       			}
+       			if(ypos == 1){
+       				makeFocus('tile'+String(xpos));
+       			} else {
+       				makeUnderline('nav'+String(xpos));
+       			}
+       			break;
         case 48 : // 0
         case 49 : // 1
         case 50 : // 2
@@ -167,14 +248,36 @@
 
 		 function exiter(){
 		 	navigator.exit();
-		 };
+		 }
 
 		 window.onload = function(){
 		 	document.getElementById('tile1').focus();
 		 };
 
+		 function makeUnderline(navItemId){
+		 	// clear any tile highlights to avoid double highlights
+		 	for(var x=1; x < document.getElementsByClassName('tile').length; x++){
+		 		document.getElementById('tile'+String(x)).style.border = "none";
+		 	}
+
+		 	for(var i=1; i <= document.getElementsByClassName('nav-bar-text').length; i++){
+		 		//alert('nav'+String(i));
+		 		if(navItemId == 'nav'+String(i)){
+		 			document.getElementById(navItemId).style.textDecoration = "underline overline red";
+		 		} else {
+		 			document.getElementById('nav'+String(i)).style.textDecoration = "none";
+		 		}
+		 	}
+		 }
+
 		 function makeFocus(tileId){
-		 	for(var i=1; i < document.getElementsByClassName('tile').length; i++){
+		 	//clear any nav-bar-text highlights to avoid double highlights
+		 	for(var x=1; x <= document.getElementsByClassName('nav-bar-text').length; x++){
+		 		document.getElementById('nav'+String(x)).style.textDecoration = "none";
+		 	}
+
+
+		 	for(var i=1; i < document.getElementsByClassName('tile').length+1; i++){
 		 		//alert('test'+String(i));
 		 		if(tileId == 'tile'+String(i)){
 		 			document.getElementById(tileId).style.border = "thick solid #0000FF";
@@ -182,16 +285,18 @@
 		 			document.getElementById('tile'+String(i)).style.border = "none";
 		 		}
 		 		//document.getElementById('tile'+String(i)).style.border = "dashed";
-		 	};
-		 	//document.getElementById('tile2').style.border = "none";
-		 	//document.getElementById(tileId).style.border = "thick solid #0000FF";
-		 	//alert(document.getElementsByClassName('tile').length);
-		 	
+		 	}	
 		 }
 
-	</script>
+
+		
+
+
+		 
+
+</script>
 </head>
-<body>
+<body onload="">
 	<div class="controller-main-bg"></div>
 	<div class="contain-full">
 		<div class="header">
@@ -199,17 +304,18 @@
 				<div class='col-sm-4'>
 					<img src="https://placeimg.com/300/100/any" class='img-responsive'>
 				</div>
-				<div class='col-sm-2 nav-bar-text align-text-bottom'>
+				<div class='col-sm-2 nav-bar-text align-text-bottom' id ="nav1" onclick="makeUnderline('nav1')">
 					For You
 				</div>
-				<div class='col-sm-2 nav-bar-text text-center'>
+				<div class='col-sm-2 nav-bar-text text-center' id ="nav2" onclick="makeUnderline('nav2')">
 					Search
 				</div>
-				<div class='col-sm-2 nav-bar-text text-center'>
+				<div class='col-sm-2 nav-bar-text text-center' id ="nav3" onclick="makeUnderline('nav3')">
 					Settings
 				</div>
 			</div>
 			<hr>
+			<button onclick="highlight();">Navi-test</button>
 			<div id="key-down"></div>
 			<div class = "row">
 				<div class="col-xs-4 text-align-left">
@@ -218,23 +324,23 @@
 			</div>
 			<div class="row tiles">
 				<div class = "row flex-row flex-nowrap tiles">
-					<a href="#"><div class = 'tile' ></div></a>
-					<a href="#"><div class = 'tile' ></div></a>
-					<div class = 'tile' id='tile1' onclick="makeFocus('tile1');"></div>
-					<div class = 'tile' id='tile2' onclick="makeFocus('tile2');"></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>	
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>	
-					<div class = 'tile'></div>
-					<div class = 'tile'></div>		
+					<a href="#"><div class = 'tile' id='tile1' onclick="makeFocus('tile1')" ></div></a>
+					<a href="#"><div class = 'tile' id='tile2' onclick="makeFocus('tile2')" ></div></a>
+					<div class = 'tile' id='tile3' tabindex='0' onclick="makeFocus('tile3');"></div>
+					<div class = 'tile' id='tile4' onclick="makeFocus('tile4');"></div>
+					<div class = 'tile' id='tile5' onclick="makeFocus('tile5');"></div>
+					<div class = 'tile' id='tile6' onclick="makeFocus('tile6');"></div>
+					<div class = 'tile' id='tile7' onclick="makeFocus('tile7');"></div>
+					<div class = 'tile' id='tile8' onclick="makeFocus('tile8');"></div>
+					<div class = 'tile' id='tile9' onclick="makeFocus('tile9');"></div>
+					<div class = 'tile' id='tile10' onclick="makeFocus('tile10');"></div>
+					<div class = 'tile' id='tile11' onclick="makeFocus('tile11');"></div>	
+					<div class = 'tile' id='tile12' onclick="makeFocus('tile12');"></div>
+					<div class = 'tile' id='tile13' onclick="makeFocus('tile13');"></div>
+					<div class = 'tile' id='tile14' onclick="makeFocus('tile14');"></div>
+					<div class = 'tile' id='tile15' onclick="makeFocus('tile15');"></div>	
+					<div class = 'tile' id='tile16' onclick="makeFocus('tile16');"></div>
+					<div class = 'tile' id='tile17' onclick="makeFocus('tile17');"></div>		
 				</div>
 			</div>
 		</div>		
