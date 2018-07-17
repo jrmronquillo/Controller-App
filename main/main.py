@@ -54,6 +54,19 @@ session = DBSession()
 import telnetlib
 import socket
 
+def takeScreenshot(scriptName = 'test', imageName = 'test'):
+    command = "stbt run "
+    path = "/home/e2e/e2ehost_local/sanityAutomation/automation_main_28/"+scriptName+"/"
+    screenshotName = imageName
+    completeCommand = str(command) + "%s%s%s"  % (path, screenshotName, ".png")
+    print completeCommand
+    
+    # with configs:
+    p = subprocess.Popen(completeCommand, shell=True)
+    
+            
+        
+
 def setVideo(config):
     # config variable designed be a dictionary of video routes
     print config
@@ -485,9 +498,9 @@ def configVideo():
 @app.route('/controller/<string:button_set>/<string:quad>/', methods=['GET', 'POST'])
 @app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/', methods=['GET', 'POST'])
 @app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
-@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/<string:scriptMode>/', methods=['GET', 'POST'])
 # login_required
-def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad'):
+def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode = ''):
     # if not rack_id:
     #    return "rack_id was undefined"
     print "button_set:"
@@ -635,6 +648,7 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad'):
                     print "slot var:"
                     print slotVar
                     keySendv2(selectedRack, var1, slotVar)
+                    takeScreenshot()
         elif alphaVar:
             print 'name2 contents: '+ alphaVar
           
