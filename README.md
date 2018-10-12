@@ -9,8 +9,22 @@ Simply, this is a user interface to a python script/API that will ultimately let
 Setup
 -----
 1. vagrant
+  ```
+  cd controller-app
+  vagrant up
+  vagrant ssh
+  cd ..
+  cd ..
+  cd vagrant
+  ```
 2. python
-3. flask
+```
+python main.py
+```
+
+3. Front-end on local machine
+
+http://localhost:5000/
 
 
 
