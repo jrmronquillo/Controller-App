@@ -55,10 +55,12 @@ import telnetlib
 import socket
 
 def takeScreenshot(scriptName = 'test', imageName = 'test'):
-    command = "stbt run "
+    print "screenshot function executed"
+    localtime = time.localtime(time.time())
+    command = "stbt screenshot "
     path = "/home/e2e/e2ehost_local/sanityAutomation/automation_main_28/"+scriptName+"/"
     screenshotName = imageName
-    completeCommand = str(command) + "%s%s%s"  % (path, screenshotName, ".png")
+    completeCommand = str(command) + "%s%s%s%s"  % (path, screenshotName, localtime, ".png")
     print completeCommand
     
     # with configs:
@@ -114,9 +116,7 @@ def setVideo(config):
     # send generated message to video router
     
     tn.write("VIDEO OUTPUT ROUTING:\n")
-    for index,route in enumerate(routerInputs):  
-        print index
-        print route     
+    for index,route in enumerate(routerInputs):       
         tn.write(route)
         tn.write("\n")
     tn.write("\n")
@@ -196,6 +196,7 @@ def keySendv2(rack,key,slot):
     TCP_PORT = 40000
     BUFFER_SIZE = 1024
     MESSAGE = 'MAC="' + rack + '" dataset="RC71" signal="' + key + '" output="' + slot + '" \n'
+    # MESSAGE = MAC = A03 dataset="RC71" signal="menu" output = "1-16" \n
     # Open socket, send message, close scoket
     p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     p.settimeout(5)
@@ -449,6 +450,7 @@ def configVideo():
     }
 
     if request.method == 'POST':
+
         postData =  request.form.get('multiviewerProfile')
         print postData
         soloConfig = request.form.get('soloConfig')
@@ -492,15 +494,90 @@ def configVideo():
     else:
         return render_template('set_video.html')
 
+# simulated data for video router and multiviewer configs,
+# in the future will move to a database or some external API  
+def defaultConf():
+    return {
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r2s1", "10":"r2s2", "11":"r2s3", "12":"r2s4",
+                    "13":"r2s5", "14":"r2s6", "15":"r2s7", "16":"r2s8"
+                }
+def allclientsConf():
+    return {
+                    "1":"r2s1", "2":"r2s2", "3":"r2s3", "4":"r2s4",
+                    "5":"r2s5", "6":"r2s6", "7":"r2s7", "8":"r2s8",
+                    "9":"r2s9", "10":"r2s10", "11":"r2s11", "12":"r2s12",
+                    "13":"r2s13", "14":"r2s14", "15":"r2s15", "16":"r2s16"
+    }
+
+def allserversConf():
+    return {
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5", "6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
+                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"   
+    }
+
+def quadConf():
+    return {
+                    "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
+                    "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
+                    "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
+    }
+
+def b12():
+    return {
+        "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
+                    "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
+                    "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"  
+    }
+
+def stbModels():
+    return {"r3s1":"H44-500", "r3s2":"HR54-700", "r3s3":"HR54-500",
+                 "r3s4":"HR54-200", "r3s5":"HR44-700", 
+                 "r3s6":"HR44-500", "r3s7":"HR44-200",
+                 "r3s8":"HR34-700", "r2s1":"C51-100",
+                 "r2s2":"C41-500", "r2s3":"C41-700",
+                 "r2s4":"C51-500", "r2s5":"C51-700",
+                 "r2s6":"C61W-700", "r2s7":"C51-500",
+                 "r2s8":"C41-700", "r2s9":"C51-100",
+                 "r2s10":"C41-500", "r2s11":"C41w-100",
+                 "r2s12":"C41-500", "r2s13":"C41-700",
+                 "r2s14":"C31-700", "r2s15":"C41-700",
+                 "r2s16":"C41-700", "r1s1":"Rack1 - STB1",
+                 "r1s2":"Rack1 - STB2", "r1s3":"Rack1 - STB3",
+                 "r1s4":"Rack1 - STB4", "r1s5":"Rack1 - STB5",
+                 "r1s6":"Rack1 - STB6", "r1s7":"Rack1 - STB6",
+                 "r1s8":"Rack1 - STB 8"}
+
+
+
+
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/controller/')
-@app.route('/controller/<string:button_set>/', methods=['GET', 'POST'])
-@app.route('/controller/<string:button_set>/<string:quad>/', methods=['GET', 'POST'])
-@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/', methods=['GET', 'POST'])
-@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
-@app.route('/controller/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/<string:scriptMode>/', methods=['GET', 'POST'])
+@app.route('/controller', methods=['GET', 'POST'])
+@app.route('/controller/<string:viewConfigMode>')
+@app.route('/controller/<string:viewConfigMode>/<string:button_set>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:viewConfigMode>/<string:button_set>/<string:quad>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:viewConfigMode>/<string:button_set>/<string:quad>/<int:rack_id>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:viewConfigMode>/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/', methods=['GET', 'POST'])
+@app.route('/controller/<string:viewConfigMode>/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/<string:scriptMode>/', methods=['GET', 'POST'])
 # login_required
-def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode = ''):
+def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode = '', viewConfigMode='quadConf'):
+    viewRackDict = {}
+    viewSlotDict = {}
+    configList = {'defaultConf': defaultConf(), 'allserversConf': allserversConf(), 'quadConf': quadConf()}
+    viewConfig = configList[viewConfigMode]
+    for key, value in viewConfig.items():
+        viewRackDict[key] = int(value.split('s')[0].split('r')[1])
+    print "viewRackDict"
+    print viewRackDict
+    for key, value in viewConfig.items():
+        viewSlotDict[key] = value.split('s')[1]
+    print "viewSlotDict"
+    print viewSlotDict
     # if not rack_id:
     #    return "rack_id was undefined"
     print "button_set:"
@@ -546,36 +623,91 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
         if quad != "true":
             print "No valid Rack Selected"
             flash("Please select Rack" )
-            return render_template('controller_main.html', button_set=button_set, quad=quad)
+            return render_template('controller_main.html', button_set=button_set, quad=quad, viewConfigMode=viewConfigMode)
 
 
     
 
     if request.method == 'POST':
+        print viewConfigMode
+        # handle multiviewer API
+        # initialize post data to designated variabiles
+        postData =  request.form.get('multiviewerProfile')
+        soloConfig = request.form.get('soloConfig')
+
+        # change video routes
+        if postData == "defaultConf":
+            setVideo(defaultConf())
+            setLabels(defaultConf())
+            viewConfig = defaultConf()
+            print "default conf"
+        elif postData == "allserversConf":
+            setVideo(allserversConf())
+            setLabels(allserversConf())
+            viewConfig = allserversConf()
+            print "all servers conf"
+        elif postData == "allclientsConf":
+            setVideo(allclientsConf())
+            setLabels(allclientsConf())
+            viewConfig = allclientsConf()
+            print "all clients conf"
+        elif postData == "quadConf":
+            setVideo(quadConf())
+            setLabels(quadConf())
+            viewConfig = quadConf()
+            print "quad conf"
+        elif postData == "solo":
+            configMultiviewer("true")
+            print "configMultiviewer attempted!"
+        elif postData == "nosolo":
+            configMultiviewer("false")
+            print "configMutliviewer attempted!"
+        else:
+            viewDict = {'defaultConf': defaultConf(), 'allserversConf': allserversConf(), 'allclientsConf': allclientsConf(), 'b12': b12(), 'quadConf':quadConf()}
+            viewConfig = viewDict[viewConfigMode]
+            print "viewConfig"
+            print viewConfig
+
+            print "error with multiviewerProfile"
+
+        for key, value in viewConfig.items():
+            viewRackDict[key] = int(value.split('s')[0].split('r')[1])
+            print "viewRackDict"
+            print viewRackDict
+        for key, value in viewConfig.items():
+            viewSlotDict[key] = value.split('s')[1]
+            print "viewSlotDict"
+            print viewSlotDict
+
+        # set view with rack slot info
+
+        
+        
+        # change multiviewer configuration
+        acceptedInput = [
+                         "0","1", "2", "3", "4", "5", "6", "7", "8",
+                         "9", "10", "11", "12", "13", "14", "15"
+                        ]
+        if soloConfig in acceptedInput:
+            setSolo(soloConfig)
+        else:
+            print "Error with input to for Solo Route Change"
+        print "attempted to set video configs"
+        #return render_template('controller_main.html', button=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id)
+
+        # end of multiviewer API
+
+
+
+
         if not selectedRack:
             if quad != "true":
                 print "No valid Rack Selected"
                 flash("Please select Rack")
-                return render_template('controller_main.html', button=button_set, quad=quad)  
+                return render_template('controller_main.html', button=button_set, quad=quad, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)  
 
         test=request.form.to_dict()
-        print "POST Data:"+str(test)
         
-        # function for implementing sending to two racks at once
-        #ke
-        #ksTest = request.form.get('keySendTest')
-        #print ksTest
-        #if ksTest == "qwerty":
-        #    testList = {
-        #                "rack":"rack1",
-        ##                "command":"menu",
-        #                "slot":"1"
-        #                }
-                        
-        #    keySendv3(testList)
-        #    return "kstest executed"
-
-
 
         # Validation for slot id
         if slot_id != "0":
@@ -631,13 +763,13 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
                 if quad == 'true':
                     print rack_macs["3"]
                     for c in var1:
-                        keySendv2(rack_macs["3"], c, '1,2,9,8')
-                        keySendv2(rack_macs["2"], c, '1,2,3,4,5,6,9,10,11,14,15,16')
-                    return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id)
+                        keySendv2(rack_macs["3"], c, '1,2,5,8')
+                        keySendv2(rack_macs["2"], c, '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16')
+                    return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
                 else:
                     for c in var1:
                         keySendv2(selectedRack, c, slotVar)
-                    return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id)
+                    return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
             else:
                 print "command string detected, sending command directly"
                 if quad == 'true':
@@ -656,19 +788,19 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
                 print 'valid letter input found, translating to t9'
                 for i in t9_trans.get(alphaVar):
                     keySendv2(selectedRack, i, slotVar)
-                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id) 
+                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict) 
             else:
                 message = 'invalid input detected, command was not sent'
                 print message
-                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message)    
+                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)    
         else:
             message = 'Error with Post Data Input'
             print 'Error with Post Data Input'
-            return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message)
-        return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id)
+            return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
+        return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
     else:
         print "request was not POST"
-        return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id)
+        return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
 
 
 @app.route('/dev')

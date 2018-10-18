@@ -1,7 +1,9 @@
-
-.active{
-  background-color: black;
+table, tr, th, td{
+  border: dashed;
+  border-collapse: collapse;
+  padding: .1rem !important;
 }
+
 #chTextBox {
   color: #000000 !important;
 }
@@ -10,10 +12,55 @@
   color: #FFF;
 }
 
+.controller-main-bg{
+  position: fixed;
+  display: block;
+  height: 100%;
+  background-image: url('destiny_2.jpg');
+  background-color: #cccccc;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  left: 0;
+  right:0;
+  z-index: -1;
+}
 
 .controller-main-content{
   color: #000000 !important;
+  position:absolute;
+  width: 100%;
+  color: white;
+  z-index: 2;
 }
+
+
+
+.viewbox{
+  width: 100%;
+  height: auto;
+  border: solid !important;
+  color: white;
+
+}
+
+.selected-green{
+  background-color: green;
+}
+
+.btn-override{
+  font-size: 1rem;
+  line-height: 1;
+  height: 35px;
+  white-space: none !important;
+}
+
+.active{
+  background-color: black;
+}
+
 
 .create-button {
    border: 1px solid #268fcc;
@@ -154,28 +201,7 @@ td{
   -webkit-filter: blur(5px);
 }
 
-.controller-main-bg{
-  position: fixed;
-  display: block;
-  height: 100%;
-  background-image: url('destiny_2.jpg');
-  background-color: #cccccc;
-  filter: blur(5px);
-  -webkit-filter: blur(5px);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  left: 0;
-  right:0;
-  z-index: -1;
-}
 
-.controller-main-content{
-  position: fixed;
-  width: 100%;
-  color: white;
-  z-index: 2;
-}
 
 #button1{
   color:white;
@@ -216,6 +242,9 @@ h2, a{
   font-size: 0.5em;
 }
 
+.white-text{
+  color: white;
+}
 
 @media (max-width: 771px) {
   .stb-selection{
@@ -223,6 +252,11 @@ h2, a{
   }
   .navbar{
     display: none;
+  }
+  .nav-bar{
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 
   .hamburger-container{

@@ -59,176 +59,352 @@
     <div class="error">
         <h1 style="color:red;">{{error}}</h1>
     </div>
+    <div style="color:red;">{{viewConfigMode}}</div>
     <div class="controller-main-bg"></div>
     <div class="controller-main-content">
-
 		<div class='row'>
             <div class='col-sm-6 stb-selection'>
-    			<table class="table" id="stb-table">
+            <table class="table">
+                <tr>
+                    <th><span class='white-text'>Video Configs</span></th>
+                </tr>
+                <tr>
+                    <td>
+                        <form action="#" method = 'post'>
+                            <input type='hidden' name="multiviewerProfile" value="defaultConf">
+                            <input type='submit' value='default' class="btn btn-default btn-override">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#" method = 'post'>
+                            <input type='hidden' name="multiviewerProfile" value="allserversConf">
+                            <input type='submit' value='all servers' class="btn btn-default btn-override">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#" method = 'post'>
+                            <input type='hidden' name="multiviewerProfile" value="allclientsConf">
+                            <input type='submit' value='all clients' class="btn btn-default btn-override">
+                        </form>
+                    </td>
+                    <td>
+                        <form action="#" method = 'post'>
+                            <input type='hidden' name="multiviewerProfile" value="quadConf">
+                            <input type='submit' value='quad conf' class="btn btn-default btn-override">
+                        </form>
+                    </td>
+                </table>
+                
+
+                {% set view1_rack = viewRacks['1'] %}
+                {% set view1_slot = viewSlots['1'] %}
+                {% set view2_rack = viewRacks['2'] %}
+                {% set view2_slot = viewSlots['2'] %}
+                {% set view3_rack = viewRacks['3'] %}
+                {% set view3_slot = viewSlots['3'] %}
+                {% set view4_rack = viewRacks['4'] %}
+                {% set view4_slot = viewSlots['4'] %}
+                {% set view5_rack = viewRacks['5'] %}
+                {% set view5_slot = viewSlots['5'] %}
+                {% set view6_rack = viewRacks['6'] %}
+                {% set view6_slot = viewSlots['6'] %}
+                {% set view7_rack = viewRacks['7'] %}
+                {% set view7_slot = viewSlots['7'] %}
+                {% set view8_rack = viewRacks['8'] %}
+                {% set view8_slot = viewSlots['8'] %}
+                {% set view9_rack = viewRacks['9'] %}
+                {% set view9_slot = viewSlots['9'] %}
+                {% set view10_rack = viewRacks['10'] %}
+                {% set view10_slot = viewSlots['10'] %}
+                {% set view11_rack = viewRacks['11'] %}
+                {% set view11_slot = viewSlots['11'] %}
+                {% set view12_rack = viewRacks['12'] %}
+                {% set view12_slot = viewSlots['12'] %}
+                {% set view13_rack = viewRacks['13'] %}
+                {% set view13_slot = viewSlots['13'] %}
+                {% set view14_rack = viewRacks['14'] %}
+                {% set view14_slot = viewSlots['14'] %}
+                {% set view15_rack = viewRacks['15'] %}
+                {% set view15_slot = viewSlots['15'] %}
+                {% set view16_rack = viewRacks['16'] %}
+                {% set view16_slot = viewSlots['16'] %}
+
+                <table class="table" id="view-table">
                     <tr>
                         <td>
-        				    <a href="{{url_for('testB', button_set=button_set, quad='none', rack_id='0')}}" class="btn btn-secondary"><h4>A00</h4></a>
-        			    </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='1')}}" class="btn btn-secondary"><h4>A01</h4></a>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2')}}" class="btn btn-secondary"><h4>A02</h4></a>
-                            <div class="slot-drawer">
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1')}}"><p>slot 1</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='2')}}"><p>slot 2</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='3')}}"><p>slot 3</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='4')}}"><p>slot 4</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='5')}}"><p>slot 5</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='6')}}"><p>slot 6</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='7')}}"><p>slot 7</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='8')}}"><p>slot 8</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='9')}}"><p>slot 9</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='10')}}"><p>slot 10</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='11')}}"><p>slot 11</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='12')}}"><p>slot 12</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='13')}}"><p>slot 13</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='14')}}"><p>slot 14</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='15')}}"><p>slot 15</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='16')}}"><p>slot 16</p></a></button>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3')}}" class="btn btn-secondary"><h4>A03</h4></a>
-                            <div class="slot-drawer">
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1')}}"><p>slot 1</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='2')}}"><p>slot 2</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='3')}}"><p>slot 3</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='4')}}"><p>slot 4</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='5')}}"><p>slot 5</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='6')}}"><p>slot 6</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='7')}}"><p>slot 7</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='8')}}"><p>slot 8</p></a></button>
-                                <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='9')}}"><p>slot 9</p></a></button>
-                            </div>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='21')}}" class="btn btn-secondary"><h4>B12</h4></a>
-                        </td>
-                        <td>
-                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26')}}" class="btn btn-secondary"><h4>WS 1</h4></a>
-                        </td>
-                        <td>
-                            <button onclick="toggleDisplay()" class="create-button">Slots</button>
+                            <form action="#" method = 'post' >
+                                <input type='hidden' name="multiviewerProfile" value="nosolo">
+                                <input type='submit' value='Multiview Mode' class="btn btn-default">
+                            </form>
                         </td>
                     </tr>
-    			
+                    <!-- row 1 -->
+                    <tr>
+                        <td>
+                            <div class="viewbox {% if rack_id == view1_rack  and slot_id == view1_slot %} selected-green{% endif %}">View 1 | Rack {{view1_rack}}, Slot {{view1_slot}} </div>
+                           <button type="button" class="btn btn-default{% if rack_id == view1_rack and slot_id == view1_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view1_rack, slot_id=view1_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="0">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view5_rack  and slot_id == view5_slot %} selected-green{% endif %}">View 5 | Rack {{view5_rack}}, Slot {{view5_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view5_rack and slot_id == view5_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view5_rack, slot_id=view5_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="4">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id ==  view9_rack  and slot_id == view9_slot %} selected-green{% endif %}">View 9 | Rack {{view9_rack}}, Slot {{view9_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view9_rack  and slot_id == view9_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view9_rack, slot_id=view9_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="8">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view13_rack  and slot_id == view13_slot %} selected-green{% endif %}">View 13 | Rack {{view13_rack}}, Slot {{view13_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view13_rack  and slot_id == view13_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view13_rack, slot_id=view13_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="12">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- row 2 -->
+                    <tr>
+                        <td>
+                            <div class="viewbox {% if rack_id == view2_rack  and slot_id == view2_slot %} selected-green{% endif %}">View 2 | Rack {{view2_rack}}, Slot {{view2_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view2_rack  and slot_id == view2_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view2_rack, slot_id=view2_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="1">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view6_rack  and slot_id == view6_slot %} selected-green{% endif %}">View 6 | Rack {{view6_rack}}, Slot {{view6_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view6_rack  and slot_id == view6_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view6_rack, slot_id=view6_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="5">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view10_rack  and slot_id == view10_slot %} selected-green{% endif %}">View 10 | Rack {{view10_rack}}, Slot {{view10_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view10_rack  and slot_id == view10_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view10_rack, slot_id=view10_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="9">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view14_rack  and slot_id == view14_slot %} selected-green{% endif %}">View 14 | Rack {{view14_rack}}, Slot {{view14_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view14_rack and slot_id == view14_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view14_rack, slot_id=view14_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="13">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- row 3 -->
+                    <tr>
+                        <td>
+                            <div class="viewbox {% if rack_id == view3_rack  and slot_id == view3_slot %} selected-green{% endif %}">View 3 | Rack {{view3_rack}}, Slot {{view3_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view3_rack  and slot_id == view3_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view3_rack, slot_id=view3_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="2">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view7_rack  and slot_id == view7_slot %} selected-green{% endif %}"> View 7 | Rack {{view7_rack}}, Slot {{view7_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == 2  and slot_id == '9' %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view7_rack, slot_id=view7_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="6">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view11_rack  and slot_id == view11_slot %} selected-green{% endif %}">View 11 | Rack {{view11_rack}}, Slot {{view11_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view11_rack  and slot_id == view11_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view11_rack, slot_id=view11_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="10">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view15_rack  and slot_id == view15_slot %} selected-green{% endif %}">View 15 | Rack {{view15_rack}}, Slot {{view15_slot}}</div>
+                           <button type="button" class="btn btn-default {% if rack_id == view15_rack  and slot_id == view15_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view15_rack, slot_id=view15_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="14">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                    </tr>
+
+                    <!-- row 4 -->
+                    <tr>
+                        <td>
+                            <div class="viewbox {% if rack_id == view4_rack  and slot_id == view4_slot %} selected-green{% endif %}">View 4 | Rack {{view4_rack}}, Slot {{view4_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view4_rack  and slot_id == view4_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view4_rack, slot_id=view4_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="3">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view8_rack  and slot_id == view8_slot %} selected-green{% endif %}">View 8 | Rack {{view8_rack}} Slot {{view8_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view8_rack  and slot_id == view8_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view8_rack, slot_id=view8_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="7">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view12_rack  and slot_id == view12_slot %} selected-green{% endif %}">View 12 | Rack {{view12_rack}}, Slot {{view12_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view12_rack  and slot_id == view12_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view12_rack, slot_id=view12_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="11">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                        <td>
+                            <div class="viewbox {% if rack_id == view16_rack  and slot_id == view16_slot %} selected-green{% endif %}">View 16 | Rack {{view16_rack}}, Slot {{view16_slot}}</div>
+                           <button type="button" class="btn btn-default{% if rack_id == view16_rack  and slot_id == view16_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id=view16_rack, slot_id=view16_slot)}}">CONTROL</a></button>
+                           <form action="#" method = 'post'>
+                                <input type='hidden' name="soloConfig" value="15">
+                                <input type='submit' value='Fullscreen' class="btn btn-default btn-override">
+                            </form>
+                        </td>
+                    </tr>
+                    <tr>
+                       
+                        
+                       
+                    </tr>
+                </table>
+
+
+    			 <table class="table" id="stb-table">
+                    <tr>
+
+                        <td>
+                            <a href="{{url_for('testB', button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2')}}" class="btn btn-default modalBtns"><p>A02 - Child Devices</p></a>
+                        </td>
+                        <td>
+                             <a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3')}}" class="btn btn-default modalBtns"><p>A03 - Parent Devices</p></a>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default{% if rack_id == view16_rack  and slot_id == view16_slot %} selected-green{% endif %} modalBtns btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='true', viewConfigMode=viewConfigMode, rack_id=0, slot_id=0)}}">All MultiView STB's</a></button>
+                        </td>
+                    </tr>
+                    <!-- row 1 -->
+                    <tr>
+                         <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '1' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='1')}}"><p>slot 1</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '2' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='2')}}"><p>slot 2</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '3' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='3')}}"><p>slot 3</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default {% if rack_id == 3  and slot_id == '1' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='1')}}"><p>slot 1</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='1,2,8,9')}}" class="btn {{allServersButton}} modalBtns">All Servers</a></button>
+                        </td>
+                    
+                    </tr>
+                    <!-- row 2 -->
+
+                    <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '4' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='4')}}"><p>slot 4</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '5' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='5')}}"><p>slot 5</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '6' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='6')}}"><p>slot 6</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default {% if rack_id == 3  and slot_id == '2' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='2')}}"><p>slot 2</p></a></button>
+                        </td>
+                         <td>
+                            <button type="button"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}" class="btn {{allClientsButton}} modalBtns">All Clients</a></button>
+                        </td>
+                    </tr>
+                    <!-- row 3 -->
+                     <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '7' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='7')}}"><p>slot 7</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='2')}}"><p>slot 2</p></a></button>
+                        </td>
+                    </tr>
+                    <!-- row 4 -->
+                     <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '8' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='8')}}"><p>slot 8</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='2')}}"><p>slot 2</p></a></button>
+                        </td>
+                    </tr>
+
+                    <!-- row 5 -->
+                     <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '9' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='9')}}"><p>slot 9</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '10' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='10')}}"><p>slot 10</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '11' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='11')}}"><p>slot 11</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default {% if rack_id == 3  and slot_id == '5' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='5')}}"><p>slot 5</p></a></button>
+                        </td>
+                    </tr>
+                    <!-- row 6 -->
+                     <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='13')}}"><p>slot 12</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default {% if rack_id == 3  and slot_id == '6' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='2')}}"><p>slot 6</p></a></button>
+                        </td>
+                    </tr>
+
+                    <!-- row 7 -->  
+                    <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='13')}}"><p>slot 13</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='7')}}"><p>slot 7</p></a></button>
+                        </td>
+                    </tr>
+
+                    <!-- row 8 -->
+                    <tr>
+                        <td nowrap> 
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '14' %} selected-green{% endif %}  btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='14')}}"><p>slot 14</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '15' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='15')}}"><p>slot 15</p></a></button>
+                            <button type="button" class="btn btn-default {% if rack_id == 2  and slot_id == '16' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='2', slot_id='16')}}"><p>slot 16</p></a></button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-default {% if rack_id == 3  and slot_id == '8' %} selected-green{% endif %} btn-override"><a href="{{url_for('testB',  button_set=button_set, quad='noQuad', viewConfigMode=viewConfigMode, rack_id='3', slot_id='8')}}"><p>slot 8</p></a></button>
+                        </td>
+                    </tr>
+
+
+
                 </table>
             
-                <table class="table">
-                    <tr>
-                        <a href="{{url_for('testB', button_set=button_set, quad='true')}}" class='btn {{allQuadButton}}'>All Quad STB's</a>
-                        <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1,2,8,9')}}" class="btn {{allServersButton}}">All Servers</a>
-                        <a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1,2,3,4,5,6,9,10,11,14,15,16')}}" class="btn {{allClientsButton}}">All Clients</a>
-                    </tr>
-                    
-                    <tr>
-                        <td>
-                           <button type="button" class="btn btn-secondary{% if rack_id == 3  and slot_id == '8' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='8')}}">STB 1</a></button></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '14' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='14')}}">STB 5</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 3  and slot_id == '1' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='1')}}">STB 9</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '1' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='1')}}">STB 13</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '15' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='15')}}">STB 2</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '16' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='16')}}">STB 6</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '2' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='2')}}">STB 10</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '3' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='3')}}">STB 14</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 3  and slot_id == '9' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='9')}}">STB 3</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '9' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='9')}}">STB 7</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 3  and slot_id == '2' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='3', slot_id='2')}}">STB 11</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '4' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='4')}}">STB 15</a></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '10' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='10')}}">STB 4</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '11' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='11')}}">STB 8</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '5' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='5')}}">STB 12</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 2  and slot_id == '6' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='2', slot_id='6')}}">STB 16</a></button>
-                        </td>
-                    </tr>
-                </table>
-
-                <table class="table">
-                    <tr>
-                        <button type="button" class="btn btn-secondary{% if rack_id == 26  and slot_id == '16' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='16')}}">Dev Box</a></button>
-                    </tr>
-                    <tr><button type="button" class="btn btn-secondary{% if rack_id == 26  and slot_id == '0' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26')}}">HS17</a></button></tr>
-                    
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-secondary{% if rack_id == 26 and slot_id == '1' %} active{% endif %}"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='1')}}">Client 1</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='2')}}">Client 2</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='4')}}">Client 4</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='5')}}">Client 5</a></button>
-                        </td>   
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='3')}}">Client 3</a></button>
-                        </td>
-                        <td>
-                            <a href="#">Empty</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='6')}}">Client 6</a></button>
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-secondary"><a href="{{url_for('testB', button_set=button_set, quad='noQuad', rack_id='26', slot_id='7')}}">Client 7</a></button>
-                        </td>
-                    </tr>
-                    
-                </table>
 
             </div> <!-- this closes the left half 'col-sm-6' div -->
             <div class ='col-sm-6'>
                  <div class='button-container'>
-                    <a href="{{url_for('testB', button_set='main', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{navColor}}"> Navigation</a>
-                    <a href= "{{url_for('testB', button_set='letters', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{letterColor}}">Letters</a>
-                    <a href= "{{url_for('testB', button_set='numbers', quad=quad, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{ numberColor }}">Numbers</a>
+                    <a href="{{url_for('testB', button_set='main', quad=quad, viewConfigMode=viewConfigMode, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{navColor}}"> Navigation</a>
+                    <a href= "{{url_for('testB', button_set='letters', quad=quad, viewConfigMode=viewConfigMode, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{letterColor}}">Letters</a>
+                    <a href= "{{url_for('testB', button_set='numbers', quad=quad, viewConfigMode=viewConfigMode, rack_id=rack_id, slot_id=slot_id)}}" class="btn {{ numberColor }}">Numbers</a>
                     <div class="row">
 
                         <h4 id="chtune-title">Channel Tune:</h4>
@@ -245,6 +421,8 @@
                                 <input type="radio" name="name" value="800"> 800
                                 <input type="radio" name="name" value="9143"> 9143
                                 <input type="radio" name="name" value="9650"> 9650
+                                <input type="radio" name="name" value="9115"> 9115
+                                <input type="radio" name="name" value="9951"> 9951
                                 <input type='submit' value='send' class="create-button">
                             </fieldset>
                         </form>
@@ -254,6 +432,11 @@
                             <input type ='text' size='20' name='name' id='chTextBox' pattern="[0-9]{1,4}" placeholder="Channel Number" required>
                             <input type='submit' value='send' class='create-button'>
                         </form>
+                         <form action="#" method = 'post'>
+                            <input type ='hidden' name='screenshotVal' required>
+                            <input type='submit' value='screenshot' class='create-button'>
+                        </form>
+
                     </div>
                     <div class='row no-gutters main-buttons' style="display:{{navigationz}};">
                     <table class="table">
@@ -502,7 +685,9 @@
                     </table>
                 </div>
                         <hr>
-                        <table class="table">
+                        
+                        <div class='letter-container alpha-buttons' style='display: {{letterz}};'>
+                            <table class="table">
                             <tr>
                                 <td>
                                     <form action="#" method = 'post' class="create-button">
@@ -565,178 +750,107 @@
                                     </form>
                                 </td>
                             </tr>
-                        </table>
-                        <div class='letter-container alpha-buttons' style='display: {{letterz}};'>
-                            <div class="row">
-                                <div class="col-sm-2">
+                            <tr>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
                                         <input type = 'hidden' name='name2' value='a'>
                                         <input type='submit' value='a' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='b'>
-                                        <input type='submit' value='b' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='c'>
-                                        <input type='submit' value='c' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='d'>
-                                        <input type='submit' value='d' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='e'>
-                                        <input type='submit' value='e' class='create-button'>
-                                    </form>
-                                </div> 
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='f'>
-                                        <input type='submit' value='f' class='create-button'>
-                                    </form>
-                                </div>              
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='g'>
-                                        <input type='submit' value='g' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='h'>
-                                        <input type='submit' value='h' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='i'>
-                                        <input type='submit' value='i' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='j'>
-                                        <input type='submit' value='j' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='k'>
-                                        <input type='submit' value='k' class='create-button'>
-                                    </form>
-                                </div> 
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='l'>
-                                        <input type='submit' value='l' class='create-button'>
-                                    </form>
-                                </div>              
-                            </div>
-                         
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='m'>
-                                        <input type='submit' value='m' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='n'>
-                                        <input type='submit' value='n' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='o'>
-                                        <input type='submit' value='o' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='p'>
-                                        <input type='submit' value='p' class='create-button'>
-                                    </form>
-                                </div>
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='q'>
-                                        <input type='submit' value='q' class='create-button'>
-                                    </form>
-                                </div> 
-                                <div class="col-sm-2">
-                                    <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='r'>
-                                        <input type='submit' value='r' class='create-button'>
-                                    </form>
-                                </div>              
-                            </div>
-                        
-                            <div class="row">
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
                                         <input type = 'hidden' name='name2' value='s'>
                                         <input type='submit' value='s' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='t'>
-                                        <input type='submit' value='t' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='d'>
+                                        <input type='submit' value='d' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='u'>
-                                        <input type='submit' value='u' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='f'>
+                                        <input type='submit' value='f' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='v'>
-                                        <input type='submit' value='v' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='g'>
+                                        <input type='submit' value='g' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='w'>
-                                        <input type='submit' value='w' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='h'>
+                                        <input type='submit' value='h' class='create-button'>
                                     </form>
-                                </div> 
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='x'>
-                                        <input type='submit' value='x' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='j'>
+                                        <input type='submit' value='j' class='create-button'>
                                     </form>
-                                </div>              
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
-                                        <input type = 'hidden' name='name2' value='y'>
-                                        <input type='submit' value='y' class='create-button'>
+                                        <input type = 'hidden' name='name2' value='k'>
+                                        <input type='submit' value='k' class='create-button'>
                                     </form>
-                                </div>
-                                <div class="col-sm-2">
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='l'>
+                                        <input type='submit' value='l' class='create-button'>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <form action="#" method = 'post' class="create-button">
                                         <input type = 'hidden' name='name2' value='z'>
                                         <input type='submit' value='z' class='create-button'>
                                     </form>
-                                </div>
-                            </div>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='x'>
+                                        <input type='submit' value='x' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='c'>
+                                        <input type='submit' value='c' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='v'>
+                                        <input type='submit' value='v' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='b'>
+                                        <input type='submit' value='b' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='n'>
+                                        <input type='submit' value='n' class='create-button'>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form action="#" method = 'post' class="create-button">
+                                        <input type = 'hidden' name='name2' value='m'>
+                                        <input type='submit' value='m' class='create-button'>
+                                    </form>
+                                </td>
+                            </tr>
+                            </table>
                              <form action="#" method = 'post'>
                                 <fieldset>
                                     <input type="radio" name="keyword" value="widgettestmon"> widgettestmon
