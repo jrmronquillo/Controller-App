@@ -1110,6 +1110,10 @@ def testerAPI():
 def automation():
     return render_template('automation.html')
 
+@app.route('/redesign/', methods=['GET', 'POST'])
+def redesign():
+    return render_template('redesign.html')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
