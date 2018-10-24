@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps, TestCasesV2
+from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps, TestCasesV2, BlogPosts
 
 from flask import session as login_session
 import random
@@ -566,6 +566,7 @@ def stbModels():
 @app.route('/controller/<string:viewConfigMode>/<string:button_set>/<string:quad>/<int:rack_id>/<string:slot_id>/<string:scriptMode>/', methods=['GET', 'POST'])
 # login_required
 def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode = '', viewConfigMode='quadConf'):
+    print 'fetch executed'
     viewRackDict = {}
     viewSlotDict = {}
     configList = {'defaultConf': defaultConf(), 'allserversConf': allserversConf(), 'quadConf': quadConf()}
@@ -1112,7 +1113,95 @@ def automation():
 
 @app.route('/redesign/', methods=['GET', 'POST'])
 def redesign():
+    print 'get request made???'
+
+    if request.method == 'POST':
+        print 'post request made!'
+        postData =  request.form.get('name')
+        print 'post data:' + postData
+
     return render_template('redesign.html')
+
+@app.route('/redesign/command/<string:val>/', methods=['GET', 'POST'])
+def command(val):
+    print 'command script executed!'
+    # information needed:
+    # STB selected - Rack and Slot
+    # a) Solo - Rack and Slot
+    # b) All Clients
+    # Command to Send
+
+
+    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
+                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
+                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
+                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+                 "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
+                 "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
+                 "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
+                 "14":"00-80-A3-9D-86-D2", "15":"00-80-A3-9E-67-3B",
+                 "16":"00-80-A3-9E-67-36", "17":"00-80-A3-9E-67-32",
+                 "18":"00-80-A3-9D-86-D6", "19":"00-80-A3-9D-86-D3",
+                 "20":"00-80-A3-9D-86-D1", "21":"00-80-A3-9D-86-D0",
+                 "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
+                 "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0",
+                 "26":"00-80-A3-9E-67-3A"}
+    print val
+    keySendv2("00-80-A3-A9-E3-6A", val, '1-16')
+    # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
+    return render_template('redesign.html')
+
+@app.route('/blog/', methods=['GET', 'POST'])
+def blog():
+    blogposts = session.query(BlogPosts).all()
+    print blogposts
+    for post in blogposts:
+        print post.id
+        print post.title
+        print post.created_date
+
+    if request.method == 'POST':
+        print 'blog post created!'
+        blog_title = request.form.get('blog_title')
+        content = request.form.get('content')
+        print blog_title
+        print content
+        newPost = BlogPosts(title=blog_title, content=content
+                           )
+        session.add(newPost)
+        session.commit()
+        return render_template('blog.html', posts=blogposts)
+    else:
+        return render_template('blog.html', posts=blogposts)
+
+@app.route('/blog/newPost', methods=['GET', 'POST'])
+def newPost():
+    if request.method == 'POST':
+        post_title = request.form['blog_title']
+        post_content = request.form['content']
+        post_author = request.form['blog_author']
+        newPost = BlogPosts(title=post_title,
+                            content=post_content,
+                            author=post_author
+                           )
+        session.add(newPost)
+        session.commit()
+        return redirect(url_for('blog'))
+    else:
+        return render_template('newPost.html')
+
+
+@app.route('/blog/<int:post_id>/deletePost/', methods=['GET', 'POST'])
+def deletePost(post_id):
+    print post_id
+    if request.method == 'POST':   
+        postToDelete = session.query(BlogPosts).filter_by(id=post_id).first()
+        #delete file from DB
+        session.delete(postToDelete)
+        session.commit()
+        return redirect(url_for('blog')) 
+    else:
+        return render_template('deletePost.html')
 
 
 @app.errorhandler(404)

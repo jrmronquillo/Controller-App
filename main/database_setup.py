@@ -1,7 +1,7 @@
 import os
 import sys
 import datetime
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Boolean
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Boolean, Date
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -79,6 +79,26 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
+
+class BlogPosts(Base):
+    __tablename__='blogposts'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(250), nullable=False)
+    created_date = Column(Date, default=datetime.datetime.now().date())
+    content = Column(String(250), nullable=False)
+    author = Column(String(20), nullable=False)
+    
+    @property
+    def serialize(self):
+        return {
+            'title': self.title,
+            'id': self.id,
+            'created_date': self.date,
+            'content': self.content,
+            'author': self.auther,
+        }
+    
+
 
 
 class Categories(Base):

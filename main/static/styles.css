@@ -4,6 +4,10 @@ table, tr, th, td{
   padding: .1rem !important;
 }
 
+#blog-form{
+  margin-left: 50%;
+}
+
 #chTextBox {
   color: #000000 !important;
 }
@@ -164,6 +168,22 @@ fieldset{
 
 }
 
+.letter, .letter-selected, .letter-unused{
+  font-size: 50px;
+}
+
+.letter{
+  color: green;
+}
+
+.letter-selected{
+  color: red;
+}
+
+.letter-unused{
+  color: gray;
+}
+
 strong{
     color: red;
 }
@@ -209,9 +229,11 @@ td{
 .stb-selection{
 
 }
-.content{
-  margin-top: 50%;
+
+#content{
   text-align: center;
+  left: 50%;
+  width: 100%;
 }
 
 .hamburger-container {
@@ -242,8 +264,20 @@ h2, a{
   font-size: 0.5em;
 }
 
+.table-style{
+  margin-left: 50px;
+}
+
 .white-text{
   color: white;
+}
+
+.red-bg{
+  background-color: red;
+}
+
+.lightblue-bg{
+  background-color: lightblue;
 }
 
 @media (max-width: 771px) {
