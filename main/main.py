@@ -1122,16 +1122,15 @@ def redesign():
 
     return render_template('redesign.html')
 
-@app.route('/redesign/command/<string:val>/', methods=['GET', 'POST'])
-def command(val):
+@app.route('/redesign/command/<string:viewerPosition>/<string:action>/', methods=['GET', 'POST'])
+def command(viewerPosition, action):
     print 'command script executed!'
     # information needed:
     # STB selected - Rack and Slot
     # a) Solo - Rack and Slot
     # b) All Clients
     # Command to Send
-
-
+    print viewerPosition
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -1146,8 +1145,30 @@ def command(val):
                  "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
                  "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0",
                  "26":"00-80-A3-9E-67-3A"}
-    print val
-    keySendv2("00-80-A3-A9-E3-6A", val, '1-16')
+
+    viewerPositions = {
+                    "1": [rack_macs["3"], "8"],
+                    "2": [rack_macs["2"], "15"],
+                    "3": [rack_macs["3"], "5"],
+                    "4": [rack_macs["2"], "10"],
+                    "5": [rack_macs["2"], "14"],
+                    "6": [rack_macs["2"], "16"],
+                    "7": [rack_macs["2"], "9"],
+                    "8": [rack_macs["2"], "11"],
+                    "9": [rack_macs["3"], "1"],
+                    "10": [rack_macs["2"], "2"],
+                    "11": [rack_macs["3"], "2"],
+                    "12": [rack_macs["2"], "5"],
+                    "13": [rack_macs["2"], "1"],
+                    "14": [rack_macs["2"], "3"],
+                    "15": [rack_macs["2"], "4"],
+                    "16": [rack_macs["2"], "6"]
+                    }
+    # print viewerPositions[viewerPosition][0]
+    
+    print action
+    keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
+    # keySendv2("00-80-A3-A9-E3-6A", action, '1-16')
     # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
     return render_template('redesign.html')
 

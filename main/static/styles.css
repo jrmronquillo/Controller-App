@@ -40,6 +40,18 @@ table, tr, th, td{
   z-index: 2;
 }
 
+.hidden-left-border{
+  border-left-style: hidden;
+}
+
+.hidden-bottom-border{
+  border-bottom-style: hidden;
+}
+
+.hidden-top-border{
+  border-top-style: hidden;
+}
+
 
 
 .viewbox{
@@ -169,7 +181,7 @@ fieldset{
 }
 
 .letter, .letter-selected, .letter-unused{
-  font-size: 50px;
+  /*font-size: 2em;*/
 }
 
 .letter{
@@ -203,8 +215,9 @@ strong{
 }
 
 td{
-
   text-align: center;
+  width: 100px;
+  height: 100px;
 }
 
 
