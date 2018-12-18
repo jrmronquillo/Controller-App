@@ -1133,6 +1133,40 @@ def command(irnetboxMac, slot, action):
     # a) Solo - Rack and Slot
     # b) All Clients
     # Command to Send
+    mac_list = ['00-80-A3-A9-E3-7A', "00-80-A3-A2-D9-13", "00-80-A3-A9-E3-68", 
+                 "00-80-A3-A9-E3-6A", "00-80-A3-A9-E3-7A", 
+                 "00-80-A3-A9-DA-67", "00-80-A3-A9-E3-79", 
+                 "00-80-A3-A9-E3-78", "00-80-A3-9E-67-37", 
+                 "00-80-A3-9D-86-D5", "00-80-A3-9E-67-34",
+                 "00-80-A3-9E-67-27", "00-80-A3-9D-86-CF",
+                 "00-80-A3-9E-67-35", "00-20-4A-BD-C5-1D",
+                 "00-80-A3-9D-86-D2", "00-80-A3-9E-67-3B",
+                 "00-80-A3-9E-67-36", "00-80-A3-9E-67-32",
+                 "00-80-A3-9D-86-D6", "00-80-A3-9D-86-D3",
+                 "00-80-A3-9D-86-D1", "00-80-A3-9D-86-D0",
+                 "00-20-4A-DF-64-55", "00-80-A3-A1-7C-3C",
+                 "00-80-A3-A2-48-5C", "00-20-4A-DF-65-A0",
+                 "00-80-A3-9E-67-3A"]
+    
+    command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow', 
+                    'rightArrow', 'upArrow', 'downArrow', 'red', 'prev', 
+                    'dash','rewind', 'play', 'fastforward', 'chanUp',
+                    'chanDown']
+
+    slot_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16, '1-16']
+
+    if(irnetboxMac in mac_list and slot in slot_list and action in command_list): 
+        print 'valid command/slotNumber/mac'
+        keySendv2(irnetboxMac, action, slot)
+        # keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
+        # keySendv2("00-80-A3-A9-E3-6A", action, '1-16')
+        # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
+        return render_template('redesign.html', errorMessage='')
+    else:
+        return render_template('redesign.html', errorMessage='Invalid MAC, command or slot number used')
+
+    
+
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -1167,14 +1201,8 @@ def command(irnetboxMac, slot, action):
                     "16": [rack_macs["2"], "6"]
                     }
     # print viewerPositions[viewerPosition][0]
-    
-    print action
-    keySendv2(irnetboxMac, action, slot)
-    # keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
-    # keySendv2("00-80-A3-A9-E3-6A", action, '1-16')
-    # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
-    return render_template('redesign.html', errorMessage='test')
-
+  
+        
 @app.route('/blog/', methods=['GET', 'POST'])
 def blog():
     blogposts = session.query(BlogPosts).all()
