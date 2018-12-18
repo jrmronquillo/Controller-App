@@ -1123,16 +1123,16 @@ def redesign():
 
     return render_template('redesign.html')
 
-@app.route('/redesign/command/<string:viewerPositions>/<string:action>/', methods=['GET', 'POST'])
-def command(viewerPosition, action):
+@app.route('/redesign/command/<string:irnetboxMac>/<string:slot>/<string:action>/', methods=['GET', 'POST'])
+def command(irnetboxMac, slot, action):
     print 'command script executed!'
+    print irnetboxMac
     # TEST TEST TEST
     # information needed:
     # STB selected - Rack and Slot
     # a) Solo - Rack and Slot
     # b) All Clients
     # Command to Send
-    print viewerPosition
     rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
                  "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
                  "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
@@ -1169,10 +1169,11 @@ def command(viewerPosition, action):
     # print viewerPositions[viewerPosition][0]
     
     print action
-    keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
+    keySendv2(irnetboxMac, action, slot)
+    # keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
     # keySendv2("00-80-A3-A9-E3-6A", action, '1-16')
     # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
-    return render_template('redesign.html')
+    return render_template('redesign.html', errorMessage='test')
 
 @app.route('/blog/', methods=['GET', 'POST'])
 def blog():

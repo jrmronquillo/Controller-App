@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <title>Redesign with key events</title>
+	
+	{% if errorMessage %}	
+		<span>{{errorMessage}}</span>
+	{% endif %}
   <div id="react_main_container"></div>
 
     <!-- Load React. -->
