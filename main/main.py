@@ -1126,6 +1126,7 @@ def redesign():
 @app.route('/redesign/command/<string:viewerPosition>/<string:action>/', methods=['GET', 'POST'])
 def command(viewerPosition, action):
     print 'command script executed!'
+    # TEST TEST TEST
     # information needed:
     # STB selected - Rack and Slot
     # a) Solo - Rack and Slot
