@@ -1123,7 +1123,7 @@ def redesign():
 
     return render_template('redesign.html')
 
-@app.route('/redesign/command/<string:viewerPosition>/<string:action>/', methods=['GET', 'POST'])
+@app.route('/redesign/command/<string:viewerPositions>/<string:action>/', methods=['GET', 'POST'])
 def command(viewerPosition, action):
     print 'command script executed!'
     # TEST TEST TEST
