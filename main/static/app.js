@@ -37,7 +37,7 @@ class Main extends React.Component {
     console.log('command: '+this.state.command)
 
     if (this.state.command && this.state.viewerPosition > -1){
-      fetch('http://localhost:5000/redesign/command/'+this.state.viewerPosition+'/'+this.state.command);
+      fetch('http://localhost:3000/redesign/command/'+this.state.viewerPosition+'/'+this.state.command);
     } else {
       console.log('Could not determine key pressed or viewer position');
     }
@@ -167,6 +167,24 @@ class Main extends React.Component {
       case 122:
         key='z';
         break;
+      case 99:
+        key='c';
+        break;
+      case 118:
+        key='v';
+        break;
+      case 98:
+        key='b';
+        break;
+      case 96:
+        key='`';
+        break;
+      case 116:
+        key='t';
+        break;
+      case 113:
+        key='q';
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -175,12 +193,17 @@ class Main extends React.Component {
                             'a':'leftArrow',
                             's':'downArrow',
                             'd':'rightArrow',
-                            'e':'guide',
-                            'r':'menu',
+                            'e':'menu',
+                            'r':'red',
                             'x':'exit',
+                            'c':'rewind',
+                            'v':'play',
+                            'b':'fastforward',
+                            't':'chanup',
+                            'q':'guide',
                             ' ':'select',
                             'f':'info',
-                            'g':'red',
+                            'g':'chandown',
                             'z':'dash',
                             '1': '1',
                             '2': '2',
@@ -191,7 +214,8 @@ class Main extends React.Component {
                             '7': '7',
                             '8': '8',
                             '9': '9',
-                            '0': '0'
+                            '0': '0',
+                            '`': 'prev'
                               };
     var selectorCommands = ['',
                             '^', 'y', 'h', 'n', '&',
@@ -228,6 +252,10 @@ class Main extends React.Component {
             <h1>Controls </h1>
             <table className="table-style">
               <tr>
+                <td className={this.state.keyPressed =='`'? 'letter lightblue-bg': 'letter'}>
+                  <h1>prev</h1>
+                  <span> ` (backtick)</span>
+                </td>
                 <td>
                   <span className={this.state.keyPressed =='1'? 'letter lightblue-bg': 'letter'}> 1</span>
                 </td>
@@ -262,20 +290,25 @@ class Main extends React.Component {
             </table>
             <table className="table-style">
               <tr>
-                <td>
-                  <span className="letter-unused"> Q</span>
+                <td className={this.state.keyPressed =='q'? 'letter lightblue-bg': 'letter'}>
+                  <h1>GUIDE</h1>
+                  <span> Q</span>
                 </td>
                 <td className={this.state.keyPressed =='w'? 'letter lightblue-bg': 'letter'}>
                   <h1>&uarr;</h1>
                   <span > W </span> <br />
                 </td>
                 <td className={this.state.keyPressed =='e'? 'letter lightblue-bg': 'letter'}>
-                  <h1>GUIDE</h1>
+                  <h1>MENU</h1>
                   <span> E </span>
                 </td>
                 <td className={this.state.keyPressed =='r'? 'letter lightblue-bg': 'letter'}>
-                  <h1>MENU</h1>
+                  <h1>RED</h1>
                   <span > R </span>
+                </td>
+                 <td className={this.state.keyPressed =='t'? 'letter lightblue-bg': 'letter'}>
+                  <h1>&#9650;</h1>
+                  <span > T </span>
                 </td>
               </tr>
             </table>
@@ -300,7 +333,7 @@ class Main extends React.Component {
                   <span>F</span>
                 </td>
                 <td className={this.state.keyPressed =='g'? 'letter lightblue-bg': 'letter'}>
-                  <h1>RED</h1>
+                  <h1>&#9660;</h1>
                   <span>G</span>
                 </td>
               </tr>
@@ -319,11 +352,17 @@ class Main extends React.Component {
                   <h1>EXIT</h1>
                   <span>X</span>
                 </td>
-                <td>
-                  <span className="letter-unused">C</span>
+                <td className={this.state.keyPressed =='c'? 'letter lightblue-bg': 'letter'}>
+                  <h1>REW</h1>
+                  <span>C</span>
                 </td>
-                <td>
-                  <span className="letter-unused">V</span>
+                <td className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
+                  <h1>PLAY</h1>
+                  <span>V</span>
+                </td>
+                 <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
+                  <h1>FFWD</h1>
+                  <span>B</span>
                 </td>
               </tr>
             </table>
