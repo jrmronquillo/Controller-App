@@ -12,6 +12,8 @@ class Main extends React.Component {
       command: '',
       viewerConfig: [],
       viewerPosition: '',
+      irnetboxMac: '',
+      slot: '1-16'
     };
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -33,15 +35,30 @@ class Main extends React.Component {
   }
 
   sendCommands(){
-    console.log('viewerPosition: '+this.state.viewerPosition)
-    console.log('command: '+this.state.command)
+    var mac_list = ['00-80-A3-A9-E3-7A', "00-80-A3-A2-D9-13", "00-80-A3-A9-E3-68", 
+                 "00-80-A3-A9-E3-6A", "00-80-A3-A9-E3-7A", 
+                 "00-80-A3-A9-DA-67", "00-80-A3-A9-E3-79", 
+                 "00-80-A3-A9-E3-78", "00-80-A3-9E-67-37", 
+                 "00-80-A3-9D-86-D5", "00-80-A3-9E-67-34",
+                 "00-80-A3-9E-67-27", "00-80-A3-9D-86-CF",
+                 "00-80-A3-9E-67-35", "00-20-4A-BD-C5-1D",
+                 "00-80-A3-9D-86-D2", "00-80-A3-9E-67-3B",
+                 "00-80-A3-9E-67-36", "00-80-A3-9E-67-32",
+                 "00-80-A3-9D-86-D6", "00-80-A3-9D-86-D3",
+                 "00-80-A3-9D-86-D1", "00-80-A3-9D-86-D0",
+                 "00-20-4A-DF-64-55", "00-80-A3-A1-7C-3C",
+                 "00-80-A3-A2-48-5C", "00-20-4A-DF-65-A0",
+                 "00-80-A3-9E-67-3A"];
 
-    if (this.state.command && this.state.viewerPosition > -1){
-      fetch('http://localhost:3000/redesign/command/'+this.state.viewerPosition+'/'+this.state.command);
+
+    console.log('viewerPosition: '+this.state.viewerPosition);
+    console.log('command: '+this.state.command);
+    console.log('irnetboxMac:'+this.state.irnetboxMac);
+    if(this.state.irnetboxMac && this.state.slot && this.state.command){
+      fetch('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
     } else {
-      console.log('Could not determine key pressed or viewer position');
+      console.log('invalid mac, slot, command');
     }
-    
   
   }
 
@@ -182,12 +199,24 @@ class Main extends React.Component {
       case 116:
         key='t';
         break;
+      case 112:
+        key='p';
+        break;
+      case 45:
+        key='-';
+        break;
       case 113:
         key='q';
         break;
       default:
         key = 'unexpected keypress';
     }
+
+    var stbObj = {
+      macAddr: '',
+      slot: '',
+    };
+
     var controlCommands = {
                             'w':'upArrow',
                             'a':'leftArrow',
@@ -217,25 +246,55 @@ class Main extends React.Component {
                             '0': '0',
                             '`': 'prev'
                               };
-    var selectorCommands = ['',
-                            '^', 'y', 'h', 'n', '&',
-                            'u', 'j', 'm', '*','i',
-                            'k', ',', '(', 'o', 'l',
-                            '.'
-                            ];
-    console.log('controlCommands'+controlCommands[key]);
-    if(controlCommands[key]){
+    var viewerPositionMapping = {
+                            '': '1',
+                            '^':'2',
+                            'h':'3',
+                            'n':'4',
+                            '&':'5',
+                            '&':'6',
+                            'u':'7', 
+                            'j':'8',
+                            'm':'9', 
+                            '*':'9',
+                            'i':'10',
+                            'k':'11', 
+                            ',':'12', 
+                            '(':'13', 
+                            'o':'14',
+                            'l':'15',
+                            '.':'16',
+                            ')':'17',
+                            '-':'18',
+                            'p':'19'
+                            };
+    var macMapping = {
+                          '1' :'',
+                          '2' :'00-80-A3-A9-E3-6A',
+                          '3' :'00-80-A3-A9-E3-7A',
+                          '17':'00-80-A3-9D-86-D0',
+                          '18':'00-80-A3-9D-86-D1',
+                          '19':'00-80-A3-9D-86-D3'
+                            };
+  
+    console.log('key translated to:');
+    console.log(controlCommands[key]);
+    
+    console.log(macMapping[viewerPositionMapping[key]]);
+    if(macMapping[viewerPositionMapping[key]]){
       this.setState({
-        keyPressed: key,
-        command: controlCommands[key]
-      });
-    } else {
-      this.setState({
-        viewerPosition: selectorCommands.indexOf(key),
-        command: ''
+        irnetboxMac: macMapping[viewerPositionMapping[key]]
       });
     }
-    this.sendCommands();
+    
+    console.log(this.state.irnetboxMac);
+
+    if(controlCommands[key]){
+      this.setState({
+        command: controlCommands[key]
+      });
+      this.sendCommands();
+    }
   }
     
     //fetch('https://jsonplaceholder.typicode.com/todos/1')
@@ -398,7 +457,7 @@ class Main extends React.Component {
                   <span> (</span>
                 </td>
                 <td>
-                  <span className="letter"> )</span>
+                  <span className={this.state.irnetboxMac !==''? 'letter lightblue-bg': 'letter'}> )</span>
                 </td>
                 <td>
                   <span className="letter">_</span>
@@ -426,6 +485,7 @@ class Main extends React.Component {
                   <span> O</span>
                 </td>
                 <td>
+                  <h5>hx2x rack B10</h5>
                   <span className="letter">P</span>
                 </td>
               </tr>
