@@ -269,8 +269,8 @@ class Main extends React.Component {
                             'p':'19'
                             };
     var macMapping = {
-                          '1' :'',
-                          '2' :'00-80-A3-A9-E3-6A',
+                          '1' :'00-80-A3-A9-E3-7A',
+                          '2' :'00-80-A3-A9-E3-7A',
                           '3' :'00-80-A3-A9-E3-7A',
                           '17':'00-80-A3-9D-86-D0',
                           '18':'00-80-A3-9D-86-D1',
@@ -279,7 +279,8 @@ class Main extends React.Component {
   
     console.log('key translated to:');
     console.log(controlCommands[key]);
-    
+    console.log('viewerPositionMapping');
+    console.log(viewerPositionMapping[key]);
     console.log(macMapping[viewerPositionMapping[key]]);
     if(macMapping[viewerPositionMapping[key]]){
       this.setState({
