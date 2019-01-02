@@ -1153,7 +1153,7 @@ def command(irnetboxMac, slot, action):
                     'dash','rewind', 'play', 'fastforward', 'chanUp',
                     'chanDown']
 
-    slot_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16, '1-16']
+    slot_list = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '1-16']
 
     if(irnetboxMac in mac_list and slot in slot_list and action in command_list): 
         print 'valid command/slotNumber/mac'
@@ -1163,6 +1163,11 @@ def command(irnetboxMac, slot, action):
         # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
         return render_template('redesign.html', errorMessage='')
     else:
+        print "invalid mac, slot, or action was used"
+        print irnetboxMac
+        print action
+        print slot
+
         return render_template('redesign.html', errorMessage='Invalid MAC, command or slot number used')
 
     

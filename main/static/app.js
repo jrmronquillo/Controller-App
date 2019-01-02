@@ -54,7 +54,10 @@ class Main extends React.Component {
     console.log('viewerPosition: '+this.state.viewerPosition);
     console.log('command: '+this.state.command);
     console.log('irnetboxMac:'+this.state.irnetboxMac);
+    console.log('slot state:'+this.state.slot);
     if(this.state.irnetboxMac && this.state.slot && this.state.command){
+      console.log('if statement executed');
+      console.log('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
       fetch('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
     } else {
       console.log('invalid mac, slot, command');
@@ -248,15 +251,15 @@ class Main extends React.Component {
                             '`': 'prev'
                               };
     var viewerPositionMapping = {
-                            '': '1',
-                            '^':'2',
+                            '': '0',
+                            '^':'1',
+                            'y':'2',
                             'h':'3',
                             'n':'4',
                             '&':'5',
-                            '&':'6',
-                            'u':'7', 
-                            'j':'8',
-                            'm':'9', 
+                            'u':'6', 
+                            'j':'7',
+                            'm':'8', 
                             '*':'9',
                             'i':'10',
                             'k':'11', 
@@ -269,28 +272,49 @@ class Main extends React.Component {
                             '-':'18',
                             'p':'19'
                             };
+    console.log('viewerPositionMapping')
+    console.log(viewerPositionMapping[key]);                        
+    var stbs = {
+      '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '8'},
+      '2': {macAddr: '00-80-A3-A9-E3-6A', slot: '15'},
+      '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '5'},
+      '4': {macAddr: '00-80-A3-A9-E3-6A', slot: '10'},
+      '5': {macAddr: '00-80-A3-A9-E3-6A', slot: '14'},
+      '6': {macAddr: '00-80-A3-A9-E3-6A', slot: '16'},
+      '7': {macAddr: '00-80-A3-A9-E3-6A', slot: '9'},
+      '8': {macAddr: '00-80-A3-A9-E3-6A', slot: '11'},
+      '9': {macAddr: '00-80-A3-A9-E3-7A', slot: '1'},
+      '10':{macAddr: '00-80-A3-A9-E3-6A', slot: '2'},
+      '11':{macAddr: '00-80-A3-A9-E3-7A', slot: '2'},
+      '12':{macAddr: '00-80-A3-A9-E3-6A', slot: '5'},
+      '13':{macAddr: '00-80-A3-A9-E3-6A', slot: '1'},
+      '14':{macAddr: '00-80-A3-A9-E3-6A', slot: '3'},
+      '15':{macAddr: '00-80-A3-A9-E3-6A', slot: '4'},
+      '16':{macAddr: '00-80-A3-A9-E3-6A', slot: '6'},
+      '17':{macAddr: '00-80-A3-9D-86-D0', slot: '1-16'},
+      '18':{macAddr: '00-80-A3-9D-86-D1', slot: '1-16'},
+      '19':{macAddr: '00-80-A3-9D-86-D3', slot: '1-16'},
+
+    };
+
+
+
     var macMapping = {
                           '1' :'00-80-A3-A9-E3-7A',
-                          '2' :'00-80-A3-A9-E3-7A',
+                          '2' :'00-80-A3-A9-E3-6A',
                           '3' :'00-80-A3-A9-E3-7A',
                           '17':'00-80-A3-9D-86-D0',
                           '18':'00-80-A3-9D-86-D1',
                           '19':'00-80-A3-9D-86-D3'
                             };
-  
-    console.log('key translated to:');
-    console.log(controlCommands[key]);
-    console.log('viewerPositionMapping');
-    console.log(viewerPositionMapping[key]);
-    console.log(macMapping[viewerPositionMapping[key]]);
-    console.log('test output:');
 
-    if(macMapping[viewerPositionMapping[key]]){
+    if(stbs[viewerPositionMapping[key]]){
       this.setState({
-        irnetboxMac: macMapping[viewerPositionMapping[key]]
+        irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
+        slot: stbs[viewerPositionMapping[key]].slot
       });
     }
-    
+    console.log('irnetboxMac state:');
     console.log(this.state.irnetboxMac);
 
     if(controlCommands[key]){
@@ -474,19 +498,19 @@ class Main extends React.Component {
               <tr>
                 <td colSpan='1' width= "10%" className='hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.viewerPosition =='2'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
                   <h5> STB 2 </h5>
                   <span> Y</span>
                 </td>
-                <td className={this.state.viewerPosition =='6'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 6</h5>
                   <span>U</span>
                 </td>
-                <td className={this.state.viewerPosition =='10'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 10</h5>
                   <span>I</span>
                 </td>
-                <td className={this.state.viewerPosition =='14'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='o'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
                   <span> O</span>
                 </td>
@@ -502,23 +526,23 @@ class Main extends React.Component {
                 </td>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.viewerPosition =='3'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 3</h5>
                   <span>H</span>
                 </td>
-                <td className={this.state.viewerPosition =='7'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 7</h5>
                   <span>J</span>
                 </td>
-                <td className={this.state.viewerPosition =='11'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 11</h5>
                   <span>K</span>
                 </td>
-                <td className={this.state.viewerPosition =='15'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 15</h5>
                   <span>L</span>
                 </td>
-                <td>
+                <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
                   <span className="letter">&#59;</span>
                 </td>
               </tr>
@@ -531,19 +555,19 @@ class Main extends React.Component {
                 </td>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.viewerPosition =='4'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 4</h5>
                   <span> N</span>
                 </td>
-                <td className={this.state.viewerPosition =='8'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 8</h5>
                   <span>M</span>
                 </td>
-                <td className={this.state.viewerPosition =='12'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 12</h5>
                   <span>&#44;</span>
                 </td>
-                <td className={this.state.viewerPosition =='16'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
                   <span >&#46;</span>
                 </td>
