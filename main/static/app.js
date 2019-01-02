@@ -212,10 +212,11 @@ class Main extends React.Component {
         key = 'unexpected keypress';
     }
 
-    var stbObj = {
-      macAddr: '',
-      slot: '',
-    };
+    this.setState({
+      keyPressed: key,
+    });
+    console.log('keypress state:');
+    console.log(this.state.keyPressed);
 
     var controlCommands = {
                             'w':'upArrow',
@@ -282,6 +283,8 @@ class Main extends React.Component {
     console.log('viewerPositionMapping');
     console.log(viewerPositionMapping[key]);
     console.log(macMapping[viewerPositionMapping[key]]);
+    console.log('test output:');
+
     if(macMapping[viewerPositionMapping[key]]){
       this.setState({
         irnetboxMac: macMapping[viewerPositionMapping[key]]
@@ -440,27 +443,29 @@ class Main extends React.Component {
              <h1>Device Selector</h1>
              <table className="table-style">
               <tr>
-                <td className={this.state.viewerPosition =='1'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
                   <span> &#x5e;</span>
                 </td>
-                <td className={this.state.viewerPosition =='5'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
                 <h5>STB 5</h5>
                   <span > &amp;</span>
 
                 </td>
-                <td className={this.state.viewerPosition =='9'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 9</h5>
                   <span>*</span>
                 </td>
-                <td className={this.state.viewerPosition =='13'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 13</h5>
                   <span> (</span>
                 </td>
-                <td>
-                  <span className={this.state.irnetboxMac !==''? 'letter lightblue-bg': 'letter'}> )</span>
+                <td className={this.state.keyPressed ==')'? 'letter lightblue-bg': 'letter'}>
+                  <h5>hx2x rack B12</h5>
+                  <span> )</span>
                 </td>
-                <td>
+                <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
+                  <h5>hx2x rack B11</h5>
                   <span className="letter">_</span>
                 </td>
               </tr>
@@ -485,9 +490,9 @@ class Main extends React.Component {
                   <h5>STB 14</h5>
                   <span> O</span>
                 </td>
-                <td>
+                <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
                   <h5>hx2x rack B10</h5>
-                  <span className="letter">P</span>
+                  <span> P</span>
                 </td>
               </tr>
             </table>
