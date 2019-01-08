@@ -86,9 +86,10 @@ def setVideo(config):
     racks = []
     slots = []
     # generate rack representation in a list
-    for i in range (12):
+    for i in range (24):
         racks.append("r"+str(i+1))
     print racks
+    print 'number of items?'+str(len(racks))
     for j in range(16):
         slots.append("s"+str(j+1))
     print slots
@@ -412,6 +413,62 @@ def testingPage():
 @app.route('/testingPage2', methods=['GET', 'POST'])
 def testingPage2():
     return render_template('testingPage2.html')
+
+@app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
+def configVideo2(configNum):
+    defaultConf = {
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r2s1", "10":"r2s2", "11":"r2s3", "12":"r2s4",
+                    "13":"r2s5", "14":"r2s6", "15":"r2s7", "16":"r2s8"
+                }
+    allclientsConf = {
+                    "1":"r2s1", "2":"r2s2", "3":"r2s3", "4":"r2s4",
+                    "5":"r2s5", "6":"r2s6", "7":"r2s7", "8":"r2s8",
+                    "9":"r2s9", "10":"r2s10", "11":"r2s11", "12":"r2s12",
+                    "13":"r2s13", "14":"r2s14", "15":"r2s15", "16":"r2s16"
+    }
+    print configNum
+    #r12 = A12, r13 = B12, r14 = B11
+    dictionary1 = {
+        '1':{
+                    "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+                    "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
+                    "9":"r2s1", "10":"r2s2", "11":"r2s3", "12":"r2s4",
+                    "13":"r2s5", "14":"r2s6", "15":"r2s7", "16":"r2s8"
+                },
+        '2':{
+                    "1":"r2s1", "2":"r2s2", "3":"r2s3", "4":"r2s4",
+                    "5":"r2s5", "6":"r2s6", "7":"r2s7", "8":"r2s8",
+                    "9":"r2s9", "10":"r2s10", "11":"r2s11", "12":"r2s12",
+                    "13":"r2s13", "14":"r2s14", "15":"r2s15", "16":"r2s16"
+    },
+        '3': {
+                    "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
+                    "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
+                    "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
+            },
+
+        '4': {   
+                    "1":"r13s1", "2":"r13s2", "3":"r13s3", "4":"r13s4",
+                    "5":"r13s5", "6":"r13s6", "7":"r13s7", "8":"r13s8",
+                    "9":"r14s1", "10":"r14s2", "11":"r14s3", "12":"r14s4",
+                    "13":"r14s5", "14":"r14s6", "15":"r14s7", "16":"r14s8"
+            },
+        '5': {
+                    "1":"r15s1", "2":"r15s2", "3":"r15s3", "4":"r15s4",
+                    "5":"r15s5", "6":"r15s6", "7":"r15s7", "8":"r15s8",
+                    "9":"r16s1", "10":"r16s2", "11":"r16s3", "12":"r16s4",
+                    "13":"r16s5", "14":"r16s6", "15":"r16s7", "16":"r16s8"
+            }, 
+    }
+    print dictionary1[str(configNum)]
+
+    setVideo(dictionary1[str(configNum)])
+
+
+    return 'configVideo2 initiated'
 
 
 @app.route('/setVideo/', methods=['GET', 'POST'])

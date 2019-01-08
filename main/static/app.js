@@ -211,6 +211,21 @@ class Main extends React.Component {
       case 113:
         key='q';
         break;
+      case 59:
+        key=';';
+        break;
+      case 39:
+        key="'";
+        break;
+      case 91:
+        key="[";
+        break;
+      case 92:
+        key='&#92;';
+        break;
+      case 93:
+        key=']';
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -297,6 +312,14 @@ class Main extends React.Component {
 
     };
 
+    var multiviewConfig = {
+                          '[':'1',
+                          ']':'2',
+                          '&#92;':'3',
+                          ';':'4',
+                          "'":'5'
+                          };
+
 
 
     var macMapping = {
@@ -317,6 +340,14 @@ class Main extends React.Component {
     console.log('irnetboxMac state:');
     console.log(this.state.irnetboxMac);
 
+    if(multiviewConfig[key]){
+      //4 quadConf
+      console.log('multiview config executed');
+      console.log(multiviewConfig[key]);
+      //fetch('http://localhost:3000/setVideo/redesign/4/');
+      fetch('http://localhost:3000/setVideo/redesign/'+multiviewConfig[key]+'/');
+    }
+
     if(controlCommands[key]){
       this.setState({
         command: controlCommands[key]
@@ -324,6 +355,8 @@ class Main extends React.Component {
       this.sendCommands();
     }
   }
+
+
     
     //fetch('https://jsonplaceholder.typicode.com/todos/1')
     //  .then(response => response.json())
@@ -492,6 +525,10 @@ class Main extends React.Component {
                   <h5>hx2x rack B11</h5>
                   <span className="letter">_</span>
                 </td>
+                <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
+                  <h5>unassigned</h5>
+                  <span className="letter">=</span>
+                </td>
               </tr>
             </table>
              <table className="table-style">
@@ -510,13 +547,25 @@ class Main extends React.Component {
                   <h5>STB 10</h5>
                   <span>I</span>
                 </td>
-                <td className={this.state.keyPressed =='o'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
                   <span> O</span>
                 </td>
                 <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
                   <h5>hx2x rack B10</h5>
                   <span> P</span>
+                </td>
+                <td className={this.state.keyPressed =='['? 'letter lightblue-bg': 'letter'}>
+                  <h5>Multiviewer Config 1</h5>
+                  <span>[</span>
+                </td>
+                <td className={this.state.keyPressed ==']'? 'letter lightblue-bg': 'letter'}>
+                  <h5>Multiviewer Config 2</h5>
+                  <span>]</span>
+                </td>
+                <td className={this.state.keyPressed =="&#92;"? 'letter lightblue-bg': 'letter'}>
+                  <h5>Multiviewer Config 3 (Rack A02/A03)</h5>
+                  <span>&#92;</span>
                 </td>
               </tr>
             </table>
@@ -543,7 +592,12 @@ class Main extends React.Component {
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
+                  <h5>MultiViewer Config 4 (Rack B12/B14)</h5>
                   <span className="letter">&#59;</span>
+                </td>
+                <td className={this.state.keyPressed =="'"? 'letter lightblue-bg': 'letter'}>
+                  <h5>Multiviwer Config 5 (Rack B15/B16) </h5>
+                  <span className="letter">&apos;</span>
                 </td>
               </tr>
             </table>
@@ -570,6 +624,10 @@ class Main extends React.Component {
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
                   <span >&#46;</span>
+                </td>
+                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
+                  <h5>unnassigned</h5>
+                  <span>/</span>
                 </td>
               </tr>
             </table>
