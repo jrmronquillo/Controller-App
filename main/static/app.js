@@ -596,7 +596,7 @@ class Main extends React.Component {
                   <span className="letter">&#59;</span>
                 </td>
                 <td className={this.state.keyPressed =="'"? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviwer Config 5 (Rack B15/B16) </h5>
+                  <h5>Multiviewer Config 5 (Rack B15/B16) </h5>
                   <span className="letter">&apos;</span>
                 </td>
               </tr>

@@ -463,12 +463,15 @@ def configVideo2(configNum):
                     "13":"r16s5", "14":"r16s6", "15":"r16s7", "16":"r16s8"
             }, 
     }
-    print dictionary1[str(configNum)]
+    
 
-    setVideo(dictionary1[str(configNum)])
-
-
-    return 'configVideo2 initiated'
+    if str(configNum) in dictionary1:
+        #print dictionary1[str(configNum)]
+        setVideo(dictionary1[str(configNum)])
+        return 'configVideo2 initiated'
+    else:
+        print 'invalid multiviwer configuration key used'
+        return 'invalid multiviwer configuration key used'
 
 
 @app.route('/setVideo/', methods=['GET', 'POST'])
