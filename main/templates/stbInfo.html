@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+<h1>Test</h1>
+
+{% if stbinfo != []%}
+	{% for stb in stbinfo %}
+		<hr>
+		<div>
+			<p>{{stb.id}} {{stb.mac}} {{stb.slot}} {{stb.model}} {{stb.rackslot_id}}</p>
+		</div>
+		<hr>
+	{% endfor %}
+{% else %}
+	<p> No Data </p>
+{% endif %}
+{% endblock %}

@@ -2,8 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, User, PostData, TestCases, TestSteps, TestCasesV2, BlogPosts
-
+from database_setup import Base, Stb
 from flask import session as login_session
 import random
 import string
@@ -25,6 +24,7 @@ import time      # used to insert current date in email report
 import sys
 import os
 import subprocess
+import re       # regex library
 
 from handlers.decorators import (login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
@@ -45,7 +45,7 @@ CLIENT_ID = json.loads(
 APPLICATION_NAME = "Catalog Application"
 
 
-engine = create_engine('sqlite:///catalogwithusers.db')
+engine = create_engine('sqlite:///stbInfo.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -54,6 +54,7 @@ session = DBSession()
 
 import telnetlib
 import socket
+
 
 def takeScreenshot(scriptName = 'test', imageName = 'test'):
     print "screenshot function executed"
@@ -67,6 +68,8 @@ def takeScreenshot(scriptName = 'test', imageName = 'test'):
     # with configs:
     p = subprocess.Popen(completeCommand, shell=True)
     
+
+
             
         
 
@@ -150,11 +153,14 @@ def setLabels(labelArr):
     tnMV = telnetlib.Telnet("10.23.223.93", "9990")
     tnMV.write("INPUT LABELS:\n")
     for key,value in labelArr.items():
+        print 'key:'
         print key
         multiviewerPos = int(key)-1
         print value
-        labelName = stbModels.get(value,"default")
+        # labelName = stbModels.get(value,"default")
+        labelName = value
         commandStr = str(multiviewerPos) + " " + labelName
+        print 'command String:'
         print commandStr
         tnMV.write(commandStr)
         tnMV.write("\n")
@@ -213,7 +219,52 @@ def keySendv3(commandParams):
     for i in commandParams:
         print i
         # keySendv2(rack,key, slot)
+
+@app.route('/stbPosition/<int:id>/edit/<string:rsPosition>/', methods=['GET', 'POST'])
+def editStbPosition(id, rsPosition):
+    editedStb = session.query(
+        Stb).filter_by(id=id).first()
+    editedStb.rackslot_id = rsPosition
+    if request.method == 'POST':
+        if request.form['name']:
+            editedCategory.name = request.form['name']
+            return redirect(url_for('showCategories'))
+    else:
+        return 'stb position edit executed'
  
+@app.route('/stbs/JSON')
+def showStbsJSON(): 
+    stbInfo = session.query(Stb).all()
+    return jsonify(stbInfoData=[i.serialize for i in stbInfo])
+
+@app.route('/stbs/')
+def showStbs():
+    stbInfo = session.query(Stb).all()
+    print 'stbInfo:'
+    print stbInfo
+    print 'showStb api executed'
+    return render_template('stbInfo.html', stbinfo=stbInfo)
+
+stbs = {
+    '1': {'mac':'00:00:00:00', 'slot': '1', 'model': 'testModel'}
+}
+@app.route('/stbs/new/')
+def newStb():
+    stbs = {'1': {'mac':'001', 'slot': '2'}
+            }
+    
+    if request.method =='POST':
+        
+        newStb = Stb(mac='0000', slot='1', model='hr44-800', rackslot_id='r3s1')
+        session.add(newSTB)
+        session.commit()
+        return render_template('stbInfo.html', stbinfo='')
+    else:
+        print stbs
+        newStb = Stb(mac='0000', slot='1', model='hr44-800', rackslot_id='r3s1')
+        session.add(newStb)
+        session.commit()
+        return render_template('stbInfo.html', stbinfo='')
 
 # Create anti-forgery state token
 @app.route('/login')
@@ -414,6 +465,8 @@ def testingPage():
 def testingPage2():
     return render_template('testingPage2.html')
 
+
+
 @app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
 def configVideo2(configNum):
     defaultConf = {
@@ -472,6 +525,63 @@ def configVideo2(configNum):
     else:
         print 'invalid multiviwer configuration key used'
         return 'invalid multiviwer configuration key used'
+
+@app.route('/setLabels/<string:stb1>/<string:stb2>/<string:stb3>/<string:stb4>'
+           '/<string:stb5>/<string:stb6>/<string:stb7>/<string:stb8>'
+           '/<string:stb9>/<string:stb10>/<string:stb11>/<string:stb12>'
+           '/<string:stb13>/<string:stb14>/<string:stb15>/<string:stb16>/', methods=['GET', 'POST'])
+def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', stb8='',
+                 stb9='',stb10='', stb11='', stb12='', stb13='', stb14='', stb15='', stb16=''):
+    # sanititize inputs - only go to next step if stb input contains digits/letters with a total less
+    # than 10 characters
+    sanitizerArr = [stb1, stb2, stb3, stb4, stb5, stb6, stb7, stb8,
+                    stb9, stb10, stb11, stb12, stb13, stb14, stb15, stb16]
+    for stb in sanitizerArr:
+        regexStatus = re.findall("^[0-9A-Za-z]{10,}",stb)
+        if (regexStatus):
+            print 'fail:'
+            print stb
+            print regexStatus
+            return 'one of the stb inputs failed regex! (digit or character less than 10 characters)'
+        else:
+            print 'stb input qualified!'
+            print stb
+            print regexStatus
+    
+
+    # store url input strings into an array/list
+    # store parameters in a dictionary because that is what the setLabels() functions uses.
+    # Note: The stb variables are by default 'unicode', so they were converted invidually
+    # to string to accomodate setLabels()
+    labelArr = {'1': str(stb1), '2': str(stb2), '3':str(stb3), '4':str(stb4),
+                '5': str(stb5), '6': str(stb6), '7':str(stb7), '8':str(stb8),
+                '9': str(stb9), '10': str(stb10), '11': str(stb11), '12': str(stb12),
+                '13': str(stb13), '14': str(stb14), '15': str(stb15), '16': str(stb16)}
+     #print labelArr
+
+    labelConfigs = {
+            '1':{
+                '1': 'HR34-700', '2': 'C41-700', '3': 'hr44-700', '4': 'test'
+                },
+            '2':{},
+            '3':{},
+            '4':{'1':'H24-100', '2': 'H24-200', '3': 'H24-700', '4': 'H25-100',
+                 '5':'HR24-100', '6':'H25-700', '7':'H25-500', '8': 'HR24-200', 
+                 '9': 'H21-100F', '10':'H21-200', '11':'H23-600', '12': 'HR20-100',
+                 '13': 'HR20-700', '14': 'HR21-100', '15': 'HR22-100F', '16':'HR24-500'},
+            '5': {}
+    }
+
+    #if str(configNum2) in labelConfigs:
+    #    print labelConfigs[str(configNum2)]
+    #    setLabels(labelConfigs[str(configNum2)])
+    #    return 'configLabels initiated'
+    #else:
+    #    return 'error with configLabels'
+    
+    setLabels(labelArr)
+    return 'config labels executed'
+
 
 
 @app.route('/setVideo/', methods=['GET', 'POST'])

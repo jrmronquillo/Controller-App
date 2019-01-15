@@ -3,7 +3,7 @@ from flask import redirect, render_template, flash, url_for, current_app, reques
 from flask import session as login_session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Categories, CategoryItem, TestCases, TestCasesV2
+from database_setup import Base, Stb
 import subprocess
 
 import prodConfig
