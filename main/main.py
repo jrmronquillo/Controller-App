@@ -75,9 +75,16 @@ def takeScreenshot(scriptName = 'test', imageName = 'test'):
 
 def setVideo(config):
     # config variable designed be a dictionary of video routes
+    # sample: "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
+    #                "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
+    #                "9":"r2s1", "10":"r2s2", "11":"r2s3", "12":"r2s4",
+    #                "13":"r2s5", "14":"r2s6", "15":"r2s7", "16":"r2s8"
+    print 'config passed in to setVideo:'
     print config
-
-    # map am integer from 1-16 to designated router channel
+    for key, value in config.items():
+        print key
+        print value
+    # map an integer from 1-16 to designated router channel
     channel = {"1":"128", "2":"129", "3":"130", "4":"131",
            "5":"132", "6":"133", "7":"134", "8":"135",
                    "9":"136", "10":"137", "11":"138", "12":"139",
@@ -466,9 +473,34 @@ def testingPage2():
     return render_template('testingPage2.html')
 
 
+@app.route('/setVideo/<string:cell1>/<string:cell2>/<string:cell3>/<string:cell4>'
+             '/<string:cell5>/<string:cell6>/<string:cell7>/<string:cell8>'
+             '/<string:cell9>/<string:cell10>/<string:cell11>/<string:cell12>'
+             '/<string:cell13>/<string:cell14>/<string:cell15>/<string:cell16>/', methods=['GET', 'POST'])
+# @app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
+def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
+                 cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16):
+    # sanitize inputs
 
-@app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
-def configVideo2(configNum):
+    #
+    vidPositionArr = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
+                      cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16]
+    vidPositionDict = {}
+    for i in vidPositionArr:
+        vidPositionDict[str(vidPositionArr.index(i)+1)] = i
+    print vidPositionDict  
+
+    physicalPosition = {
+                            'r3s1':'H44-500',
+                            'r3s2':'HR54-700',
+                            'r3s3':'HR54-500',
+                            'r3s4':'HR54-200',
+                            'r3s5':'HR44-700',
+                            'r3s6':'HR44-500',
+                            'r3s7':'HR44-200',
+                            'r3s8':'HR34-700'
+                        }
+
     defaultConf = {
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
                     "5":"r3s5","6":"r3s6", "7":"r3s7", "8":"r3s8",
@@ -481,7 +513,7 @@ def configVideo2(configNum):
                     "9":"r2s9", "10":"r2s10", "11":"r2s11", "12":"r2s12",
                     "13":"r2s13", "14":"r2s14", "15":"r2s15", "16":"r2s16"
     }
-    print configNum
+    # print configNum
     #r12 = A12, r13 = B12, r14 = B11
     dictionary1 = {
         '1':{
@@ -518,9 +550,10 @@ def configVideo2(configNum):
     }
     
 
-    if str(configNum) in dictionary1:
-        #print dictionary1[str(configNum)]
-        setVideo(dictionary1[str(configNum)])
+    if str(1) in dictionary1:
+        # print dictionary1[str(configNum)]
+        # setVideo(dictionary1[str(1)])
+        setVideo(vidPositionDict)
         return 'configVideo2 initiated'
     else:
         print 'invalid multiviwer configuration key used'
@@ -584,7 +617,7 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
 
 
 
-@app.route('/setVideo/', methods=['GET', 'POST'])
+@app.route('/setVideov1/', methods=['GET', 'POST'])
 def configVideo():
     defaultConf = {
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",

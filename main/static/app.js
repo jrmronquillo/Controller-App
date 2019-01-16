@@ -13,7 +13,8 @@ class Main extends React.Component {
       viewerConfig: [],
       viewerPosition: '',
       irnetboxMac: '',
-      slot: '1-16'
+      slot: '1-16',
+      stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
     };
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -63,6 +64,22 @@ class Main extends React.Component {
       console.log('invalid mac, slot, command');
     }
   
+  }
+
+  sendVideoConfigs(){
+    // fetch('http://localhost:3000/setVideo/')
+  }
+
+  sendLabelNames(){
+    console.log(this.state.stbLabels.length);
+    if(this.state.stbLabels.length == 16){
+      console.log(this.state.stbLabels.join('/'));
+      var commandStr = 'http://localhost:3000/setLabels/'+this.state.stbLabels.join('/');
+      console.log(commandStr);
+      fetch(commandStr);
+    } else{
+      console.log('Number of stb labels does not equal 16');
+    }
   }
 
   handleKeyPress(event){
@@ -346,6 +363,7 @@ class Main extends React.Component {
       console.log(multiviewConfig[key]);
       //fetch('http://localhost:3000/setVideo/redesign/4/');
       fetch('http://localhost:3000/setVideo/redesign/'+multiviewConfig[key]+'/');
+      this.sendLabelNames();
     }
 
     if(controlCommands[key]){
@@ -353,6 +371,7 @@ class Main extends React.Component {
         command: controlCommands[key]
       });
       this.sendCommands();
+      
     }
   }
 
