@@ -117,6 +117,7 @@ def setVideo(config):
         sourcePosition = str(rs.index(value))
         print routerPort + " " + sourcePosition
         routerInputs.append(routerPort + " " + sourcePosition)
+    print 'router inputs:'
     print routerInputs
 
     # connect to video route and multiviewer
@@ -932,7 +933,7 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
         #------
         print "quad mode:" + str(quad)
       
-        # check for keyword flag
+        # check for keyword flag 
         if keyword:
             print keyword
             check=""

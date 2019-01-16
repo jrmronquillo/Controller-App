@@ -15,6 +15,25 @@ class Main extends React.Component {
       irnetboxMac: '',
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
+      stbObjTest: {'testKey1':'testValue1'},
+      multiviewerConfig1: {
+                           '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker:'r3s1'}, 
+                           '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker:'r3s2'},
+                           '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '3', model: 'HR54-500', vidRouteMoniker: 'r3s3'},
+                           '4': {macAddr: '00-80-A3-A9-E3-7A', slot: '4', model: 'HR54-200', vidRouteMoniker: 'r3s4'},
+                           '5': {macAddr: '00-80-A3-A9-E3-7A', slot: '5', model: 'HR44-700', vidRouteMoniker: 'r3s5'},
+                           '6': {macAddr: '00-80-A3-A9-E3-7A', slot: '6', model: 'HR44-500', vidRouteMoniker: 'r3s6'},
+                           '7': {macAddr: '00-80-A3-A9-E3-7A', slot: '7', model: 'HR44-200', vidRouteMoniker: 'r3s7'},
+                           '8': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700', vidRouteMoniker: 'r3s8'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C41-100?', vidRouteMoniker: 'r2s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500?', vidRouteMoniker: 'r2s2'},
+                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700?', vidRouteMoniker: 'r2s3'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C41w-500?', vidRouteMoniker: 'r2s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C51-100?', vidRouteMoniker: 'r2s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61-500?', vidRouteMoniker: 'r2s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C61-100?', vidRouteMoniker: 'r2s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C61w-500', vidRouteMoniker: 'r2s8'},
+                         },
     };
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -71,10 +90,21 @@ class Main extends React.Component {
   }
 
   sendLabelNames(){
-    console.log(this.state.stbLabels.length);
-    if(this.state.stbLabels.length == 16){
-      console.log(this.state.stbLabels.join('/'));
-      var commandStr = 'http://localhost:3000/setLabels/'+this.state.stbLabels.join('/');
+    var stbLabelsArr = [];
+    for (var key in this.state.multiviewerConfig1){
+      console.log('sendLabelNames function:');
+      console.log(this.state.multiviewerConfig1[key].model);
+      // need to sanitize question marks in model strings, by converting them to html entity %3F
+      var escapeQuestionMarks = this.state.multiviewerConfig1[key].model.replace("?", "%3F");
+
+      //stbLabelsArr.push(this.state.multiviewerConfig1[key].model);
+      stbLabelsArr.push(escapeQuestionMarks);
+    }
+    console.log(stbLabelsArr);
+        
+    if(stbLabelsArr.length == 16){
+      console.log(stbLabelsArr.join('/'));
+      var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
       console.log(commandStr);
       fetch(commandStr);
     } else{
@@ -304,11 +334,11 @@ class Main extends React.Component {
                             '-':'18',
                             'p':'19'
                             };
-    console.log('viewerPositionMapping')
+    console.log('viewerPositionMapping');
     console.log(viewerPositionMapping[key]);                        
     var stbs = {
-      '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700'},
-      '2': {macAddr: '00-80-A3-A9-E3-6A', slot: '15', model: 'C41-700'},
+      '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500', vidRouteMoniker: 'r3s1'},
+      '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
       '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '5', model: 'HR44-700'},
       '4': {macAddr: '00-80-A3-A9-E3-6A', slot: '10', model: 'C41-500'},
       '5': {macAddr: '00-80-A3-A9-E3-6A', slot: '14', model: 'C31-700'},
@@ -348,10 +378,13 @@ class Main extends React.Component {
                           '19':'00-80-A3-9D-86-D3'
                             };
 
-    if(stbs[viewerPositionMapping[key]]){
+    if(viewerPositionMapping[key]){
+      console.log(this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr);
       this.setState({
-        irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
-        slot: stbs[viewerPositionMapping[key]].slot
+        //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
+        //slot: stbs[viewerPositionMapping[key]].slot
+        irnetboxMac: this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr,
+        slot: this.state.multiviewerConfig1[viewerPositionMapping[key]].slot,     
       });
     }
     console.log('irnetboxMac state:');
@@ -360,11 +393,24 @@ class Main extends React.Component {
     if(multiviewConfig[key]){
       //4 quadConf
       console.log('multiview config executed');
-      console.log(multiviewConfig[key]);
-      //fetch('http://localhost:3000/setVideo/redesign/4/');
-      fetch('http://localhost:3000/setVideo/redesign/'+multiviewConfig[key]+'/');
+      
+      
+      // build url string for setVideo api call
+      var urlBuilder = [];
+      for (var key in this.state.multiviewerConfig1){
+        // build url by taking all the vidRouteMonikers and converting them to a url string
+        urlBuilder.push(this.state.multiviewerConfig1[key].vidRouteMoniker);
+
+      }
+      var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
+      console.log(setVideoCall);
+      fetch(setVideoCall);
+
       this.sendLabelNames();
     }
+
+
+
 
     if(controlCommands[key]){
       this.setState({
@@ -521,6 +567,7 @@ class Main extends React.Component {
               <tr>
                 <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
+                  <h4>{this.state.multiviewerConfig1['1'].model}</h4>
                   <span> &#x5e;</span>
                 </td>
                 <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
