@@ -567,24 +567,28 @@ class Main extends React.Component {
               <tr>
                 <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
-                  <h4>{this.state.multiviewerConfig1['1'].model}</h4>
+                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
                   <span> &#x5e;</span>
                 </td>
                 <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
                 <h5>STB 5</h5>
-                  <span > &amp;</span>
+                <div className='model-text'>{this.state.multiviewerConfig1['5'].model}</div>
+                  <span> &amp;</span>
 
                 </td>
                 <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 9</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['9'].model}</div>
                   <span>*</span>
                 </td>
                 <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 13</h5>
+                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
                   <span> (</span>
                 </td>
                 <td className={this.state.keyPressed ==')'? 'letter lightblue-bg': 'letter'}>
                   <h5>hx2x rack B12</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
                   <span> )</span>
                 </td>
                 <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
@@ -603,18 +607,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
                   <h5> STB 2 </h5>
+                  <div className='text'>{this.state.multiviewerConfig1['2'].model}</div>
                   <span> Y</span>
                 </td>
                 <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 6</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['6'].model}</div>
                   <span>U</span>
                 </td>
                 <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 10</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['10'].model}</div>
                   <span>I</span>
                 </td>
                 <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['14'].model}</div>
                   <span> O</span>
                 </td>
                 <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
@@ -643,18 +651,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 3</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['3'].model}</div>
                   <span>H</span>
                 </td>
                 <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 7</h5>
+                  <div className='model-text'>{this.state.multiviewerConfig1['7'].model}</div>
                   <span>J</span>
                 </td>
                 <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 11</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['11'].model}</div>
                   <span>K</span>
                 </td>
                 <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 15</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['15'].model}</div>
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
@@ -677,18 +689,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 4</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['4'].model}</div>
                   <span> N</span>
                 </td>
                 <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 8</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['8'].model}</div>
                   <span>M</span>
                 </td>
                 <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 12</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
                   <span>&#44;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
+                  <div className='text'>{this.state.multiviewerConfig1['16'].model}</div>
                   <span >&#46;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
