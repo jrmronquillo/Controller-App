@@ -16,7 +16,9 @@ class Main extends React.Component {
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
       stbObjTest: {'testKey1':'testValue1'},
-      multiviewerConfig1: {
+      chosenConfig: 'multiviewerConfig1',
+      configs: {
+                'multiviewerConfig1': {
                            '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker:'r3s1'}, 
                            '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker:'r3s2'},
                            '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '3', model: 'HR54-500', vidRouteMoniker: 'r3s3'},
@@ -25,15 +27,34 @@ class Main extends React.Component {
                            '6': {macAddr: '00-80-A3-A9-E3-7A', slot: '6', model: 'HR44-500', vidRouteMoniker: 'r3s6'},
                            '7': {macAddr: '00-80-A3-A9-E3-7A', slot: '7', model: 'HR44-200', vidRouteMoniker: 'r3s7'},
                            '8': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700', vidRouteMoniker: 'r3s8'},
-                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C41-100?', vidRouteMoniker: 'r2s1'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100', vidRouteMoniker: 'r2s1'},
                            '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500?', vidRouteMoniker: 'r2s2'},
                            '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700?', vidRouteMoniker: 'r2s3'},
-                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C41w-500?', vidRouteMoniker: 'r2s4'},
-                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C51-100?', vidRouteMoniker: 'r2s5'},
-                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61-500?', vidRouteMoniker: 'r2s6'},
-                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C61-100?', vidRouteMoniker: 'r2s7'},
-                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C61w-500', vidRouteMoniker: 'r2s8'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C51-500?', vidRouteMoniker: 'r2s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C61-700', vidRouteMoniker: 'r2s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61W-700', vidRouteMoniker: 'r2s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C51-500', vidRouteMoniker: 'r2s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C41-700', vidRouteMoniker: 'r2s8'},
                          },
+                'multiviewerConfig2': {
+                           '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700', vidRouteMoniker: 'r3s8'}, 
+                           '2': {macAddr: '00-80-A3-A9-E3-6A', slot: '15', model: 'cxx-xxx', vidRouteMoniker:'r2s15'},
+                           '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '5', model: 'HR54-500', vidRouteMoniker: 'r3s5'},
+                           '4': {macAddr: '00-80-A3-A9-E3-6A', slot: '9', model: 'HR54-200', vidRouteMoniker: 'r2s9'},
+                           '5': {macAddr: '00-80-A3-A9-E3-6A', slot: '14', model: 'HR44-700', vidRouteMoniker: 'r2s14'},
+                           '6': {macAddr: '00-80-A3-A9-E3-6A', slot: '16', model: 'HR44-500', vidRouteMoniker: 'r2s16'},
+                           '7': {macAddr: '00-80-A3-A9-E3-7A', slot: '7', model: 'HR44-200', vidRouteMoniker: 'r3s7'},
+                           '8': {macAddr: '00-80-A3-A9-E3-6A', slot: '10', model: 'cxx-xxx', vidRouteMoniker: 'r3s10'},
+                           '9': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker:'r3s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100', vidRouteMoniker: 'r2s1'},
+                           '11': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker:'r3s2'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C61-700', vidRouteMoniker: 'r2s5'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C61-700', vidRouteMoniker: 'r2s3'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100', vidRouteMoniker: 'r2s5'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C51-500', vidRouteMoniker: 'r2s4'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C41-XXX', vidRouteMoniker: 'r2s6'},
+                         },
+               },
     };
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -85,17 +106,28 @@ class Main extends React.Component {
   
   }
 
-  sendVideoConfigs(){
-    // fetch('http://localhost:3000/setVideo/')
+  sendVideoConfigs(chosenConfig){
+    console.log('sendVideoConfigs function executed');
+    var stbObjects = chosenConfig;
+     // build url string for setVideo api call
+      var urlBuilder = [];
+      for (var position in stbObjects){
+        // build url by taking all the vidRouteMonikers and converting them to a url string
+        urlBuilder.push(stbObjects[position].vidRouteMoniker);
+
+      }
+      var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
+      console.log(setVideoCall);
+      fetch(setVideoCall);
   }
 
-  sendLabelNames(){
+  sendLabelNames(chosenConfig2){
     var stbLabelsArr = [];
-    for (var key in this.state.multiviewerConfig1){
+    for (var key in chosenConfig2){
       console.log('sendLabelNames function:');
-      console.log(this.state.multiviewerConfig1[key].model);
+      console.log(chosenConfig2[key].model);
       // need to sanitize question marks in model strings, by converting them to html entity %3F
-      var escapeQuestionMarks = this.state.multiviewerConfig1[key].model.replace("?", "%3F");
+      var escapeQuestionMarks = chosenConfig2[key].model.replace("?", "%3F");
 
       //stbLabelsArr.push(this.state.multiviewerConfig1[key].model);
       stbLabelsArr.push(escapeQuestionMarks);
@@ -360,11 +392,11 @@ class Main extends React.Component {
     };
 
     var multiviewConfig = {
-                          '[':'1',
-                          ']':'2',
-                          '&#92;':'3',
-                          ';':'4',
-                          "'":'5'
+                          '[': 'multiviewerConfig1',
+                          ']': 'multiviewerConfig2',
+                          '&#92;': '',
+                          ';': '',
+                          "'": ''
                           };
 
 
@@ -379,12 +411,12 @@ class Main extends React.Component {
                             };
 
     if(viewerPositionMapping[key]){
-      console.log(this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr);
+      console.log(this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr);
       this.setState({
         //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
         //slot: stbs[viewerPositionMapping[key]].slot
-        irnetboxMac: this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr,
-        slot: this.state.multiviewerConfig1[viewerPositionMapping[key]].slot,     
+        irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
+        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,     
       });
     }
     console.log('irnetboxMac state:');
@@ -393,20 +425,17 @@ class Main extends React.Component {
     if(multiviewConfig[key]){
       //4 quadConf
       console.log('multiview config executed');
+      console.log(multiviewConfig[key]);
+      var stbObjects = this.state.configs[multiviewConfig[key]];
       
-      
-      // build url string for setVideo api call
-      var urlBuilder = [];
-      for (var key in this.state.multiviewerConfig1){
-        // build url by taking all the vidRouteMonikers and converting them to a url string
-        urlBuilder.push(this.state.multiviewerConfig1[key].vidRouteMoniker);
-
-      }
-      var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
-      console.log(setVideoCall);
-      fetch(setVideoCall);
-
-      this.sendLabelNames();
+      this.setState({
+        chosenConfig: multiviewConfig[key],
+      });
+      console.log('chosenConfig:');
+      console.log(this.state.chosenConfig);
+      console.log(this.state.configs[this.state.chosenConfig]['1'].model);
+      this.sendVideoConfigs(stbObjects);
+      this.sendLabelNames(stbObjects);
     }
 
 
@@ -567,28 +596,28 @@ class Main extends React.Component {
               <tr>
                 <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['1'].model}</div>
                   <span> &#x5e;</span>
                 </td>
                 <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
                 <h5>STB 5</h5>
-                <div className='model-text'>{this.state.multiviewerConfig1['5'].model}</div>
+                <div className='model-text'>{this.state.configs[this.state.chosenConfig]['5'].model}</div>
                   <span> &amp;</span>
 
                 </td>
                 <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 9</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['9'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['9'].model}</div>
                   <span>*</span>
                 </td>
                 <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 13</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['13'].model}</div>
                   <span> (</span>
                 </td>
                 <td className={this.state.keyPressed ==')'? 'letter lightblue-bg': 'letter'}>
                   <h5>hx2x rack B12</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
+                  <div className='text'>{}</div>
                   <span> )</span>
                 </td>
                 <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
@@ -607,22 +636,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
                   <h5> STB 2 </h5>
-                  <div className='text'>{this.state.multiviewerConfig1['2'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['2'].model}</div>
                   <span> Y</span>
                 </td>
                 <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 6</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['6'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['6'].model}</div>
                   <span>U</span>
                 </td>
                 <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 10</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['10'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['10'].model}</div>
                   <span>I</span>
                 </td>
                 <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['14'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['14'].model}</div>
                   <span> O</span>
                 </td>
                 <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
@@ -651,22 +680,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 3</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['3'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['3'].model}</div>
                   <span>H</span>
                 </td>
                 <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 7</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['7'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['7'].model}</div>
                   <span>J</span>
                 </td>
                 <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 11</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['11'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['11'].model}</div>
                   <span>K</span>
                 </td>
                 <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 15</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['15'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['15'].model}</div>
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
@@ -689,25 +718,25 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 4</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['4'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['4'].model}</div>
                   <span> N</span>
                 </td>
                 <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 8</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['8'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['8'].model}</div>
                   <span>M</span>
                 </td>
                 <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 12</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['12'].model}</div>
                   <span>&#44;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['16'].model}</div>
+                  <div className='text'>{this.state.configs[this.state.chosenConfig]['16'].model}</div>
                   <span >&#46;</span>
                 </td>
-                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.keyPressed =='/'? 'letter lightblue-bg': 'letter'}>
                   <h5>unnassigned</h5>
                   <span>/</span>
                 </td>
