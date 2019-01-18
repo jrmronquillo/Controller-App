@@ -14,6 +14,7 @@ class Main extends React.Component {
       viewerPosition: '',
       irnetboxMac: '',
       slot: '1-16',
+      vidMoniker: '',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
       stbObjTest: {'testKey1':'testValue1'},
       chosenConfig: 'multiviewerConfig1',
@@ -124,8 +125,6 @@ class Main extends React.Component {
   sendLabelNames(chosenConfig2){
     var stbLabelsArr = [];
     for (var key in chosenConfig2){
-      console.log('sendLabelNames function:');
-      console.log(chosenConfig2[key].model);
       // need to sanitize question marks in model strings, by converting them to html entity %3F
       var escapeQuestionMarks = chosenConfig2[key].model.replace("?", "%3F");
 
@@ -416,7 +415,8 @@ class Main extends React.Component {
         //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
         //slot: stbs[viewerPositionMapping[key]].slot
         irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
-        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,     
+        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
+        vidMoniker: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].vidRouteMoniker,   
       });
     }
     console.log('irnetboxMac state:');
@@ -594,23 +594,23 @@ class Main extends React.Component {
              <h1>Device Selector</h1>
              <table className="table-style">
               <tr>
-                <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['1'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
                   <div className='model-text'>{this.state.configs[this.state.chosenConfig]['1'].model}</div>
                   <span> &#x5e;</span>
                 </td>
-                <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['5'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                 <h5>STB 5</h5>
                 <div className='model-text'>{this.state.configs[this.state.chosenConfig]['5'].model}</div>
                   <span> &amp;</span>
 
                 </td>
-                <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['9'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 9</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['9'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['9'].model}</div>
                   <span>*</span>
                 </td>
-                <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['13'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 13</h5>
                   <div className='model-text'>{this.state.configs[this.state.chosenConfig]['13'].model}</div>
                   <span> (</span>
@@ -634,24 +634,24 @@ class Main extends React.Component {
               <tr>
                 <td colSpan='1' width= "10%" className='hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['2'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5> STB 2 </h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['2'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['2'].model}</div>
                   <span> Y</span>
                 </td>
-                <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['6'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 6</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['6'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['6'].model}</div>
                   <span>U</span>
                 </td>
-                <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['10'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 10</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['10'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['10'].model}</div>
                   <span>I</span>
                 </td>
-                <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['14'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['14'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['14'].model}</div>
                   <span> O</span>
                 </td>
                 <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
@@ -678,24 +678,24 @@ class Main extends React.Component {
                 </td>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['3'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 3</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['3'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['3'].model}</div>
                   <span>H</span>
                 </td>
-                <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['7'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 7</h5>
                   <div className='model-text'>{this.state.configs[this.state.chosenConfig]['7'].model}</div>
                   <span>J</span>
                 </td>
-                <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['11'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 11</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['11'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['11'].model}</div>
                   <span>K</span>
                 </td>
-                <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['15'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 15</h5>
-                  <div className='text'>{this.state.configs[this.state.chosenConfig]['15'].model}</div>
+                  <div className='model-text'>{this.state.configs[this.state.chosenConfig]['15'].model}</div>
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
@@ -716,22 +716,22 @@ class Main extends React.Component {
                 </td>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
                 </td>
-                <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['4'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 4</h5>
                   <div className='text'>{this.state.configs[this.state.chosenConfig]['4'].model}</div>
                   <span> N</span>
                 </td>
-                <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['8'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 8</h5>
                   <div className='text'>{this.state.configs[this.state.chosenConfig]['8'].model}</div>
                   <span>M</span>
                 </td>
-                <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['12'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 12</h5>
                   <div className='text'>{this.state.configs[this.state.chosenConfig]['12'].model}</div>
                   <span>&#44;</span>
                 </td>
-                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
+                <td className={this.state.vidMoniker == this.state.configs[this.state.chosenConfig]['16'].vidRouteMoniker ? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
                   <div className='text'>{this.state.configs[this.state.chosenConfig]['16'].model}</div>
                   <span >&#46;</span>

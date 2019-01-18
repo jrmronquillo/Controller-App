@@ -32,6 +32,10 @@ table, tr, th, td{
   z-index: -1;
 }
 
+.model-text{
+  color: red;
+}
+
 .controller-main-content{
   color: #000000 !important;
   position:absolute;
