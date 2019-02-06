@@ -228,6 +228,19 @@ def keySendv3(commandParams):
         print i
         # keySendv2(rack,key, slot)
 
+@app.route('/setCookie/', methods = ['POST', 'GET'])
+def setCookie():
+    resp = make_response(render_template('redesign.html'))
+    resp.set_cookie('myCookie', 'testUSER')
+    return resp
+
+@app.route('/getCookie/', methods = ['POST', 'GET'])
+def getCookie():
+    cookieContents = request.cookies.get('myCookie')
+    print cookieContents
+    return cookieContents
+
+
 @app.route('/stbPosition/<int:id>/edit/<string:rsPosition>/', methods=['GET', 'POST'])
 def editStbPosition(id, rsPosition):
     editedStb = session.query(
@@ -1354,7 +1367,7 @@ def command(irnetboxMac, slot, action):
     
     command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow', 
                     'rightArrow', 'upArrow', 'downArrow', 'red', 'prev', 
-                    'dash','rewind', 'play', 'fastforward', 'chanUp',
+                    'dash','rewind', 'play', 'fastforward', 'chanUp', 'record',
                     'chanDown', '0','1','2','3','4','5','6','7','8','9']
 
     slot_list = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '1-16']

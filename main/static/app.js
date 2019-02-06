@@ -273,6 +273,9 @@ class Main extends React.Component {
       case 93:
         key=']';
         break;
+      case 86:
+        key='V';
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -300,6 +303,7 @@ class Main extends React.Component {
                             'f':'info',
                             'g':'chandown',
                             'z':'dash',
+                            'V':'record',
                             '1': '1',
                             '2': '2',
                             '3': '3',
@@ -544,6 +548,10 @@ class Main extends React.Component {
                 <td className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
                   <h1>PLAY</h1>
                   <span>V</span>
+                </td>
+                <td className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
+                  <h1>Record</h1>
+                  <span>capital V</span>
                 </td>
                  <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
                   <h1>FFWD</h1>
