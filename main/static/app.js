@@ -527,6 +527,34 @@ class Main extends React.Component {
                 </td>
               </tr>
             </table>
+            <table className="table-style" >
+              <tr>
+                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
+                </td>
+                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
+                </td>
+                <td className={this.state.keyPressed =='Z'? 'letter lightblue-bg': 'letter'}>
+                  <h1>null</h1>
+                  <span>capital Z</span>
+                </td>
+                <td className={this.state.keyPressed =='X'? 'letter lightblue-bg': 'letter'}>
+                  <h1>null</h1>
+                  <span>capital X</span>
+                </td>
+                <td className={this.state.keyPressed =='C'? 'letter lightblue-bg': 'letter'}>
+                  <h1>null</h1>
+                  <span>capital C</span>
+                </td>
+                <td className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
+                  <h1>RECORD</h1>
+                  <span>capital V</span>
+                </td>
+                 <td className={this.state.keyPressed =='B'? 'letter lightblue-bg': 'letter'}>
+                  <h1>null</h1>
+                  <span>capital B</span>
+                </td>
+              </tr>
+            </table>
               <table className="table-style" >
               <tr>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
@@ -548,10 +576,6 @@ class Main extends React.Component {
                 <td className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
                   <h1>PLAY</h1>
                   <span>V</span>
-                </td>
-                <td className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
-                  <h1>Record</h1>
-                  <span>capital V</span>
                 </td>
                  <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
                   <h1>FFWD</h1>
@@ -716,7 +740,7 @@ class Main extends React.Component {
                   <span >&#46;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
-                  <h5>unnassigned</h5>
+                  <h5>null</h5>
                   <span>/</span>
                 </td>
               </tr>
