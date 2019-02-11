@@ -107,21 +107,59 @@ def setVideo(config):
         for l in slots:
             rs.append(k+l)
     print rs
-
+    
     # generate message to to send to video router
     routerInputs = []   
     for key, value in config.items():
         print key
         print value
+        
+        #----
+        # issue was found with value data info on racks 14+ are not matching the proper video routes using the rack
+        # representation logic from above
+        # added logic below to check if data is using rack greater than 13
+        # and if so, map the video routes from racks 14/15 to the proper hard coded video routes
+        #-----
+        rackNum = value.split('r')
+        rackNum2 = rackNum[1].split('s')
+        print rackNum
+        print rackNum2[0]
+        print rackNum2[1]
+        if int(rackNum2[0]) >= 14:
+            updatedConfig = {
+                'r14s1':'200', 'r14s2':'201', 'r14s3':'202', 'r14s4':'203',
+                'r14s5':'204', 'r14s6':'205', 'r14s7':'206', 'r14s8':'207',
+                'r15s1':'208', 'r15s2':'209', 'r15s3':'210', 'r15s4':'211',
+                'r15s5':'212', 'r15s6':'213', 'r15s7':'214', 'r15s8':'215',
+                'r16s1':'216', 'r16s2':'217', 'r16s3':'218', 'r16s4':'219',
+                'r16s5':'220', 'r16s6':'221', 'r16s7':'222', 'r16s8':'223',
+            }
+            print 'updatedConfig:'
+            print updatedConfig[value]
+
+            sourcePosition = str(updatedConfig[value])
+            print 'initial sourcePosition:'
+            print sourcePosition
+        else:
+            sourcePosition = str(rs.index(value))
+            print 'default sourcePosition'
+            print sourcePosition
+
+
+
         routerPort = str(channel[key])
-        sourcePosition = str(rs.index(value))
         print routerPort + " " + sourcePosition
+
+
+
         routerInputs.append(routerPort + " " + sourcePosition)
     print 'router inputs:'
     print routerInputs
 
     # connect to video route and multiviewer
     # video route
+    
+    #-----
     tn = telnetlib.Telnet("10.23.223.202", "9990")
     
 
@@ -135,9 +173,10 @@ def setVideo(config):
     tn.write("\n")
     tn.read_until("ACK", 2)
     tn.close()
-
+    #----
 
     return "routeVideo function executed!"
+
 # customConfig = {"1":"r2s10", "2":"r2s11"}
 # setVideo(customConfig)
 def setLabels(labelArr):
@@ -502,6 +541,7 @@ def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
     vidPositionDict = {}
     for i in vidPositionArr:
         vidPositionDict[str(vidPositionArr.index(i)+1)] = i
+    print "vidPositionDict:"
     print vidPositionDict  
 
     physicalPosition = {

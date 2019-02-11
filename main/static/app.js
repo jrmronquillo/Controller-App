@@ -16,7 +16,9 @@ class Main extends React.Component {
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
       stbObjTest: {'testKey1':'testValue1'},
-      multiviewerConfig1: {
+      chosenConfig: 'multiviewerConfig1',
+      configs: {
+      'multiviewerConfig1': {
                            '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker:'r3s1'}, 
                            '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker:'r3s2'},
                            '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '3', model: 'HR54-500', vidRouteMoniker: 'r3s3'},
@@ -25,15 +27,88 @@ class Main extends React.Component {
                            '6': {macAddr: '00-80-A3-A9-E3-7A', slot: '6', model: 'HR44-500', vidRouteMoniker: 'r3s6'},
                            '7': {macAddr: '00-80-A3-A9-E3-7A', slot: '7', model: 'HR44-200', vidRouteMoniker: 'r3s7'},
                            '8': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700', vidRouteMoniker: 'r3s8'},
-                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C41-100?', vidRouteMoniker: 'r2s1'},
-                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500?', vidRouteMoniker: 'r2s2'},
-                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700?', vidRouteMoniker: 'r2s3'},
-                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C41w-500?', vidRouteMoniker: 'r2s4'},
-                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C51-100?', vidRouteMoniker: 'r2s5'},
-                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61-500?', vidRouteMoniker: 'r2s6'},
-                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C61-100?', vidRouteMoniker: 'r2s7'},
-                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C61w-500', vidRouteMoniker: 'r2s8'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C41-100(H44-500)', vidRouteMoniker: 'r2s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500(H44-500)', vidRouteMoniker: 'r2s2'},
+                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700(H44-500)', vidRouteMoniker: 'r2s3'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C51-500(HR54R1-700)', vidRouteMoniker: 'r2s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C61-700(HR54R1-700)', vidRouteMoniker: 'r2s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61w-700(HR54R1-700)', vidRouteMoniker: 'r2s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: 'C51-500(HR54-500)', vidRouteMoniker: 'r2s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: 'C41-700(HR54-200)', vidRouteMoniker: 'r2s8'},
                          },
+      'multiviewerConfig2': {
+                           '1': {macAddr: '00-80-A3-9D-86-D0', slot: '1', model: 'H24-100', vidRouteMoniker:'r13s1'}, 
+                           '2': {macAddr: '00-80-A3-9D-86-D0', slot: '2', model: 'H24-200', vidRouteMoniker:'r13s2'},
+                           '3': {macAddr: '00-80-A3-9D-86-D0', slot: '3', model: 'H24-700', vidRouteMoniker: 'r13s3'},
+                           '4': {macAddr: '00-80-A3-9D-86-D0', slot: '4', model: 'H25-100', vidRouteMoniker: 'r13s4'},
+                           '5': {macAddr: '00-80-A3-9D-86-D0', slot: '5', model: 'HR24-100', vidRouteMoniker: 'r13s5'},
+                           '6': {macAddr: '00-80-A3-9D-86-D0', slot: '6', model: 'H25-700', vidRouteMoniker: 'r13s6'},
+                           '7': {macAddr: '00-80-A3-9D-86-D0', slot: '7', model: 'H25-500', vidRouteMoniker: 'r13s7'},
+                           '8': {macAddr: '00-80-A3-9D-86-D0', slot: '8', model: 'HR24-200', vidRouteMoniker: 'r13s8'},
+                           '9': {macAddr: '00-80-A3-9D-86-D1', slot: '1', model: 'H21-100', vidRouteMoniker: 'r14s1'},
+                           '10': {macAddr: '00-80-A3-9D-86-D1', slot: '2', model: 'H21-200', vidRouteMoniker: 'r14s2'},
+                           '11': {macAddr: '00-80-A3-9D-86-D1', slot: '3', model: 'H23-600', vidRouteMoniker: 'r14s3'},
+                           '12': {macAddr: '00-80-A3-9D-86-D1', slot: '4', model: 'HR20-100', vidRouteMoniker: 'r14s4'},
+                           '13': {macAddr: '00-80-A3-9D-86-D1', slot: '5', model: 'HR20-700', vidRouteMoniker: 'r14s5'},
+                           '14': {macAddr: '00-80-A3-9D-86-D1', slot: '6', model: 'HR21-100', vidRouteMoniker: 'r14s6'},
+                           '15': {macAddr: '00-80-A3-9D-86-D1', slot: '7', model: 'HR22-100', vidRouteMoniker: 'r14s7'},
+                           '16': {macAddr: '00-80-A3-9D-86-D1', slot: '8', model: 'HR24-500', vidRouteMoniker: 'r14s8'},
+                         },
+      'multiviewerConfig3': {
+                           '1': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker:'r13s1'}, 
+                           '2': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker:'r13s2'},
+                           '3': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r13s3'},
+                           '4': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r13s4'},
+                           '5': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r13s5'},
+                           '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
+                           '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
+                           '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
+                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
+                         },
+      'multiviewerConfig4': {
+                           '1': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker:'r13s1'}, 
+                           '2': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker:'r13s2'},
+                           '3': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r13s3'},
+                           '4': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r13s4'},
+                           '5': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r13s5'},
+                           '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
+                           '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
+                           '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
+                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
+                         },
+      'multiviewerConfig5': {
+                           '1': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker:'r13s1'}, 
+                           '2': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker:'r13s2'},
+                           '3': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r13s3'},
+                           '4': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r13s4'},
+                           '5': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r13s5'},
+                           '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
+                           '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
+                           '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
+                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
+                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
+                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
+                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
+                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
+                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
+                         }
+        },
     };
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -91,19 +166,17 @@ class Main extends React.Component {
 
   sendLabelNames(){
     var stbLabelsArr = [];
-    for (var key in this.state.multiviewerConfig1){
+    for (var key in this.state.configs[this.state.chosenConfig]){
       console.log('sendLabelNames function:');
-      console.log(this.state.multiviewerConfig1[key].model);
+      console.log(this.state.configs[this.state.chosenConfig][key]);
       // need to sanitize question marks in model strings, by converting them to html entity %3F
-      var escapeQuestionMarks = this.state.multiviewerConfig1[key].model.replace("?", "%3F");
+      var escapeQuestionMarks = this.state.configs[this.state.chosenConfig][key].model.replace("?", "%3F");
 
       //stbLabelsArr.push(this.state.multiviewerConfig1[key].model);
       stbLabelsArr.push(escapeQuestionMarks);
     }
-    console.log(stbLabelsArr);
         
     if(stbLabelsArr.length == 16){
-      console.log(stbLabelsArr.join('/'));
       var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
       console.log(commandStr);
       fetch(commandStr);
@@ -364,11 +437,11 @@ class Main extends React.Component {
     };
 
     var multiviewConfig = {
-                          '[':'1',
-                          ']':'2',
-                          '&#92;':'3',
-                          ';':'4',
-                          "'":'5'
+                          '[':'multiviewerConfig1',
+                          ']':'multiviewerConfig2',
+                          '&#92;':'multiviewerConfig3',
+                          ';':'multiviewerConfig4',
+                          "'":'multiviewerConfig5'
                           };
 
 
@@ -383,31 +456,39 @@ class Main extends React.Component {
                             };
 
     if(viewerPositionMapping[key]){
-      console.log(this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr);
+      
       this.setState({
         //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
         //slot: stbs[viewerPositionMapping[key]].slot
-        irnetboxMac: this.state.multiviewerConfig1[viewerPositionMapping[key]].macAddr,
-        slot: this.state.multiviewerConfig1[viewerPositionMapping[key]].slot,     
+        irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
+      
+        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,     
+        
       });
     }
-    console.log('irnetboxMac state:');
-    console.log(this.state.irnetboxMac);
 
+    
+    
     if(multiviewConfig[key]){
       //4 quadConf
-      console.log('multiview config executed');
-      
-      
+      this.setState({
+        chosenConfig: multiviewConfig[key]
+      });
+
+      console.log('this.state.chosenConfig:');
+      console.log(this.state.chosenConfig);
       // build url string for setVideo api call
       var urlBuilder = [];
-      for (var key in this.state.multiviewerConfig1){
-        // build url by taking all the vidRouteMonikers and converting them to a url string
-        urlBuilder.push(this.state.multiviewerConfig1[key].vidRouteMoniker);
-
+      console.log('stb info should display below:');
+      console.log(this.state.configs[multiviewConfig[key]]);
+      for (var configKey in this.state.configs[multiviewConfig[key]]){
+        // build url by taking all the vidRouteMonikers and converting them to a url string[]
+        urlBuilder.push(this.state.configs[multiviewConfig[key]][configKey].vidRouteMoniker);
       }
       var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
+      console.log('setVideoCall:');
       console.log(setVideoCall);
+      
       fetch(setVideoCall);
 
       this.sendLabelNames();
@@ -599,28 +680,28 @@ class Main extends React.Component {
               <tr>
                 <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 1</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
+                  <div className='model-text'>#</div>
                   <span> &#x5e;</span>
                 </td>
                 <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
                 <h5>STB 5</h5>
-                <div className='model-text'>{this.state.multiviewerConfig1['5'].model}</div>
+                <div className='model-text'>#</div>
                   <span> &amp;</span>
 
                 </td>
                 <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 9</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['9'].model}</div>
+                  <div className='text'>#</div>
                   <span>*</span>
                 </td>
                 <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 13</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['1'].model}</div>
+                  <div className='model-text'>#</div>
                   <span> (</span>
                 </td>
                 <td className={this.state.keyPressed ==')'? 'letter lightblue-bg': 'letter'}>
                   <h5>hx2x rack B12</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
+                  <div className='text'>#</div>
                   <span> )</span>
                 </td>
                 <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
@@ -639,22 +720,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
                   <h5> STB 2 </h5>
-                  <div className='text'>{this.state.multiviewerConfig1['2'].model}</div>
+                  <div className='text'>#</div>
                   <span> Y</span>
                 </td>
                 <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 6</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['6'].model}</div>
+                  <div className='text'>#</div>
                   <span>U</span>
                 </td>
                 <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 10</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['10'].model}</div>
+                  <div className='text'>#</div>
                   <span>I</span>
                 </td>
                 <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 14</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['14'].model}</div>
+                  <div className='text'>#</div>
                   <span> O</span>
                 </td>
                 <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
@@ -663,10 +744,12 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='['? 'letter lightblue-bg': 'letter'}>
                   <h5>Multiviewer Config 1</h5>
+                  <p>Genie A03 + A02</p>
                   <span>[</span>
                 </td>
                 <td className={this.state.keyPressed ==']'? 'letter lightblue-bg': 'letter'}>
                   <h5>Multiviewer Config 2</h5>
+                  <p>hx2x b12 + b13</p>
                   <span>]</span>
                 </td>
                 <td className={this.state.keyPressed =="&#92;"? 'letter lightblue-bg': 'letter'}>
@@ -683,22 +766,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 3</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['3'].model}</div>
+                  <div className='text'>#</div>
                   <span>H</span>
                 </td>
                 <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 7</h5>
-                  <div className='model-text'>{this.state.multiviewerConfig1['7'].model}</div>
+                  <div className='model-text'>#</div>
                   <span>J</span>
                 </td>
                 <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 11</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['11'].model}</div>
+                  <div className='text'>#</div>
                   <span>K</span>
                 </td>
                 <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 15</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['15'].model}</div>
+                  <div className='text'>#</div>
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
@@ -721,22 +804,22 @@ class Main extends React.Component {
                 </td>
                 <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 4</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['4'].model}</div>
+                  <div className='text'>#</div>
                   <span> N</span>
                 </td>
                 <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 8</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['8'].model}</div>
+                  <div className='text'>#</div>
                   <span>M</span>
                 </td>
                 <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 12</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['12'].model}</div>
+                  <div className='text'>#</div>
                   <span>&#44;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
                   <h5>STB 16</h5>
-                  <div className='text'>{this.state.multiviewerConfig1['16'].model}</div>
+                  <div className='text'>#</div>
                   <span >&#46;</span>
                 </td>
                 <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
