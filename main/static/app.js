@@ -11,6 +11,22 @@ class Main extends React.Component {
       keyPressed: '',
       command: '',
       viewerConfig: [],
+      keyObjects: [
+                    [
+                    {key:'q', command:'guide'},
+                    {key:'w', command:'upArrow'},
+                    {key:'e', command:'menu'},
+                    {key:'r', command:'red'},
+                    {key:'t', command:'chanUp'},
+                    ],
+                    [
+                    {key:'shift+X', command:'null'},
+                    {key:'shift+Z', command:'menu'}, 
+                    {key:'shift+X', command:'null'},
+                    {key:'shift+C', command:'null'},
+                    {key:'shift+V', command:'null'}
+                    ]
+                  ],
       viewerPosition: '',
       irnetboxMac: '',
       slot: '1-16',
@@ -27,8 +43,8 @@ class Main extends React.Component {
                            '6': {macAddr: '00-80-A3-A9-E3-7A', slot: '6', model: 'HR44-500', vidRouteMoniker: 'r3s6'},
                            '7': {macAddr: '00-80-A3-A9-E3-7A', slot: '7', model: 'HR44-200', vidRouteMoniker: 'r3s7'},
                            '8': {macAddr: '00-80-A3-A9-E3-7A', slot: '8', model: 'HR34-700', vidRouteMoniker: 'r3s8'},
-                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C41-100(H44-500)', vidRouteMoniker: 'r2s1'},
-                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500(H44-500)', vidRouteMoniker: 'r2s2'},
+                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100(H44-500)', vidRouteMoniker: 'r2s1'},
+                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-700(H44-500)', vidRouteMoniker: 'r2s2'},
                            '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700(H44-500)', vidRouteMoniker: 'r2s3'},
                            '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C51-500(HR54R1-700)', vidRouteMoniker: 'r2s4'},
                            '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C61-700(HR54R1-700)', vidRouteMoniker: 'r2s5'},
@@ -55,32 +71,32 @@ class Main extends React.Component {
                            '16': {macAddr: '00-80-A3-9D-86-D1', slot: '8', model: 'HR24-500', vidRouteMoniker: 'r14s8'},
                          },
       'multiviewerConfig3': {
-                           '1': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker:'r13s1'}, 
-                           '2': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker:'r13s2'},
-                           '3': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r13s3'},
-                           '4': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r13s4'},
-                           '5': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r13s5'},
-                           '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
-                           '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
-                           '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
-                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
-                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
-                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
-                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
-                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
-                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
-                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
-                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
+                           '1': {macAddr: '00-80-A3-9D-86-D1', slot: '1', model: 'H21-100', vidRouteMoniker: 'r14s1'},
+                           '2': {macAddr: '00-80-A3-9D-86-D1', slot: '2', model: 'H21-200', vidRouteMoniker: 'r14s2'},
+                           '3': {macAddr: '00-80-A3-9D-86-D1', slot: '3', model: 'H23-600', vidRouteMoniker: 'r14s3'},
+                           '4': {macAddr: '00-80-A3-9D-86-D1', slot: '4', model: 'HR20-100', vidRouteMoniker: 'r14s4'},
+                           '5': {macAddr: '00-80-A3-9D-86-D1', slot: '5', model: 'HR20-700', vidRouteMoniker: 'r14s5'},
+                           '6': {macAddr: '00-80-A3-9D-86-D1', slot: '6', model: 'HR21-100', vidRouteMoniker: 'r14s6'},
+                           '7': {macAddr: '00-80-A3-9D-86-D1', slot: '7', model: 'HR22-100', vidRouteMoniker: 'r14s7'},
+                           '8': {macAddr: '00-80-A3-9D-86-D1', slot: '8', model: 'HR24-500', vidRouteMoniker: 'r14s8'},
+                           '9': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: 'THR22-100', vidRouteMoniker: 'r15s1'},
+                           '10': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: 'HR21-200', vidRouteMoniker: 'r15s2'},
+                           '11': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: 'HR21P-200', vidRouteMoniker: 'r15s3'},
+                           '12': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: 'R22-100', vidRouteMoniker: 'r15s4'},
+                           '13': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: 'HR24-200', vidRouteMoniker: 'r15s5'},
+                           '14': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: 'HR21-700', vidRouteMoniker: 'r15s6'},
+                           '15': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: 'HR23-700', vidRouteMoniker: 'r15s7'},
+                           '16': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: 'HR24-500', vidRouteMoniker: 'r15s8'},
                          },
       'multiviewerConfig4': {
-                           '1': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker:'r13s1'}, 
-                           '2': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker:'r13s2'},
-                           '3': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r13s3'},
-                           '4': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r13s4'},
-                           '5': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r13s5'},
-                           '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
-                           '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
-                           '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
+                           '1': {macAddr: '00-80-A3-9E-67-3A', slot: '1', model: 'HS171', vidRouteMoniker:'r13s1'}, 
+                           '2': {macAddr: '00-80-A3-9E-67-3A', slot: '2', model: 'HS172', vidRouteMoniker:'r13s2'},
+                           '3': {macAddr: '00-80-A3-9E-67-3A', slot: '3', model: 'HS173', vidRouteMoniker: 'r13s3'},
+                           '4': {macAddr: '00-80-A3-9E-67-3A', slot: '4', model: 'HS174', vidRouteMoniker: 'r13s4'},
+                           '5': {macAddr: '00-80-A3-9E-67-3A', slot: '5', model: 'HS175', vidRouteMoniker: 'r13s5'},
+                           '6': {macAddr: '00-80-A3-9E-67-3A', slot: '6', model: 'HS176', vidRouteMoniker: 'r13s6'},
+                           '7': {macAddr: '00-80-A3-9E-67-3A', slot: '7', model: 'HS177', vidRouteMoniker: 'r13s7'},
+                           '8': {macAddr: '00-80-A3-9E-67-3A', slot: '8', model: 'HS178', vidRouteMoniker: 'r13s8'},
                            '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
                            '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
                            '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
@@ -515,6 +531,8 @@ class Main extends React.Component {
   
 
   render() {
+    console.log(this.state.keyObjects.length);
+    console.log(this.state.keyObjects[0]);
     if(this.state.display){
       return(
         <div className="row">
@@ -753,7 +771,7 @@ class Main extends React.Component {
                   <span>]</span>
                 </td>
                 <td className={this.state.keyPressed =="&#92;"? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviewer Config 3 (Rack A02/A03)</h5>
+                  <h5>Multiviewer Config 3 (B11/B10)</h5>
                   <span>&#92;</span>
                 </td>
               </tr>
@@ -785,7 +803,7 @@ class Main extends React.Component {
                   <span>L</span>
                 </td>
                 <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
-                  <h5>MultiViewer Config 4 (Rack B12/B14)</h5>
+                  <h5>MultiViewer Config 4 (HS17 WS)</h5>
                   <span className="letter">&#59;</span>
                 </td>
                 <td className={this.state.keyPressed =="'"? 'letter lightblue-bg': 'letter'}>
@@ -850,6 +868,8 @@ class Main extends React.Component {
     
   }
 }
+
+
 
 const domContainer = document.querySelector('#react_main_container');
 ReactDOM.render(< Main />, domContainer);
