@@ -33,6 +33,8 @@ class Main extends React.Component {
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
       stbObjTest: {'testKey1':'testValue1'},
       chosenConfig: 'multiviewerConfig1',
+      multipleMacs: false,
+      macsInConfig: [],
       configs: {
       'multiviewerConfig1': {
                            '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker:'r3s1'}, 
@@ -115,14 +117,14 @@ class Main extends React.Component {
                            '6': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r13s6'},
                            '7': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r13s7'},
                            '8': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r13s8'},
-                           '9': {macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
-                           '10': {macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
-                           '11': {macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
-                           '12': {macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
-                           '13': {macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
-                           '14': {macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
-                           '15': {macAddr: '00-80-A3-A9-E3-6A', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
-                           '16': {macAddr: '00-80-A3-A9-E3-6A', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
+                           '9': {macAddr: '00-80-A3-9D-86-D3', slot: '1', model: '#', vidRouteMoniker: 'r14s1'},
+                           '10': {macAddr: '00-80-A3-9D-86-D3', slot: '2', model: '#', vidRouteMoniker: 'r14s2'},
+                           '11': {macAddr: '00-80-A3-9D-86-D3', slot: '3', model: '#', vidRouteMoniker: 'r14s3'},
+                           '12': {macAddr: '00-80-A3-9D-86-D3', slot: '4', model: '#', vidRouteMoniker: 'r14s4'},
+                           '13': {macAddr: '00-80-A3-9D-86-D3', slot: '5', model: '#', vidRouteMoniker: 'r14s5'},
+                           '14': {macAddr: '00-80-A3-9D-86-D3', slot: '6', model: '#', vidRouteMoniker: 'r14s6'},
+                           '15': {macAddr: '00-80-A3-9D-86-D3', slot: '7', model: '#', vidRouteMoniker: 'r14s7'},
+                           '16': {macAddr: '00-80-A3-9D-86-D3', slot: '8', model: '#', vidRouteMoniker: 'r14s8'},
                          }
         },
     };
@@ -162,10 +164,17 @@ class Main extends React.Component {
                  "00-80-A3-9E-67-3A"];
 
 
-    console.log('viewerPosition: '+this.state.viewerPosition);
-    console.log('command: '+this.state.command);
-    console.log('irnetboxMac:'+this.state.irnetboxMac);
-    console.log('slot state:'+this.state.slot);
+ 
+
+    // logic to send command to all unique macs in a config, it checks if multiple macs are in the config
+    // and then for each mac calls a command api.
+    if(this.state.multipleMacs){
+      var newArr = this.state.macsInConfig.forEach(function(currVal){
+        console.log('------');
+        fetch('http://localhost:3000/redesign/command/'+currVal+'/'+this.state.slot+'/'+this.state.command); 
+      }, this);
+    }
+
     if(this.state.irnetboxMac && this.state.slot && this.state.command){
       console.log('if statement executed');
       console.log('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
@@ -365,6 +374,9 @@ class Main extends React.Component {
       case 86:
         key='V';
         break;
+      case 47:
+        key='/';
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -425,7 +437,8 @@ class Main extends React.Component {
                             '.':'16',
                             ')':'17',
                             '-':'18',
-                            'p':'19'
+                            'p':'19',
+                            '/':'1-16'
                             };
     console.log('viewerPositionMapping');
     console.log(viewerPositionMapping[key]);                        
@@ -470,22 +483,55 @@ class Main extends React.Component {
                           '18':'00-80-A3-9D-86-D1',
                           '19':'00-80-A3-9D-86-D3'
                             };
+    
 
-    if(viewerPositionMapping[key]){
+    console.log(viewerPositionMapping[key]);
+    console.log('viewerPositionMapping[key]:');
+    console.log(this.state.configs[this.state.chosenConfig][1].macAddr);
+    if(viewerPositionMapping[key] == '1-16'){
       
+
       this.setState({
+        irnetboxMac: this.state.configs[this.state.chosenConfig][1].macAddr,
+        slot: '1-16',
+      });
+
+
+    } else if (viewerPositionMapping[key]){
+        this.setState({
         //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
         //slot: stbs[viewerPositionMapping[key]].slot
         irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
       
-        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,     
+        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
+        multipleMacs: false,     
         
       });
+    } else {
+      console.log('viewerPostionMapping[key] not detected');
     }
 
     
     
     if(multiviewConfig[key]){
+      
+      // logic check all unique macs, so that it can be used for the send all stb's function
+      var arr = this.state.configs[this.state.chosenConfig];
+      var lookForUniques = [];
+      for (var keyItem in arr){
+        console.log(keyItem);
+        lookForUniques.push(arr[keyItem].macAddr);
+      }
+      var onlyUniques = lookForUniques.filter(function(value, index, self){
+        return self.indexOf(value) === index;
+      });
+      if(onlyUniques.length > 1){
+        this.setState({
+          multipleMacs: true,
+          macsInConfig: onlyUniques
+        });
+      }
+
       //4 quadConf
       this.setState({
         chosenConfig: multiviewConfig[key]
@@ -840,8 +886,8 @@ class Main extends React.Component {
                   <div className='text'>#</div>
                   <span >&#46;</span>
                 </td>
-                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
-                  <h5>null</h5>
+                <td className={this.state.keyPressed =='/'? 'letter lightblue-bg': 'letter'}>
+                  <h5>send to all STB's 1</h5>
                   <span>/</span>
                 </td>
               </tr>
