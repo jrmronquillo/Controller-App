@@ -1,5 +1,4 @@
 table, tr, th, td{
-  border: dashed;
   border-collapse: collapse;
   padding: .1rem !important;
 }
@@ -214,12 +213,11 @@ strong{
   display: none;
 }
 
-td{
-  text-align: center;
-  width: 100px;
-  height: 100px;
+td {
+  /*border-top: 3px solid !important;*/
+  background-color: #343a40;
+  border-radius: 25px;
 }
-
 
 
 .containz{
@@ -278,6 +276,7 @@ h2, a{
 }
 
 .table-style{
+  display: none;
   margin-left: 50px;
 }
 

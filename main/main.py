@@ -1408,7 +1408,7 @@ def command(irnetboxMac, slot, action):
     command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow', 
                     'rightArrow', 'upArrow', 'downArrow', 'red', 'prev', 
                     'dash','rewind', 'play', 'fastforward', 'chanup', 'record',
-                    'chandown', '0','1','2','3','4','5','6','7','8','9']
+                    'chandown', '0','1','2','3','4','5','6','7','8','9', 'back']
 
     slot_list = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '1-16']
 
