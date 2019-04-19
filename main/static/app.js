@@ -497,6 +497,7 @@ class Main extends React.Component {
       
 
       this.setState({
+        viewerPosition: viewerPositionMapping[key],
         irnetboxMac: this.state.configs[this.state.chosenConfig][1].macAddr,
         slot: '1-16',
       });
@@ -506,6 +507,7 @@ class Main extends React.Component {
         this.setState({
         //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
         //slot: stbs[viewerPositionMapping[key]].slot
+        viewerPosition: viewerPositionMapping[key],
         irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
       
         slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
@@ -585,6 +587,7 @@ class Main extends React.Component {
     
     if(this.state.display){
       return(
+
         <div className="row">
           <div className="col-md-5">
             <h1>Controls </h1>
@@ -753,122 +756,7 @@ class Main extends React.Component {
                 </tbody>
               </table>
             
-            <table className="table-style">
-              <tr>
-                <td className={this.state.keyPressed =='`'? 'letter lightblue-bg': 'letter'}>
-                  <h1>prev</h1>
-                  <span> ` (backtick)</span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='1'? 'letter lightblue-bg': 'letter'}> 1</span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='2'? 'letter lightblue-bg': 'letter'}> 2 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='3'? 'letter lightblue-bg': 'letter'}> 3 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='4'? 'letter lightblue-bg': 'letter'}> 4 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='5'? 'letter lightblue-bg': 'letter'}> 5 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='6'? 'letter lightblue-bg': 'letter'}> 6 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='7'? 'letter lightblue-bg': 'letter'}> 7 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='8'? 'letter lightblue-bg': 'letter'}> 8 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='9'? 'letter lightblue-bg': 'letter'}> 9 </span>
-                </td>
-                <td>
-                  <span className={this.state.keyPressed =='0'? 'letter lightblue-bg': 'letter'}> 0 </span>
-                </td>
-              </tr>
-            </table>
-            <table className="table-style">
-              <tr>
-                <td className={this.state.keyPressed =='q'? 'letter lightblue-bg': 'letter'}>
-                  <h1>GUIDE</h1>
-                  <span> Q</span>
-                </td>
-                <td className={this.state.keyPressed =='w'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&uarr;</h1>
-                  <span > W </span> <br />
-                </td>
-                <td className={this.state.keyPressed =='e'? 'letter lightblue-bg': 'letter'}>
-                  <h1>MENU</h1>
-                  <span> E </span>
-                </td>
-                <td className={this.state.keyPressed =='r'? 'letter lightblue-bg': 'letter'}>
-                  <h1>RED</h1>
-                  <span > R </span>
-                </td>
-                 <td className={this.state.keyPressed =='t'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&#9650;</h1>
-                  <span > T </span>
-                </td>
-              </tr>
-            </table>
-            <table className="table-style" >
-              <tr>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed =='a'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&larr;</h1>
-                  <span >A</span>
-                </td>
-                <td className={this.state.keyPressed =='s'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&darr;</h1>
-                  <span >S</span>
-                </td>
-                <td className={this.state.keyPressed =='d'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&rarr;</h1>
-                  <span >D</span>
-                </td>
-                <td className={this.state.keyPressed =='f'? 'letter lightblue-bg': 'letter'}>
-                  <h1>INFO</h1>
-                  <span>F</span>
-                </td>
-                <td className={this.state.keyPressed =='g'? 'letter lightblue-bg': 'letter'}>
-                  <h1>&#9660;</h1>
-                  <span>G</span>
-                </td>
-              </tr>
-            </table>
-            <table className="table-style" >
-              <tr>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed =='Z'? 'letter lightblue-bg': 'letter'}>
-                  <h1>BACK</h1>
-                  <span>capital Z</span>
-                </td>
-                <td className={this.state.keyPressed =='X'? 'letter lightblue-bg': 'letter'}>
-                  <h1>null</h1>
-                  <span>capital X</span>
-                </td>
-                <td className={this.state.keyPressed =='C'? 'letter lightblue-bg': 'letter'}>
-                  <h1>null</h1>
-                  <span>capital C</span>
-                </td>
-                <td className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
-                  <h1>RECORD</h1>
-                  <span>capital V</span>
-                </td>
-                 <td className={this.state.keyPressed =='B'? 'letter lightblue-bg': 'letter'}>
-                  <h1>null</h1>
-                  <span>capital B</span>
-                </td>
-              </tr>
-            </table>
+            
               <table className="table-style" >
               <tr>
                 <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
@@ -916,55 +804,75 @@ class Main extends React.Component {
                     <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
 
+                      <span> ^</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
+                    <span className="cell-text-container">Device 5</span><br />
+                      <span> &</span>
+
+                    </td>
+                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 9</span><br />
+                      <span>*</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 13</span><br />
+                      <span> (</span>
+                    </td>
+                  </tr>                  
+                  <tr>
+                    <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 2</span><br />
+
                       <span> Y</span>
                     </td>
-                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
-                    <span className="cell-text-container">Device 4</span><br />
+                    <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
+                    <span className="cell-text-container">Device 6</span><br />
                       <span> U</span>
 
                     </td>
-                    <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 7</span><br />
-                      <span>I</span>
-                    </td>
                     <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
+                      <span>I</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '14' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 14</span><br />
                       <span> O</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container"> Device 2 </span> <br />
+                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container"> Device 3 </span> <br />
                       <span> H</span>
                     </td>
-                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 5</span><br />
+                    <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 7</span><br />
                       <span>J</span>
-                    </td>
-                    <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 8</span><br />
-                      <span>K</span>
                     </td>
                     <td className={this.state.viewerPosition == '11' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 11</span><br />
+                      <span>K</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '15' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 15</span><br />
                       <span> L</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">STB 3</span><br />
+                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">STB 4</span><br />
                       <span>N</span>
                     </td>
-                    <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 6</span><br />
+                    <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 8</span><br />
                       <span>M</span>
                     </td>
-                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 9</span> <br />
+                    <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 12</span> <br />
                       <span>,</span>
                     </td>
-                    <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 12</span><br />
+                    <td className={this.state.viewerPosition == '16' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 16</span><br />
                       <span>.</span>
                     </td>
                   </tr>
@@ -972,158 +880,7 @@ class Main extends React.Component {
               </table>
 
 
-             <table className="table-style">
-              <tr>
-                <td className={this.state.keyPressed =='^'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 1</h5>
-                  <div className='model-text'>#</div>
-                  <span> &#x5e;</span>
-                </td>
-                <td className={this.state.keyPressed =='&'? 'letter lightblue-bg': 'letter'}>
-                <h5>STB 5</h5>
-                <div className='model-text'>#</div>
-                  <span> &amp;</span>
-
-                </td>
-                <td className={this.state.keyPressed =='*'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 9</h5>
-                  <div className='text'>#</div>
-                  <span>*</span>
-                </td>
-                <td className={this.state.keyPressed =='('? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 13</h5>
-                  <div className='model-text'>#</div>
-                  <span> (</span>
-                </td>
-                <td className={this.state.keyPressed ==')'? 'letter lightblue-bg': 'letter'}>
-                  <h5>hx2x rack B12</h5>
-                  <div className='text'>#</div>
-                  <span> )</span>
-                </td>
-                <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
-                  <h5>hx2x rack B11</h5>
-                  <span className="letter">_</span>
-                </td>
-                <td className={this.state.keyPressed =='-'? 'letter lightblue-bg': 'letter'}>
-                  <h5>unassigned</h5>
-                  <span className="letter">=</span>
-                </td>
-              </tr>
-            </table>
-             <table className="table-style">
-              <tr>
-                <td colSpan='1' width= "10%" className='hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed =='y'? 'letter lightblue-bg': 'letter'}>
-                  <h5> STB 2 </h5>
-                  <div className='text'>#</div>
-                  <span> Y</span>
-                </td>
-                <td className={this.state.keyPressed =='u'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 6</h5>
-                  <div className='text'>#</div>
-                  <span>U</span>
-                </td>
-                <td className={this.state.keyPressed == 'i'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 10</h5>
-                  <div className='text'>#</div>
-                  <span>I</span>
-                </td>
-                <td className={this.state.keyPressed  =='o'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 14</h5>
-                  <div className='text'>#</div>
-                  <span> O</span>
-                </td>
-                <td className={this.state.keyPressed =='p'? 'letter lightblue-bg': 'letter'}>
-                  <h5>hx2x rack B10</h5>
-                  <span> P</span>
-                </td>
-                <td className={this.state.keyPressed =='['? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviewer Config 1</h5>
-                  <p>Genie A03 + A02</p>
-                  <span>[</span>
-                </td>
-                <td className={this.state.keyPressed ==']'? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviewer Config 2</h5>
-                  <p>hx2x b12 + b13</p>
-                  <span>]</span>
-                </td>
-                <td className={this.state.keyPressed =="&#92;"? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviewer Config 3 (B11/B10)</h5>
-                  <span>&#92;</span>
-                </td>
-              </tr>
-            </table>
-            <table className="table-style">
-              <tr>
-                <td colSpan='1' width= "10%" className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed == 'h'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 3</h5>
-                  <div className='text'>#</div>
-                  <span>H</span>
-                </td>
-                <td className={this.state.keyPressed == 'j'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 7</h5>
-                  <div className='model-text'>#</div>
-                  <span>J</span>
-                </td>
-                <td className={this.state.keyPressed =='k'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 11</h5>
-                  <div className='text'>#</div>
-                  <span>K</span>
-                </td>
-                <td className={this.state.keyPressed =='l'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 15</h5>
-                  <div className='text'>#</div>
-                  <span>L</span>
-                </td>
-                <td className={this.state.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
-                  <h5>MultiViewer Config 4 (HS17 WS)</h5>
-                  <span className="letter">&#59;</span>
-                </td>
-                <td className={this.state.keyPressed =="'"? 'letter lightblue-bg': 'letter'}>
-                  <h5>Multiviewer Config 5 (Rack B15/B16) </h5>
-                  <span className="letter">&apos;</span>
-                </td>
-              </tr>
-            </table>
-            <table className="table-style">
-              <tr>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed =='n'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 4</h5>
-                  <div className='text'>#</div>
-                  <span> N</span>
-                </td>
-                <td className={this.state.keyPressed == 'm'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 8</h5>
-                  <div className='text'>#</div>
-                  <span>M</span>
-                </td>
-                <td className={this.state.keyPressed ==','? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 12</h5>
-                  <div className='text'>#</div>
-                  <span>&#44;</span>
-                </td>
-                <td className={this.state.keyPressed =='.'? 'letter lightblue-bg': 'letter'}>
-                  <h5>STB 16</h5>
-                  <div className='text'>#</div>
-                  <span >&#46;</span>
-                </td>
-                <td className={this.state.keyPressed =='/'? 'letter lightblue-bg': 'letter'}>
-                  <h5>send to all STB's 1</h5>
-                  <span>/</span>
-                </td>
-              </tr>
-            </table>
+             
             <p>viewer position:</p>
             <h1>{this.state.viewerPosition}</h1>
           </div>
