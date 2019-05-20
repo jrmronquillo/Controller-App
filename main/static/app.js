@@ -587,8 +587,33 @@ class Main extends React.Component {
     
     if(this.state.display){
       return(
+        <div>
 
+          <div className="row shadow p-3 mb-3 bg-white rounded">
+
+             <div className="col-lg-6 ">
+                
+             <div className="row">
+                <ul className="list-group shadow p-1 mb-3 bg-white rounded">
+                  <ul className="list-group list-group-horizontal">
+                    <li className={!this.state.viewerPosition ? "list-group-item list-group-item-success active": "list-group-item"}>1. Select Device </li>
+                    {!this.state.viewerPosition && <li className="list-group-item active"><i>-use keyboard</i></li>}
+                    {this.state.viewerPosition && <li className="list-group-item">{this.state.viewerPosition}</li>}
+                  </ul>
+                  <ul className="list-group list-group-horizontal">
+                      <li className={this.state.viewerPosition && this.state.command ? "list-group-item" :  this.state.viewerPosition ? "list-group-item active": "list-group-item"}>2. Select Control </li>
+                      { !this.state.viewerPosition && this.state.command ? 
+                          <li className="list-group-item list-group-item-danger"><i>^^Select device^^</i></li> : 
+                        !this.state.viewerPosition ? <li className="list-group-item"><i>-use keyboard</i></li> : 
+                        this.state.viewerPosition && this.state.command ?<li className="list-group-item">{this.state.command}</li> : <li className="list-group-item active"><i>-use keyboard</i></li>
+                      }
+                  </ul>
+                </ul>
+              </div>
+            </div>
+          </div>
         <div className="row">
+          
           <div className="col-md-5">
             <h1>Controls </h1>
             <table className="table table-config-1">
@@ -884,6 +909,7 @@ class Main extends React.Component {
             <p>viewer position:</p>
             <h1>{this.state.viewerPosition}</h1>
           </div>
+      </div>
       </div>
         )
     } else {
