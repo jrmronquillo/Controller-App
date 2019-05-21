@@ -2,6 +2,36 @@
 
 const e = React.createElement;
 
+class MultiViewButtons extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      firstState : '',
+    };
+  }
+
+    render(){
+      return( 
+        <div>
+          <table className="table table-config-1">
+            <tbody>
+              <tr>
+                <td className={this.props.keyPressed =='='? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">Toggle 4x4/2x2</span><br />
+                    <span> = </span>
+                  </div>  
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )
+      ;
+    }
+  } 
+
+
 class Main extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +57,7 @@ class Main extends React.Component {
       stbObjTest: {'testKey1':'testValue1'},
       chosenConfig: 'multiviewerConfig1',
       multipleMacs: false,
+      view16: true,
       macsInConfig: [],
       configs: {
       'multiviewerConfig1': {
@@ -381,6 +412,9 @@ class Main extends React.Component {
       case 47:
         key='/';
         break;
+      case 61:
+        key='=';
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -445,6 +479,9 @@ class Main extends React.Component {
                             'p':'19',
                             '/':'1-16'
                             };
+    var multiviewAPI = {
+                      '=':'data',
+                      };
     console.log('viewerPositionMapping');
     console.log(viewerPositionMapping[key]);                        
     var stbs = {
@@ -573,7 +610,34 @@ class Main extends React.Component {
       this.sendCommands();
       
     }
+
+    // handle multiviewAPI
+    if (multiviewAPI[key]){
+      console.log('multiViewAPI call detected');
+      var gridConfig = ""
+      if (this.state.view16){
+        gridConfig = "2x2"
+      } else {
+        gridConfig = "4x4"
+      }
+      var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
+      console.log(setGridCall);
+      fetch(setGridCall);
+      this.setState({
+        view16: !this.state.view16,
+      })
+      
+
+    }
+
+
+    console.log(this.state.view16);
+    console.log('reached end of script');
+
   }
+
+
+
 
 
     
@@ -614,7 +678,7 @@ class Main extends React.Component {
           </div>
         <div className="row">
           
-          <div className="col-md-5">
+          <div className="col-md-4">
             <h1>Controls </h1>
             <table className="table table-config-1">
                 <tbody>
@@ -820,7 +884,7 @@ class Main extends React.Component {
               <input type='submit' key='submit' />
             </form>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-4">
              <h1>Device Selector</h1>
 
             <table className="table table-config-1">
@@ -908,6 +972,9 @@ class Main extends React.Component {
              
             <p>viewer position:</p>
             <h1>{this.state.viewerPosition}</h1>
+          </div>
+          <div className="col-md-4">
+            <MultiViewButtons keyPressed={this.state.keyPressed}/>
           </div>
       </div>
       </div>

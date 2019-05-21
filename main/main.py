@@ -217,6 +217,19 @@ def setLabels(labelArr):
 
     return "set labels executed!!"
 
+def setGrid(gridConfig):
+    validVals = ["2x2", "4x4"]
+    strVal = str(gridConfig)
+    if (strVal in validVals):
+        print "valid value found!"
+        tnMV = telnetlib.Telnet("10.23.223.93", "9990")
+        tnMV.write("CONFIGURATION:\n")
+        tnMV.write("Layout: "+strVal+"\n")
+        tnMV.write("\n")
+        return 'multviewAPI executed!'
+    else:
+        return "invalid input - multiviewerAPI did not execute"
+
 def configMultiviewer(mode):
     tn = telnetlib.Telnet("10.23.223.93", "9990")
     tn.write("CONFIGURATION:\n")
@@ -668,6 +681,12 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
     
     setLabels(labelArr)
     return 'config labels executed'
+
+@app.route('/redesign/multiview/setGrid/<string:gridConfig>/')
+def multiviewAPI(gridConfig):
+    setGrid(gridConfig)
+    return "multiviewAPI placeholder "+gridConfig
+
 
 
 
