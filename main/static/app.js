@@ -25,6 +25,7 @@ class MultiViewButtons extends React.Component {
               </tr>
             </tbody>
           </table>
+          
         </div>
       )
       ;
@@ -887,7 +888,34 @@ class Main extends React.Component {
           <div className="col-md-4">
              <h1>Device Selector</h1>
 
+              {!this.state.view16 &&
             <table className="table table-config-1">
+              <tbody>
+                  <tr>
+                    <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 1</span><br />
+
+                      <span> ^</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
+                    <span className="cell-text-container">Device 5</span><br />
+                      <span> &</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 9</span><br />
+                      <span>*</span>
+                    </td>
+                    <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 13</span><br />
+                      <span> (</span>
+                    </td>
+                  </tr>
+                </tbody> 
+            </table>
+          }
+          {this.state.view16 && <table className="table table-config-1">
                 <tbody>
                   <tr>
                     <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
@@ -967,6 +995,7 @@ class Main extends React.Component {
                   </tr>
                 </tbody>
               </table>
+            }
 
 
              
@@ -974,7 +1003,7 @@ class Main extends React.Component {
             <h1>{this.state.viewerPosition}</h1>
           </div>
           <div className="col-md-4">
-            <MultiViewButtons keyPressed={this.state.keyPressed}/>
+            <MultiViewButtons keyPressed={this.state.keyPressed} view16={this.state.view16} />
           </div>
       </div>
       </div>
