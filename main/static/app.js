@@ -5,9 +5,6 @@ const e = React.createElement;
 class MultiViewButtons extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      firstState : '',
-    };
   }
 
     render(){
@@ -15,11 +12,20 @@ class MultiViewButtons extends React.Component {
         <div>
           <table className="table table-config-1">
             <tbody>
+              <thead>
+                <h1> Modes </h1>
+              </thead>
               <tr>
                 <td className={this.props.keyPressed =='='? 'letter lightblue-bg': 'letter'}>
                   <div id="`" data-txt="guide" className="cell-text-container">
                     <span className="cell-text">Toggle 4x4/2x2</span><br />
                     <span> = </span>
+                  </div>  
+                </td>
+                <td className={this.props.keyPressed =='+'? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">Toggle Solo Mode</span><br />
+                    <span> + </span>
                   </div>  
                 </td>
               </tr>
@@ -30,6 +36,19 @@ class MultiViewButtons extends React.Component {
       )
       ;
     }
+  }
+
+  class BackDrop extends React.Component {
+    constructor(props){
+      super(props);
+    }
+
+      render(){
+        return(
+          <div className={this.props.windowFocused ? 'backdrop-none' : 'backdrop-display'}>
+          </div>
+        )
+      }
   } 
 
 
@@ -42,6 +61,7 @@ class Main extends React.Component {
       display: true,
       keyPressed: '',
       command: '',
+      windowFocused: true,
       viewerConfig: [],
       keys: ['q','w', 'e', 'r', 't', 'y'],
       keyObjects: { 
@@ -53,6 +73,7 @@ class Main extends React.Component {
                       },
       viewerPosition: '',
       irnetboxMac: '',
+      soloMode: false,
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
       stbObjTest: {'testKey1':'testValue1'},
@@ -156,28 +177,51 @@ class Main extends React.Component {
     this.toggleDisplay = this.toggleDisplay.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.sendCommands = this.sendCommands.bind(this);
+    this.focusTest = this.focusTest.bind(this);
+    this.focused = this.focused.bind(this);
   }
 
   componentDidMount(){
-    //console.log('00000000');
+    console.log('00000000');
+    //console.log(document.hidden);
+    //console.log(navigator);
     //console.log(this.state.keyObjects.length);
     //console.log(this.state.keyObjects[0][0]);
     //for (var key in this.state.keyObjects[0][0]){
     //  console.log(key);
     //  console.log(this.state.keyObjects[0][0][key]);
     //}
-
+    console.log('document focus var');
+    console.log(document.hasFocus());
+    window.addEventListener("blur", this.focusTest);
+    window.addEventListener("focus", this.focused);
     document.addEventListener('keypress', this.handleKeyPress);
   }
 
   componentWillUnmount(){
     document.removeEventListener('keypress', this.handleKeyPress);
+    window.addEventListener("blur", this.focusTest);
+    window.addEventListener('focus', this.focused);
   }
 
   toggleDisplay(){
     this.setState({
       display: !this.state.display
       });
+  }
+
+  focused(){
+    console.log('screen is focused!');
+    this.setState({
+      windowFocused: true,
+    })
+  }
+
+  focusTest(){
+    console.log('window not focused!');
+    this.setState({
+      windowFocused: false,
+    })
   }
 
   sendCommands(){
@@ -416,6 +460,9 @@ class Main extends React.Component {
       case 61:
         key='=';
         break;
+      case 43:
+        key='+'
+        break;
       default:
         key = 'unexpected keypress';
     }
@@ -481,7 +528,8 @@ class Main extends React.Component {
                             '/':'1-16'
                             };
     var multiviewAPI = {
-                      '=':'data',
+                      '=':'toggleLayout',
+                      '+':'toggleSolo',
                       };
     console.log('viewerPositionMapping');
     console.log(viewerPositionMapping[key]);                        
@@ -615,24 +663,38 @@ class Main extends React.Component {
     // handle multiviewAPI
     if (multiviewAPI[key]){
       console.log('multiViewAPI call detected');
-      var gridConfig = ""
-      if (this.state.view16){
-        gridConfig = "2x2"
-      } else {
-        gridConfig = "4x4"
-      }
-      var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
-      console.log(setGridCall);
-      fetch(setGridCall);
-      this.setState({
-        view16: !this.state.view16,
-      })
-      
+      console.log(multiviewAPI[key]);
+      switch(multiviewAPI[key]){
+        case 'toggleLayout':
+          var gridConfig = ""
+          if (this.state.view16){
+            gridConfig = "2x2"
+          } else {
+            gridConfig = "4x4"
+          }
+          var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
+          console.log(setGridCall);
+          fetch(setGridCall);
+          this.setState({
+            view16: !this.state.view16,
+          })
+          break;
+        case 'toggleSolo':
+          console.log('toggleSolo triggered!');
+          console.log(this.state.soloMode)
 
+          var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+this.state.soloMode;
+          fetch(setSoloCall);
+          this.setState({
+            soloMode: !this.state.soloMode,
+          })
+          break;
+        } 
+      
     }
 
 
-    console.log(this.state.view16);
+    
     console.log('reached end of script');
 
   }
@@ -652,8 +714,8 @@ class Main extends React.Component {
     
     if(this.state.display){
       return(
-        <div>
-
+        <div className="containerMain">
+          <BackDrop windowFocused={this.state.windowFocused}/>
           <div className="row shadow p-3 mb-3 bg-white rounded">
 
              <div className="col-lg-6 ">
@@ -843,6 +905,12 @@ class Main extends React.Component {
                       </div>
                     </td>
                   </tr>
+                  <tr>
+                    <td colspan="5" className={this.state.keyPressed ==' '? 'letter lightblue-bg': 'letter'}>
+                      <h1>Select</h1>
+                      <span>Spacebar</span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             
@@ -872,6 +940,12 @@ class Main extends React.Component {
                  <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
                   <h1>FFWD</h1>
                   <span>B</span>
+                </td>
+              </tr>
+              <tr>
+                <td className={this.state.keyPressed =='space'? 'letter lightblue-bg': 'letter'}>
+                  <h1>Select</h1>
+                  <span>Spacebar</span>
                 </td>
               </tr>
             </table>

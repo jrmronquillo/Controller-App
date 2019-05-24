@@ -687,6 +687,21 @@ def multiviewAPI(gridConfig):
     setGrid(gridConfig)
     return "multiviewAPI placeholder "+gridConfig
 
+@app.route('/redesign/setSolo/<string:mode>/')
+def setSoloConfig(mode):
+    # true or false
+    # only run if input is valid
+    valVars = ['true', 'false']
+    if mode in valVars:
+        Message = 'valid input detected! - '+mode
+        configMultiviewer(mode);
+    else:
+        print 'invalid input!'
+        Message = 'invalid input'
+    # configMultiviewer(mode)
+    return Message
+
+
 
 
 

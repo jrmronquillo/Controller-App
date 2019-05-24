@@ -3,6 +3,23 @@ table, tr, th, td{
   padding: .1rem !important;
 }
 
+.backdrop-display{
+  width:100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: .8;
+  z-index: 9999;
+  top:0;
+  position: fixed;
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+}
+
+.backdrop-none{
+  display: none;
+}
+
 #blog-form{
   margin-left: 50%;
 }
@@ -13,6 +30,10 @@ table, tr, th, td{
 
 #chtune-title{
   color: #FFF;
+}
+
+.containerMain{
+  margin: 25px;
 }
 
 .controller-main-bg{
@@ -308,4 +329,9 @@ h2, a{
   .hamburger-container{
     display: inline-block;
   }
+}
+
+@keyframes fadeIn{
+  0% {opacity: 0;}
+  100% { opacity: .8; }
 }
