@@ -180,6 +180,7 @@ def setVideo(config):
 # customConfig = {"1":"r2s10", "2":"r2s11"}
 # setVideo(customConfig)
 def setLabels(labelArr):
+    print'setLabels backend function:'
     print labelArr
     stbModels = {"r3s1":"H44-500", "r3s2":"HR54-700", "r3s3":"HR54-500",
                  "r3s4":"HR54-200", "r3s5":"HR44-700", 
@@ -657,7 +658,8 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
                 '5': str(stb5), '6': str(stb6), '7':str(stb7), '8':str(stb8),
                 '9': str(stb9), '10': str(stb10), '11': str(stb11), '12': str(stb12),
                 '13': str(stb13), '14': str(stb14), '15': str(stb15), '16': str(stb16)}
-     #print labelArr
+    print "0o000labelArr values: "
+    print labelArr
 
     labelConfigs = {
             '1':{
@@ -687,7 +689,7 @@ def multiviewAPI(gridConfig):
     setGrid(gridConfig)
     return "multiviewAPI placeholder "+gridConfig
 
-@app.route('/redesign/setSolo/<string:mode>/')
+@app.route('/setSoloConfigx')
 def setSoloConfig(mode):
     # true or false
     # only run if input is valid

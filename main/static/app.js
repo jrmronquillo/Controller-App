@@ -25,6 +25,7 @@ class MultiViewButtons extends React.Component {
                 <td className={this.props.keyPressed =='+'? 'letter lightblue-bg': 'letter'}>
                   <div id="`" data-txt="guide" className="cell-text-container">
                     <span className="cell-text">Toggle Solo Mode</span><br />
+                    <span>mode: {this.props.soloMode}</span> 
                     <span> + </span>
                   </div>  
                 </td>
@@ -51,6 +52,20 @@ class MultiViewButtons extends React.Component {
       }
   } 
 
+  class TestComponent extends React.Component{
+    constructor(props){
+      super(props);
+    }
+
+      render(){
+        return(
+          <div>
+            <span> Test Component </span>
+          </div>
+        )
+      }
+  }
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -76,7 +91,24 @@ class Main extends React.Component {
       soloMode: false,
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
-      stbObjTest: {'testKey1':'testValue1'},
+      view1: {macAddr:'00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker: 'r3s1'},
+      view2: {macAddr:'00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
+      view3: {macAddr:'00-80-A3-A9-E3-7A', slot: '3', model: 'HR54-500', vidRouteMoniker: 'r3s3'},
+      view4: {macAddr:'00-80-A3-A9-E3-7A', slot: '4', model: 'HR54-200', vidRouteMoniker: 'r3s4'},
+      view5: {macAddr:'00-80-A3-A9-E3-7A', slot: '5', model: 'null', vidRouteMoniker: 'r3s5'},
+      view6: {macAddr:'00-80-A3-A9-E3-7A', slot: '6', model: 'null', vidRouteMoniker: 'r3s6'},
+      view7: {macAddr:'00-80-A3-A9-E3-7A', slot: '7', model: 'null', vidRouteMoniker: 'r3s7'},
+      view8: {macAddr:'00-80-A3-A9-E3-7A', slot: '8', model: 'null', vidRouteMoniker: 'r3s8'},
+      view9: {macAddr:'00-80-A3-A9-E3-6A', slot: '1', model: 'null', vidRouteMoniker: 'r2s1'},
+      view10: {macAddr:'00-80-A3-A9-E3-6A', slot: '2', model: 'null', vidRouteMoniker: 'r2s2'},
+      view11: {macAddr:'00-80-A3-A9-E3-6A', slot: '3', model: 'null', vidRouteMoniker: 'r2s3'},
+      view12: {macAddr:'00-80-A3-A9-E3-6A', slot: '4', model: 'null', vidRouteMoniker: 'r2s4'},
+      view13: {macAddr:'00-80-A3-A9-E3-6A', slot: '5', model: 'null', vidRouteMoniker: 'r2s5'},
+      view14: {macAddr:'00-80-A3-A9-E3-6A', slot: '6', model: 'null', vidRouteMoniker: 'r2s6'},
+      view15: {macAddr:'00-80-A3-A9-E3-6A', slot: '7', model: 'null', vidRouteMoniker: 'r2s7'},
+      view16: {macAddr:'00-80-A3-A9-E3-6A', slot: '8', model: 'null', vidRouteMoniker: 'r2s8'},
+      toggleTempView3: 'null',
+      toggleTempView4: 'null',
       chosenConfig: 'multiviewerConfig1',
       multipleMacs: false,
       view16: true,
@@ -184,6 +216,13 @@ class Main extends React.Component {
   componentDidMount(){
     console.log('00000000');
     //console.log(document.hidden);
+    // initialize temp view values so that they get be set to reset the views in the toggle function
+    this.setState({
+          toggleTempView3: this.state.view3,
+          toggleTempView4: this.state.view4,
+          toggleTempView5: this.state.view5,
+          toggleTempView6: this.state.view6,
+        });
     //console.log(navigator);
     //console.log(this.state.keyObjects.length);
     //console.log(this.state.keyObjects[0][0]);
@@ -196,6 +235,8 @@ class Main extends React.Component {
     window.addEventListener("blur", this.focusTest);
     window.addEventListener("focus", this.focused);
     document.addEventListener('keypress', this.handleKeyPress);
+    console.log('stb object test');
+    console.log(this.state.stbObjTest);
   }
 
   componentWillUnmount(){
@@ -504,29 +545,52 @@ class Main extends React.Component {
                             '0': '0',
                             '`': 'prev'
                               };
-    var viewerPositionMapping = {
-                            '': '0',
-                            '^':'1',
-                            'y':'2',
-                            'h':'3',
-                            'n':'4',
-                            '&':'5',
-                            'u':'6', 
-                            'j':'7',
-                            'm':'8', 
-                            '*':'9',
-                            'i':'10',
-                            'k':'11', 
-                            ',':'12', 
-                            '(':'13', 
-                            'o':'14',
-                            'l':'15',
-                            '.':'16',
-                            ')':'17',
-                            '-':'18',
-                            'p':'19',
-                            '/':'1-16'
-                            };
+  //var viewerPositionMapping = {
+  //                          '': '0',
+  //                          '^':'1',
+  //                          'y':'2',
+  //                          'h':'3',
+  //                          'n':'4',
+  //                          '&':'5',
+  //                          'u':'6', 
+  //                          'j':'7',
+  //                          'm':'8', 
+  //                          '*':'9',
+  //                          'i':'10',
+  //                          'k':'11', 
+  //                         ',':'12', 
+  //                          '(':'13', 
+  //                          'o':'14',
+  //                          'l':'15',
+  //                          '.':'16',
+  //                          ')':'17',
+  //                          '-':'18',
+  //                          'p':'19',
+  //                          '/':'1-16'
+  //                          };
+
+  var viewerPositionMapping = {
+                        'test':'0',
+                        '^': this.state.view1,
+                        'y': this.state.view2,
+                        'h': this.state.view3,
+                        'n': this.state.view4,
+                        '&': this.state.view5,
+                        'u': this.state.view6,
+                        'j': this.state.view7,
+                        'm': this.state.view8,
+                        '*': this.state.view9,
+                        'i': this.state.view10,
+                        'k': this.state.view11,
+                        ',': this.state.view12,
+                        '(': this.state.view13,
+                        'o': this.state.view14,
+                        'l': this.state.view15,
+                        '.': this.state.view16,
+                        
+                        };
+
+
     var multiviewAPI = {
                       '=':'toggleLayout',
                       '+':'toggleSolo',
@@ -590,16 +654,25 @@ class Main extends React.Component {
 
 
     } else if (viewerPositionMapping[key]){
-        this.setState({
-        //irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
-        //slot: stbs[viewerPositionMapping[key]].slot
-        viewerPosition: viewerPositionMapping[key],
-        irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
+        //this.setState({
+        ////irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
+        ////slot: stbs[viewerPositionMapping[key]].slot
+        //viewerPosition: viewerPositionMapping[key],
+        //irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
       
-        slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
-        multipleMacs: false,     
+        //slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
+        //multipleMacs: false,
+        //console.log('test log');
         
-      });
+        //});
+        
+        console.log(viewerPositionMapping[key].macAddr);
+        console.log('$$$$$$$$$');
+
+        this.setState({
+          irnetboxMac: viewerPositionMapping[key].macAddr,
+          slot: viewerPositionMapping[key].slot,
+        }) 
     } else {
       console.log('viewerPostionMapping[key] not detected');
     }
@@ -664,13 +737,31 @@ class Main extends React.Component {
     if (multiviewAPI[key]){
       console.log('multiViewAPI call detected');
       console.log(multiviewAPI[key]);
+      // intializing these temp view states, so they can be used to reset the views.
+      
       switch(multiviewAPI[key]){
+
         case 'toggleLayout':
           var gridConfig = ""
           if (this.state.view16){
             gridConfig = "2x2"
+            this.setState({
+              view5: this.state.toggleTempView3,
+              view6: this.state.toggleTempView4,
+            })
+            //var setVideoCall = 'http://localhost:3000/setVideo/;
+            //console.log('setVideoCall:');
+            //console.log(setVideoCall);
+      
+            //fetch(setVideoCall);
           } else {
             gridConfig = "4x4"
+            this.setState({
+              view3: this.state.toggleTempView3,
+              view4: this.state.toggleTempView4,
+              view5: this.state.toggleTempView5,
+              view6: this.state.toggleTempView6,
+            })
           }
           var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
           console.log(setGridCall);
@@ -679,6 +770,7 @@ class Main extends React.Component {
             view16: !this.state.view16,
           })
           break;
+
         case 'toggleSolo':
           console.log('toggleSolo triggered!');
           console.log(this.state.soloMode)
@@ -966,24 +1058,24 @@ class Main extends React.Component {
             <table className="table table-config-1">
               <tbody>
                   <tr>
-                    <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '^' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
 
                       <span> ^</span>
                     </td>
-                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '&' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'y' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
-                      <span>*</span>
+                      <span>y</span>
                     </td>
-                    <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'u' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
-                      <span> (</span>
+                      <span> u</span>
                     </td>
                   </tr>
                 </tbody> 
@@ -992,77 +1084,77 @@ class Main extends React.Component {
           {this.state.view16 && <table className="table table-config-1">
                 <tbody>
                   <tr>
-                    <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '^' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
 
                       <span> ^</span>
                     </td>
-                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '&' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
 
                     </td>
-                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '*' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
                       <span>*</span>
                     </td>
-                    <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '(' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
                       <span> (</span>
                     </td>
                   </tr>                  
                   <tr>
-                    <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'y' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 2</span><br />
 
                       <span> Y</span>
                     </td>
-                    <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'u' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 6</span><br />
                       <span> U</span>
 
                     </td>
-                    <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'i' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
                       <span>I</span>
                     </td>
-                    <td className={this.state.viewerPosition == '14' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'o' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 14</span><br />
                       <span> O</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'h' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container"> Device 3 </span> <br />
                       <span> H</span>
                     </td>
-                    <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'j' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 7</span><br />
                       <span>J</span>
                     </td>
-                    <td className={this.state.viewerPosition == '11' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'k' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 11</span><br />
                       <span>K</span>
                     </td>
-                    <td className={this.state.viewerPosition == '15' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'l' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 15</span><br />
                       <span> L</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'n' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">STB 4</span><br />
                       <span>N</span>
                     </td>
-                    <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == 'm' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 8</span><br />
                       <span>M</span>
                     </td>
-                    <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == ',' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 12</span> <br />
                       <span>,</span>
                     </td>
-                    <td className={this.state.viewerPosition == '16' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.keyPressed == '.' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 16</span><br />
                       <span>.</span>
                     </td>
@@ -1077,7 +1169,7 @@ class Main extends React.Component {
             <h1>{this.state.viewerPosition}</h1>
           </div>
           <div className="col-md-4">
-            <MultiViewButtons keyPressed={this.state.keyPressed} view16={this.state.view16} />
+            <MultiViewButtons keyPressed={this.state.keyPressed} view16={this.state.view16} soloMode={this.state.soloMode} />
           </div>
       </div>
       </div>
