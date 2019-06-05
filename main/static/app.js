@@ -109,9 +109,11 @@ class Main extends React.Component {
       view16: {macAddr:'00-80-A3-A9-E3-6A', slot: '8', model: 'null', vidRouteMoniker: 'r2s8'},
       toggleTempView3: 'null',
       toggleTempView4: 'null',
+      toggleTempView5: 'null',
+      toggleTempView6: 'null',
       chosenConfig: 'multiviewerConfig1',
       multipleMacs: false,
-      view16: true,
+      viewMode16: true,
       macsInConfig: [],
       configs: {
       'multiviewerConfig1': {
@@ -587,7 +589,6 @@ class Main extends React.Component {
                         'o': this.state.view14,
                         'l': this.state.view15,
                         '.': this.state.view16,
-                        
                         };
 
 
@@ -667,6 +668,7 @@ class Main extends React.Component {
         //});
         
         console.log(viewerPositionMapping[key].macAddr);
+        console.log(this.state.view16);
         console.log('$$$$$$$$$');
 
         this.setState({
@@ -743,7 +745,7 @@ class Main extends React.Component {
 
         case 'toggleLayout':
           var gridConfig = ""
-          if (this.state.view16){
+          if (this.state.viewMode16){
             gridConfig = "2x2"
             this.setState({
               view5: this.state.toggleTempView3,
@@ -1054,7 +1056,7 @@ class Main extends React.Component {
           <div className="col-md-4">
              <h1>Device Selector</h1>
 
-              {!this.state.view16 &&
+              {!this.state.viewMode16 &&
             <table className="table table-config-1">
               <tbody>
                   <tr>
@@ -1081,7 +1083,7 @@ class Main extends React.Component {
                 </tbody> 
             </table>
           }
-          {this.state.view16 && <table className="table table-config-1">
+          {this.state.viewMode16 && <table className="table table-config-1">
                 <tbody>
                   <tr>
                     <td className={this.state.keyPressed == '^' ? 'letter lightblue-bg': 'letter'}>
