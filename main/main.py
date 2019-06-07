@@ -6,6 +6,7 @@ from database_setup import Base, Stb
 from flask import session as login_session
 import random
 import string
+import urllib2
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -13,6 +14,8 @@ import httplib2
 import json
 from flask import make_response
 import requests
+
+import feedparser
 
 import datetime
 import pytz
@@ -280,6 +283,33 @@ def keySendv3(commandParams):
     for i in commandParams:
         print i
         # keySendv2(rack,key, slot)
+
+# server-side handling of rss feeds
+def rssFeedConverter():
+    url="https://news.google.com/news/rss"
+    data = feedparser.parse(url)
+    print data['feed']['title']
+    print len(data['entries'])
+    for article in data['entries']:
+        article.title + ":" + article.link
+    
+    return data['entries']
+     
+  
+
+@app.route('/rssTest')
+def rssTest():
+    print rssFeedConverter()
+    fullData= rssFeedConverter()
+    testArr = []
+    for item in fullData:
+        print item.title
+        testArr.append(item.title)
+    # testArr = ['test', 'test2']
+    
+    return jsonify(title=testArr)
+    
+    # return
 
 @app.route('/setCookie/', methods = ['POST', 'GET'])
 def setCookie():

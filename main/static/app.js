@@ -47,6 +47,7 @@ class MultiViewButtons extends React.Component {
       render(){
         return(
           <div className={this.props.windowFocused ? 'backdrop-none' : 'backdrop-display'}>
+            <span className="screensave-data">{this.props.displayData}</span>
           </div>
         )
       }
@@ -111,9 +112,11 @@ class Main extends React.Component {
       toggleTempView4: 'null',
       toggleTempView5: 'null',
       toggleTempView6: 'null',
+      screenSaverData: 'null',
       chosenConfig: 'multiviewerConfig1',
       multipleMacs: false,
       viewMode16: true,
+      rssItems: 'null',
       macsInConfig: [],
       configs: {
       'multiviewerConfig1': {
@@ -239,12 +242,54 @@ class Main extends React.Component {
     document.addEventListener('keypress', this.handleKeyPress);
     console.log('stb object test');
     console.log(this.state.stbObjTest);
+    //this.getItems();
+    var that = this;
+    console.log(that.state.chosenConfig);
+    fetch('http://localhost:3000/rssTest')
+      .then(function(response){
+        console.log('fetch function triggered!');
+        if (response.status>= 400) {
+          throw new Error("Bad response from the server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        console.log('response was good!');
+        console.log(data.title[0]);
+        console.log(that.state.viewMode16);
+        that.setState({
+          screenSaverData: data.title[0],
+        });
+      })
+    
+    this.logOutput();
   }
 
   componentWillUnmount(){
     document.removeEventListener('keypress', this.handleKeyPress);
     window.addEventListener("blur", this.focusTest);
     window.addEventListener('focus', this.focused);
+  }
+
+  logOutput(){
+    console.log('&&&');
+    console.log(this.state.screenSaverData);
+  }
+
+  getItems(){
+    $.ajax({ 
+    type: 'GET', 
+    url: 'http://localhost:3000/rssTest', 
+    data: { get_param: 'value' }, 
+    dataType: 'json',
+    success: function (data) { 
+        console.log('test$$$');
+        console.log(data.title[0]);
+        this.setState({
+          screenSaverData: data.title[0],
+        })
+      }
+    });
   }
 
   toggleDisplay(){
@@ -809,7 +854,7 @@ class Main extends React.Component {
     if(this.state.display){
       return(
         <div className="containerMain">
-          <BackDrop windowFocused={this.state.windowFocused}/>
+          <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData}/>
           <div className="row shadow p-3 mb-3 bg-white rounded">
 
              <div className="col-lg-6 ">
