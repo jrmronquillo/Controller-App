@@ -789,6 +789,8 @@ class Main extends React.Component {
       switch(multiviewAPI[key]){
 
         case 'toggleLayout':
+          console.log("##########");
+          console.log(this.state.viewMode16);
           var gridConfig = ""
           if (this.state.viewMode16){
             gridConfig = "2x2"
@@ -814,7 +816,7 @@ class Main extends React.Component {
           console.log(setGridCall);
           fetch(setGridCall);
           this.setState({
-            view16: !this.state.view16,
+            viewMode16: !this.state.viewMode16,
           })
           break;
 
