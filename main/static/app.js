@@ -11,10 +11,10 @@ class MultiViewButtons extends React.Component {
       return( 
         <div>
           <table className="table table-config-1">
-            <tbody>
               <thead>
-                <h1> Modes </h1>
+                 <tr><th>Modes</th></tr>
               </thead>
+              <tbody>
               <tr>
                 <td className={this.props.keyPressed =='='? 'letter lightblue-bg': 'letter'}>
                   <div id="`" data-txt="guide" className="cell-text-container">
@@ -30,7 +30,7 @@ class MultiViewButtons extends React.Component {
                   </div>  
                 </td>
               </tr>
-            </tbody>
+              </tbody>
           </table>
           
         </div>
@@ -47,7 +47,12 @@ class MultiViewButtons extends React.Component {
       render(){
         return(
           <div className={this.props.windowFocused ? 'backdrop-none' : 'backdrop-display'}>
-            <span className="screensave-data">{this.props.displayData}</span>
+            <p className="screensave-data">{this.props.displayData[0]}</p>
+            <br />
+            <p className="screensave-data">{this.props.displayData[1]}</p>
+            <br />
+            <p className="screensave-data">{this.props.displayData[2]}</p>
+            <br />
           </div>
         )
       }
@@ -245,6 +250,8 @@ class Main extends React.Component {
     //this.getItems();
     var that = this;
     console.log(that.state.chosenConfig);
+
+    // initial load of data
     fetch('http://localhost:3000/rssTest')
       .then(function(response){
         console.log('fetch function triggered!');
@@ -256,11 +263,68 @@ class Main extends React.Component {
       .then(function(data){
         console.log('response was good!');
         console.log(data.title[0]);
-        console.log(that.state.viewMode16);
+        console.log(data.title.length);
+        var screenSaverDataArr = [];
+        for(var i=0; i<data.title.length; i++){
+          screenSaverDataArr.push(data.title[i])
+        }
+        console.log(screenSaverDataArr);
+        
+        // generate a random integer and use that integer to select random item in an array of news articles.
+        var j = 0;
+        var ranThreeArticles = [];
+        while(j < 3){
+          var ranNum = Math.floor(Math.random() * screenSaverDataArr.length)
+          console.log('ranNum:');
+          console.log(ranNum);
+          console.log(screenSaverDataArr[ranNum]);
+          ranThreeArticles.push(screenSaverDataArr[ranNum])
+          j++;
+        }
+        
         that.setState({
-          screenSaverData: data.title[0],
+          screenSaverData: ranThreeArticles,
+        });
+      });
+
+
+    // load new data into screenSaverData state every 5 mins
+    setInterval(function(){
+      fetch('http://localhost:3000/rssTest')
+      .then(function(response){
+        console.log('fetch function triggered!');
+        if (response.status>= 400) {
+          throw new Error("Bad response from the server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        console.log('response was good!');
+        console.log(data.title[0]);
+        console.log(data.title.length);
+        var screenSaverDataArr = [];
+        for(var i=0; i<data.title.length; i++){
+          screenSaverDataArr.push(data.title[i])
+        }
+        console.log(screenSaverDataArr);
+        // generate a random integer and use that integer to select random item in an array of news articles.
+        var j = 0;
+        var ranThreeArticles = [];
+        while(j < 3){
+          var ranNum = Math.floor(Math.random() * screenSaverDataArr.length)
+          console.log('ranNum:');
+          console.log(ranNum);
+          console.log(screenSaverDataArr[ranNum]);
+          ranThreeArticles.push(screenSaverDataArr[ranNum])
+          j++;
+        }
+
+        that.setState({
+          screenSaverData: ranThreeArticles,
         });
       })
+    }, 300000)
+
     
     this.logOutput();
   }
@@ -715,8 +779,28 @@ class Main extends React.Component {
         console.log(viewerPositionMapping[key].macAddr);
         console.log(this.state.view16);
         console.log('$$$$$$$$$');
+        console.log(this.state.keyPressed);
+        var viewMappings = {
+                "^" : '1',
+                "y" : '2',
+                "h" : '3',
+                "n" : '4',
+                "&" : '5',
+                "u" : '6',
+                "j" : '7',
+                "m" : '8',
+                "*" : '9',
+                "i" : '10',
+                "k" : '11',
+                "," : '12',
+                "(" : '13',
+                "o" : '14',
+                "l" : '15',
+                "." : '16',
+        }
 
         this.setState({
+          viewerPosition: viewMappings[this.state.keyPressed],
           irnetboxMac: viewerPositionMapping[key].macAddr,
           slot: viewerPositionMapping[key].slot,
         }) 
@@ -856,13 +940,9 @@ class Main extends React.Component {
     if(this.state.display){
       return(
         <div className="containerMain">
-          <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData}/>
-          <div className="row shadow p-3 mb-3 bg-white rounded">
+          <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData} />
+          <div className="row shadow">
 
-             <div className="col-lg-6 ">
-                
-             <div className="row">
-                <ul className="list-group shadow p-1 mb-3 bg-white rounded">
                   <ul className="list-group list-group-horizontal">
                     <li className={!this.state.viewerPosition ? "list-group-item list-group-item-success active": "list-group-item"}>1. Select Device </li>
                     {!this.state.viewerPosition && <li className="list-group-item active"><i>-use keyboard</i></li>}
@@ -876,9 +956,6 @@ class Main extends React.Component {
                         this.state.viewerPosition && this.state.command ?<li className="list-group-item">{this.state.command}</li> : <li className="list-group-item active"><i>-use keyboard</i></li>
                       }
                   </ul>
-                </ul>
-              </div>
-            </div>
           </div>
         <div className="row">
           
@@ -1047,7 +1124,7 @@ class Main extends React.Component {
                     </td>
                   </tr>
                   <tr>
-                    <td colspan="5" className={this.state.keyPressed ==' '? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan="5" className={this.state.keyPressed ==' '? 'letter lightblue-bg': 'letter'}>
                       <h1>Select</h1>
                       <span>Spacebar</span>
                     </td>
@@ -1057,38 +1134,40 @@ class Main extends React.Component {
             
             
               <table className="table-style" >
-              <tr>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
-                </td>
-                <td className={this.state.keyPressed =='z'? 'letter lightblue-bg': 'letter'}>
-                  <h1>DASH</h1>
-                  <span>Z</span>
-                </td>
-                <td className={this.state.keyPressed =='x'? 'letter lightblue-bg': 'letter'}>
-                  <h1>EXIT</h1>
-                  <span>X</span>
-                </td>
-                <td className={this.state.keyPressed =='c'? 'letter lightblue-bg': 'letter'}>
-                  <h1>REW</h1>
-                  <span>C</span>
-                </td>
-                <td className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
-                  <h1>PLAY</h1>
-                  <span>V</span>
-                </td>
-                 <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
-                  <h1>FFWD</h1>
-                  <span>B</span>
-                </td>
-              </tr>
-              <tr>
-                <td className={this.state.keyPressed =='space'? 'letter lightblue-bg': 'letter'}>
-                  <h1>Select</h1>
-                  <span>Spacebar</span>
-                </td>
-              </tr>
+                <tbody>
+                  <tr>
+                    <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
+                    </td>
+                    <td colSpan='1' width= "10%"  className='hidden-top-border hidden-left-border hidden-bottom-border'>
+                    </td>
+                    <td className={this.state.keyPressed =='z'? 'letter lightblue-bg': 'letter'}>
+                      <h1>DASH</h1>
+                      <span>Z</span>
+                    </td>
+                    <td className={this.state.keyPressed =='x'? 'letter lightblue-bg': 'letter'}>
+                      <h1>EXIT</h1>
+                      <span>X</span>
+                    </td>
+                    <td className={this.state.keyPressed =='c'? 'letter lightblue-bg': 'letter'}>
+                      <h1>REW</h1>
+                      <span>C</span>
+                    </td>
+                    <td className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
+                      <h1>PLAY</h1>
+                      <span>V</span>
+                    </td>
+                     <td className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
+                      <h1>FFWD</h1>
+                      <span>B</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={this.state.keyPressed =='space'? 'letter lightblue-bg': 'letter'}>
+                      <h1>Select</h1>
+                      <span>Spacebar</span>
+                    </td>
+                  </tr>
+                </tbody>
             </table>
             <p>key pressed: </p>
             <h1>{this.state.keyPressed}</h1>
@@ -1107,22 +1186,22 @@ class Main extends React.Component {
             <table className="table table-config-1">
               <tbody>
                   <tr>
-                    <td className={this.state.keyPressed == '^' ? 'letter lightblue-bg': 'letter'}>
-                      <span className="cell-text-container">Device 1</span><br />
+                    <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">Device 1 -{this.state.viewerPosition}</span><br />
 
                       <span> ^</span>
                     </td>
-                    <td className={this.state.keyPressed == '&' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.keyPressed == 'y' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
                       <span>y</span>
                     </td>
-                    <td className={this.state.keyPressed == 'u' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
                       <span> u</span>
                     </td>
@@ -1133,77 +1212,77 @@ class Main extends React.Component {
           {this.state.viewMode16 && <table className="table table-config-1">
                 <tbody>
                   <tr>
-                    <td className={this.state.keyPressed == '^' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
 
                       <span> ^</span>
                     </td>
-                    <td className={this.state.keyPressed == '&' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
 
                     </td>
-                    <td className={this.state.keyPressed == '*' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
                       <span>*</span>
                     </td>
-                    <td className={this.state.keyPressed == '(' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
                       <span> (</span>
                     </td>
                   </tr>                  
                   <tr>
-                    <td className={this.state.keyPressed == 'y' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 2</span><br />
 
                       <span> Y</span>
                     </td>
-                    <td className={this.state.keyPressed == 'u' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 6</span><br />
                       <span> U</span>
 
                     </td>
-                    <td className={this.state.keyPressed == 'i' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
                       <span>I</span>
                     </td>
-                    <td className={this.state.keyPressed == 'o' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '14' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 14</span><br />
                       <span> O</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.keyPressed == 'h' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container"> Device 3 </span> <br />
                       <span> H</span>
                     </td>
-                    <td className={this.state.keyPressed == 'j' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 7</span><br />
                       <span>J</span>
                     </td>
-                    <td className={this.state.keyPressed == 'k' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '11' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 11</span><br />
                       <span>K</span>
                     </td>
-                    <td className={this.state.keyPressed == 'l' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '15' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 15</span><br />
                       <span> L</span>
                     </td>
                   </tr>
                   <tr>
-                    <td className={this.state.keyPressed == 'n' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">STB 4</span><br />
                       <span>N</span>
                     </td>
-                    <td className={this.state.keyPressed == 'm' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 8</span><br />
                       <span>M</span>
                     </td>
-                    <td className={this.state.keyPressed == ',' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 12</span> <br />
                       <span>,</span>
                     </td>
-                    <td className={this.state.keyPressed == '.' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '16' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 16</span><br />
                       <span>.</span>
                     </td>

@@ -297,8 +297,18 @@ h2, a{
 }
 
 .screensave-data{
+  position: relative;
+  top: 100px;
   color: white;
-  font-size: 50px;
+  font-size: 25px;
+  margin: 50px;
+  padding-right: 50px;
+  -webkit-animation-name: antman;
+  animation-name: antman;
+  animation-duration: 20s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  /*animation-fill-mode: forwards;*/
 }
 
 .table-style{
@@ -318,6 +328,13 @@ h2, a{
   background-color: lightblue;
 }
 
+.main-container{
+  height:100%;
+  width:100%;
+  overflow:hidden;
+  position: fixed;
+}
+
 @media (max-width: 771px) {
   .stb-selection{
     display: none;
@@ -329,6 +346,7 @@ h2, a{
     position: fixed;
     top: 0;
     left: 0;
+    height: 10vh;
   }
 
   .hamburger-container{
@@ -339,4 +357,9 @@ h2, a{
 @keyframes fadeIn{
   0% {opacity: 0;}
   100% { opacity: .8; }
+}
+
+@keyframes antman{
+  0% { font-size: 20px; }
+  100%{ font-size: 25px; }
 }
