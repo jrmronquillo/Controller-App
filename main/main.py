@@ -719,7 +719,7 @@ def multiviewAPI(gridConfig):
     setGrid(gridConfig)
     return "multiviewAPI placeholder "+gridConfig
 
-@app.route('/setSoloConfigx')
+@app.route('/redesign/setSolo/<string:mode>')
 def setSoloConfig(mode):
     # true or false
     # only run if input is valid
