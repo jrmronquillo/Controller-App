@@ -122,6 +122,7 @@ class Main extends React.Component {
       multipleMacs: false,
       viewMode16: true,
       rssItems: 'null',
+      jsonDataReceived: 'null',
       macsInConfig: [],
       configs: {
       'multiviewerConfig1': {
@@ -325,7 +326,7 @@ class Main extends React.Component {
       })
     }, 300000)
 
-    
+    this.getJsonTest();
     this.logOutput();
   }
 
@@ -337,7 +338,33 @@ class Main extends React.Component {
 
   logOutput(){
     console.log('&&&');
-    console.log(this.state.screenSaverData);
+    console.log(this.state.jsonDataReceived);
+  }
+
+  getJsonTest(){
+    var that = this;
+    fetch('http://localhost:3000/jsonTest')
+      .then(function(response){
+        console.log('fetch function triggered!');
+        if (response.status>= 400) {
+          throw new Error("Bad response from the server");
+        }
+        return response.json();
+      })
+      .then(function(data){
+        console.log('####response was good!####');
+        console.log(data['fakeData']);
+        //need santizaiton of data here?
+
+        //set data to state.
+
+        that.setState({
+          jsonDataReceived: data['fakeData'],
+          view1: data['fakeData']['1'],
+          view2: data['fakeData']['2'],
+          });
+
+        });
   }
 
   getItems(){
@@ -1191,7 +1218,7 @@ class Main extends React.Component {
 
                       <span> ^</span>
                     </td>
-                    <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
                     </td>
@@ -1201,7 +1228,7 @@ class Main extends React.Component {
                       <span className="cell-text-container">Device 9</span><br />
                       <span>y</span>
                     </td>
-                    <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
+                    <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
                       <span> u</span>
                     </td>

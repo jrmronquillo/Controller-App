@@ -298,16 +298,19 @@ h2, a{
 
 .screensave-data{
   position: relative;
-  top: 100px;
-  color: white;
+  top: 75px;
+  background-color: white;
+  color: black;
   font-size: 25px;
   margin: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   padding-right: 50px;
-  -webkit-animation-name: antman;
-  animation-name: antman;
-  animation-duration: 20s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
+  -webkit-animation-name: slidein-left;
+  animation-name: slidein-left;
+  animation-duration: .5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
   /*animation-fill-mode: forwards;*/
 }
 
@@ -357,6 +360,11 @@ h2, a{
 @keyframes fadeIn{
   0% {opacity: 0;}
   100% { opacity: .8; }
+}
+
+@keyframes slidein-left{
+  0% { transform: translateX(1000px); }
+  100%{ transform: translateX(0px); }
 }
 
 @keyframes antman{
