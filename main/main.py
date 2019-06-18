@@ -295,7 +295,9 @@ def rssFeedConverter():
     
     return data['entries']
      
-  
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    return render_template('home.html')
 
 @app.route('/rssTest')
 def rssTest():
@@ -923,7 +925,7 @@ def stbModels():
 
 
 
-@app.route('/', methods=['GET', 'POST'])
+
 @app.route('/controller', methods=['GET', 'POST'])
 @app.route('/controller/<string:viewConfigMode>')
 @app.route('/controller/<string:viewConfigMode>/<string:button_set>/', methods=['GET', 'POST'])

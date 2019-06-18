@@ -296,6 +296,10 @@ h2, a{
   font-size: 0.5em;
 }
 
+.nav-item{
+    padding: 10px;
+  }
+
 .screensave-data{
   position: relative;
   top: 75px;
@@ -317,6 +321,16 @@ h2, a{
 .table-style{
   display: none;
   margin-left: 50px;
+}
+
+.transparency_test{
+  background-image: url('/static/coffee_test.png');
+  background-position: center;
+  background-size: cover;
+  top:0px;
+  height: 100vh;
+  width: 100vw;
+  z-index:9999;
 }
 
 .white-text{
@@ -351,6 +365,7 @@ h2, a{
     left: 0;
     height: 10vh;
   }
+
 
   .hamburger-container{
     display: inline-block;

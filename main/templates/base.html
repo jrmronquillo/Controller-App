@@ -86,28 +86,26 @@
             <div class="bar3"></div>
         </div>
         <div class='container-fluid '>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-              <a class="navbar-brand" href="<?php echo site_url('/') ?>">Home</a>
+            {% if request.path != url_for('home') %}
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+              <a class="navbar-brand" href="/">Home</a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
 
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                  <li class="nav-item active">
+                  <li class="nav-item">
                     <a href='/testcases'>testcases</a>
                   </li>
-                  <li class="nav-item active">
+                  <li class="nav-item">
                     <a href='/sampleApp'>Sample App</a>
                   </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a href='/sampleApp2'>Sample App 2</a>
                 </li>
-                <li>
+                <li class="nav-item">
                     <a href='/setVideo'>Video Configs</a>
-                </li>
-                <li>
-                    <a href="/">Home</a>
                 </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
@@ -116,9 +114,7 @@
                 </form>
               </div>
             </nav>
-
-
-        <hr>
+            {% endif %}
         <div class='row'>
             <div id="content" align='center'>{% block content %}{% endblock %}</div>
         </div>
