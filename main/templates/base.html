@@ -86,33 +86,38 @@
             <div class="bar3"></div>
         </div>
         <div class='container-fluid '>
-            <div class='row no-gutters navbar'>
-                <div class='col-sm-1'>
-                    <h1 class='text-muted'>APP</h1>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href='/testcases'>Automation</a></h3>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href='/sampleApp'>Sample App</a></h3>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href='/sampleApp2'>Sample App 2</a></h3>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href='/shef'>Shef</a></h3>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href='/setVideo'>Video Configs</h3>
-                </div>
-                <div class='col-sm-1'>
-                    <h3><a href="/">Home</a></h3>
-                </div>
-                <!-- <div class='col-sm-3'>
-                    <h3>{{ tme }}</h3>
-                </div> -->
-            </div>
-        </div>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <a class="navbar-brand" href="<?php echo site_url('/') ?>">Home</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item active">
+                    <a href='/testcases'>testcases</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a href='/sampleApp'>Sample App</a>
+                  </li>
+                <li class="nav-item active">
+                    <a href='/sampleApp2'>Sample App 2</a>
+                </li>
+                <li>
+                    <a href='/setVideo'>Video Configs</a>
+                </li>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+              </div>
+            </nav>
+
+
         <hr>
         <div class='row'>
             <div id="content" align='center'>{% block content %}{% endblock %}</div>

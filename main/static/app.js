@@ -10,9 +10,10 @@ class MultiViewButtons extends React.Component {
     render(){
       return( 
         <div>
+          <h2>Modes </h2>
           <table className="table table-config-1">
               <thead>
-                 <tr><th>Modes</th></tr>
+                 <tr><th></th></tr>
               </thead>
               <tbody>
               <tr>
@@ -362,6 +363,20 @@ class Main extends React.Component {
           jsonDataReceived: data['fakeData'],
           view1: data['fakeData']['1'],
           view2: data['fakeData']['2'],
+          view3: data['fakeData']['3'],
+          view4: data['fakeData']['4'],
+          view5: data['fakeData']['5'],
+          view6: data['fakeData']['6'],
+          view7: data['fakeData']['7'],
+          view8: data['fakeData']['8'],
+          view9: data['fakeData']['9'],
+          view10: data['fakeData']['10'],
+          view11: data['fakeData']['11'],
+          view12: data['fakeData']['12'],
+          view13: data['fakeData']['13'],
+          view14: data['fakeData']['14'],
+          view15: data['fakeData']['15'],
+          view16: data['fakeData']['16'],
           });
 
         });
@@ -1241,76 +1256,89 @@ class Main extends React.Component {
                   <tr>
                     <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
-
+                      <span className="cell-text-container">{this.state.view1.model}</span><br />
                       <span> ^</span>
                     </td>
                     <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
+                    <span className="cell-text-container">{this.state.view5.model}</span><br />
                       <span> &</span>
 
                     </td>
                     <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
+                      <span className="cell-text-container">{this.state.view9.model}</span><br />
                       <span>*</span>
                     </td>
                     <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
+                      <span className="cell-text-container">{this.state.view13.model}</span><br />
                       <span> (</span>
                     </td>
                   </tr>                  
                   <tr>
                     <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 2</span><br />
-
+                      <span className="cell-text-container">{this.state.view2.model}</span><br />
                       <span> Y</span>
                     </td>
                     <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 6</span><br />
                       <span> U</span>
-
+                      <span className="cell-text-container">{this.state.view6.model}</span><br />
                     </td>
                     <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
+                      <span className="cell-text-container">{this.state.view10.model}</span><br />
                       <span>I</span>
                     </td>
                     <td className={this.state.viewerPosition == '14' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 14</span><br />
+                      <span className="cell-text-container">{this.state.view14.model}</span><br />
                       <span> O</span>
                     </td>
                   </tr>
                   <tr>
                     <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container"> Device 3 </span> <br />
+                      <span className="cell-text-container">{this.state.view3.model}</span><br />
                       <span> H</span>
                     </td>
                     <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 7</span><br />
+                      <span className="cell-text-container">{this.state.view7.model}</span><br />
                       <span>J</span>
                     </td>
                     <td className={this.state.viewerPosition == '11' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 11</span><br />
+                      <span className="cell-text-container">{this.state.view11.model}</span><br />
                       <span>K</span>
                     </td>
                     <td className={this.state.viewerPosition == '15' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 15</span><br />
+                      <span className="cell-text-container">{this.state.view15.model}</span><br />
                       <span> L</span>
                     </td>
                   </tr>
                   <tr>
                     <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">STB 4</span><br />
+                      <span className="cell-text-container">{this.state.view4.model}</span><br />
                       <span>N</span>
                     </td>
                     <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 8</span><br />
+                      <span className="cell-text-container">{this.state.view8.model}</span><br />
                       <span>M</span>
                     </td>
                     <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 12</span> <br />
+                      <span className="cell-text-container">{this.state.view12.model}</span><br />
                       <span>,</span>
                     </td>
                     <td className={this.state.viewerPosition == '16' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 16</span><br />
+                      <span className="cell-text-container">{this.state.view16.model}</span><br />
                       <span>.</span>
                     </td>
                   </tr>
