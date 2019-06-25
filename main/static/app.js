@@ -31,6 +31,26 @@ class MultiViewButtons extends React.Component {
                   </div>  
                 </td>
               </tr>
+              <tr>
+                <td className={this.props.keyPressed =='['? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">A03</span><br />
+                    <span> [ </span>
+                  </div>  
+                </td>
+                <td className={this.props.keyPressed ==']'? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">B12</span><br />
+                    <span> ] </span>
+                  </div>  
+                </td>
+                <td className={this.props.keyPressed =='&#92;'? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">B11</span><br />
+                    <span> &#92; </span>
+                  </div>  
+                </td>
+              </tr>
               </tbody>
           </table>
           
@@ -1261,13 +1281,13 @@ class Main extends React.Component {
                     </td>
                     <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
-                    <span className="cell-text-container">{this.state.view5.model}</span><br />
+                    <span className="cell-text-container-info">{this.state.view5.model}</span><br />
                       <span> &</span>
 
                     </td>
                     <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
-                      <span className="cell-text-container">{this.state.view9.model}</span><br />
+                      <span className="cell-text-container-info">{this.state.view9.model}</span><br />
                       <span>*</span>
                     </td>
                     <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>

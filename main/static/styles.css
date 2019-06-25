@@ -1,6 +1,12 @@
-table, tr, th, td{
+
+ table, tr, th, td{
   border-collapse: collapse;
   padding: .1rem !important;
+}
+
+a{
+  color:black;
+  text-decoration: none;
 }
 
 .backdrop-display{
@@ -32,6 +38,14 @@ table, tr, th, td{
   color: #FFF;
 }
 
+.cell-text-container-info{
+  color:white;
+  font-size: .3em;
+}
+
+.cell-text-container{
+  font-size: .3em;
+}
 .containerMain{
   margin: 25px;
 }
@@ -202,6 +216,9 @@ fieldset{
 
 .letter, .letter-selected, .letter-unused{
   /*font-size: 2em;*/
+  width: 75px;
+  height: 75px;
+  padding: 0px;
 }
 
 .letter{
@@ -292,13 +309,15 @@ td {
     -webkit-transform: rotate(45deg) translate(-8px, -8px);
     transform: rotate(45deg) translate(-8px, -8px);
 }
-h2, a{
-  font-size: 0.5em;
-}
+
 
 .nav-item{
     padding: 10px;
   }
+
+.nav-item:hover{
+  background-color: black;
+}
 
 .screensave-data{
   position: relative;
@@ -306,6 +325,7 @@ h2, a{
   background-color: white;
   color: black;
   font-size: 25px;
+  text-align: center;
   margin: 50px;
   padding-top: 20px;
   padding-bottom: 20px;
@@ -323,13 +343,20 @@ h2, a{
   margin-left: 50px;
 }
 
+.transparency_test_container{
+  height: 100vh;
+  width: 100vh;
+}
+
 .transparency_test{
-  background-image: url('/static/coffee_test.png');
+  /*display: none;*/
+  background-image: url('/static/dtv_remote.png');
   background-position: center;
   background-size: cover;
-  top:0px;
-  height: 100vh;
-  width: 100vw;
+  margin-top: 20vh;
+  margin-left: 30%;
+  height: 65vh;
+  width: 50vw;
   z-index:9999;
 }
 
@@ -350,6 +377,20 @@ h2, a{
   width:100%;
   overflow:hidden;
   position: fixed;
+}
+
+.main-title-cta{
+  position: absolute;
+  top:0;
+  left: 0;
+  z-index: -1;
+  color: black;
+  width:100%;
+}
+
+.main-title-cta-text{
+  font-size: 45vw;
+  color: black;
 }
 
 @media (max-width: 771px) {

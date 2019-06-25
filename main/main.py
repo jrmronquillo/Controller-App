@@ -335,7 +335,7 @@ def jsonTest():
     }
 
     config2={
-       '1': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
+       '1': {'macAddr': '00-80-A3-9D-86-CF', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
        '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
        '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
        '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
@@ -352,7 +352,26 @@ def jsonTest():
        '15': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '7', 'model': 'C51-500(HR54-500)', 'vidRouteMoniker': 'r2s7'},
        '16': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '8', 'model': 'C41-700(HR54-200)', 'vidRouteMoniker': 'r2s8'},   
     }
-    
+
+    #rack A09
+    config3={
+        '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '1', 'model': 'HR44-200', 'vidRouteMoniker':'r9s1'}, 
+       '2': {'macAddr': '00-80-A3-9E-67-34', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r9s2'},
+       '3': {'macAddr': '00-80-A3-9E-67-34', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r9s3'},
+       '4': {'macAddr': '00-80-A3-9E-67-34', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r9s4'},
+       '5': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'HR44-500', 'vidRouteMoniker': 'r9s5'},
+       '6': {'macAddr': '00-80-A3-9E-67-34', 'slot': '6', 'model': 'client', 'vidRouteMoniker': 'r9s6'},
+       '7': {'macAddr': '00-80-A3-9E-67-34', 'slot': '7', 'model': 'client', 'vidRouteMoniker': 'r9s7'},
+       '8': {'macAddr': '00-80-A3-9E-67-34', 'slot': '8', 'model': 'client', 'vidRouteMoniker': 'r9s8'},
+       '9': {'macAddr': '00-80-A3-9E-67-34', 'slot': '9', 'model': 'HR44-700', 'vidRouteMoniker': 'r9s9'},
+       '10': {'macAddr': '00-80-A3-9E-67-34', 'slot': '10', 'model': 'client', 'vidRouteMoniker': 'r9s10'},
+       '11': {'macAddr': '00-80-A3-9E-67-34', 'slot': '11', 'model': 'client', 'vidRouteMoniker': 'r9s11'},
+       '12': {'macAddr': '00-80-A3-9E-67-34', 'slot': '12', 'model': 'client', 'vidRouteMoniker': 'r9s12'},
+       '13': {'macAddr': '00-80-A3-9E-67-34', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+       '14': {'macAddr': '00-80-A3-9E-67-34', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+       '15': {'macAddr': '00-80-A3-9E-67-34', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+       '16': {'macAddr': '00-80-A3-9E-67-34', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
+    }
     # return jsonify(fakeData={'1':{'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'H24-100', 'vidRouteMoniker':'r13s1'}})
     return jsonify(fakeData=config2)
 
