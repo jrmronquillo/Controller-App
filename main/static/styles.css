@@ -219,6 +219,7 @@ fieldset{
   width: 75px;
   height: 75px;
   padding: 0px;
+  text-align: center;
 }
 
 .letter{
@@ -391,6 +392,36 @@ td {
 .main-title-cta-text{
   font-size: 45vw;
   color: black;
+}
+
+.sections{
+  /* The image used */
+    background-image: url('./landscape_placeholder.jpg');
+    background-color: white;
+
+    /* Full height */
+    height: 100vh;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+#section1-home{
+  /*background-color: #4F788D;*/
+  background-image: url('/landscape_placeholder.jpg');
+}
+
+#section2-home{
+  /*background-color: #4F788D;*/
+  background-image: url('/landscape_placeholder.jpg');
+}
+
+#section3-home{
+  /*background-color: #4F788D;*/
+  background-image: url('/landscape_placeholder.jpg');
 }
 
 @media (max-width: 771px) {

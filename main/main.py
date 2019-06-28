@@ -335,7 +335,7 @@ def jsonTest():
     }
 
     config2={
-       '1': {'macAddr': '00-80-A3-9D-86-CF', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
+       '1': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
        '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
        '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
        '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
@@ -1646,6 +1646,7 @@ def deletePost(post_id):
         return redirect(url_for('blog')) 
     else:
         return render_template('deletePost.html')
+
 
 
 @app.errorhandler(404)
