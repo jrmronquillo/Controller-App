@@ -373,7 +373,7 @@ def jsonTest():
        '16': {'macAddr': '00-80-A3-9E-67-34', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
     }
     # return jsonify(fakeData={'1':{'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'H24-100', 'vidRouteMoniker':'r13s1'}})
-    return jsonify(fakeData=config2)
+    return jsonify(fakeData=config1)
 
 @app.route('/setCookie/', methods = ['POST', 'GET'])
 def setCookie():
@@ -1647,7 +1647,9 @@ def deletePost(post_id):
     else:
         return render_template('deletePost.html')
 
-
+@app.route('/redesign-mock')
+def redesign_mock():
+    return render_template('redesign-mock.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

@@ -2,6 +2,11 @@
  table, tr, th, td{
   border-collapse: collapse;
   padding: .1rem !important;
+  table-layout: fixed;
+}
+
+td{
+  width: 10px;
 }
 
 a{
@@ -345,20 +350,75 @@ td {
 }
 
 .transparency_test_container{
+  display: flex;
   height: 100vh;
-  width: 100vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
+  background-color:black;
 }
 
 .transparency_test{
-  /*display: none;*/
-  background-image: url('/static/dtv_remote.png');
+  background-color: black;
+  /*background-image: url('/static/luggages.png');
+  background-position: center;
+  background-size: cover;*/
+  display: flex;
+  width: 80%;
+  height: 300px;
+  z-index:9999;
+  align-items: center;
+  justify-content: center;
+}
+
+.transparency_test_text{
+  color:white;
+  font-size: 10em;
+  opacity: .8;
+}
+
+.transparency_test_item1{
+  /*background-color: white;*/
+  background-image: url('/static/coffee1.png');
   background-position: center;
   background-size: cover;
-  margin-top: 20vh;
-  margin-left: 30%;
-  height: 65vh;
-  width: 50vw;
+  max-width: 100%;
+  height: auto;
+  position: relative;
+  top: 20%;
+  left: 5%;
   z-index:9999;
+  /*margin-right: 50%;*/
+}
+
+.transparency_test_item2{
+  /*background-image: url('/static/kettle.png');
+  background-position: center;
+  background-size: cover;*/
+  width: 100%;
+  max-width:200px;
+  height: auto;
+  /*position: relative;
+  bottom: 15%;
+  right: 5%;*/
+}
+
+.leftside_image{
+  max-width: 40%;
+  height: auto;
+  position: absolute;
+  bottom: 10%;
+  left: 1%;
+  z-index: 1;
+}
+
+.rightside_image{
+  max-width: 25%;
+  height: auto;
+  position: absolute;
+  top: 15%;
+  right: 2%;
+  z-index: -1;
 }
 
 .white-text{
@@ -422,6 +482,63 @@ td {
 #section3-home{
   /*background-color: #4F788D;*/
   background-image: url('/landscape_placeholder.jpg');
+}
+
+@media(min-width: 800px){
+   .transparency_test_text{
+    color:white;
+    font-size: 12em;
+    opacity: .8;
+  }
+
+  .leftside_image{
+    max-width: 40%;
+    height: auto;
+    position: absolute;
+    bottom: 2%;
+    left: 1%;
+    z-index: 1;
+  }
+
+  .rightside_image{
+    max-width: 25%;
+    height: auto;
+    position: absolute;
+    top: 5%;
+    right: 2%;
+    z-index: -1;
+  }
+
+}
+
+
+@media(max-width: 600px){
+  .transparency_test_text{
+    color:white;
+    font-size: 7em;
+    opacity: .8;
+  }
+
+  .leftside_image{
+    max-width: 40%;
+    height: auto;
+    position: absolute;
+    bottom: 15%;
+    left: 1%;
+    z-index: 1;
+  }
+
+  .rightside_image{
+    max-width: 25%;
+    height: auto;
+    position: absolute;
+    top: 25%;
+    right: 2%;
+    z-index: -1;
+  }
+
+
+
 }
 
 @media (max-width: 771px) {

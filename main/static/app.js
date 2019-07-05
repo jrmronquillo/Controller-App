@@ -2,6 +2,25 @@
 
 const e = React.createElement;
 
+class Search extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+
+
+
+  render(){
+    return(
+      <div>
+        <input placeholder="Search" />
+      </div>
+      )
+  }
+}
+
+
+
 class MultiViewButtons extends React.Component {
   constructor(props){
     super(props);
@@ -101,6 +120,7 @@ class Main extends React.Component {
       testEnv: true, 
       liked: false,
       display: true,
+      textBoxFocused: false,
       keyPressed: '',
       command: '',
       windowFocused: true,
@@ -243,6 +263,9 @@ class Main extends React.Component {
     this.sendCommands = this.sendCommands.bind(this);
     this.focusTest = this.focusTest.bind(this);
     this.focused = this.focused.bind(this);
+    this.focusFunction = this.focusFunction.bind(this);
+    this.blurFunction = this.blurFunction.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount(){
@@ -502,492 +525,517 @@ class Main extends React.Component {
   }
 
   handleKeyPress(event){
-    console.log(event.keyCode);
-    var key = '';
-    switch(event.keyCode){
-      case 119:
-        key = 'w';
-        break;
-      case 97:
-        key = 'a';
-        break;
-      case 100:
-        key = 'd';
-        break;
-      case 115:
-        key = 's';
-        break;
-      case 32:
-        key = ' ';
-        break;
-      case 120:
-        key = 'x';
-        break;
-      case 101:
-        key='e';
-        break;
-      case 114:
-        key= 'r';
-        break;
-      // numbers
-      case 48:
-        key= '0';
-        break;
-      case 49:
-        key= '1';
-        break;
-      case 50:
-        key= '2';
-        break;
-      case 51:
-        key= '3';
-        break;
-      case 52:
-        key= '4';
-        break;
-      case 53:
-        key= '5';
-        break;
-      case 54:
-        key= '6';
-        break;
-      case 55:
-        key= '7';
-        break;
-      case 56:
-        key= '8';
-        break;
-      case 57:
-        key= '9';
-        break;
-      case 38:
-        key= '&';
-        break;
-      case 42:
-        key='*';
-        break;
-      case 40:
-        key='(';
-        break;
-      case 41:
-        key=')';
-        break;
-      case 117:
-        key='u';
-        break;
-      case 94:
-        key='^';
-        break;
-      case 121:
-        key='y';
-        break;
-      case 104:
-        key='h';
-        break;
-      case 110:
-        key='n';
-        break;
-      case 106:
-        key='j';
-        break;
-      case 109:
-        key='m';
-        break;
-      case 105:
-        key='i';
-        break;
-      case 107:
-        key='k';
-        break;
-      case 44:
-        key=',';
-        break;
-      case 40:
-        key='(';
-        break;
-      case 111:
-        key='o';
-        break;
-      case 108:
-        key='l';
-        break;
-      case 46:
-        key='.';
-        break;
-      case 102:
-        key='f';
-        break;
-      case 103:
-        key='g';
-        break;
-      case 122:
-        key='z';
-        break;
-      case 99:
-        key='c';
-        break;
-      case 118:
-        key='v';
-        break;
-      case 98:
-        key='b';
-        break;
-      case 96:
-        key='`';
-        break;
-      case 116:
-        key='t';
-        break;
-      case 112:
-        key='p';
-        break;
-      case 45:
-        key='-';
-        break;
-      case 113:
-        key='q';
-        break;
-      case 59:
-        key=';';
-        break;
-      case 39:
-        key="'";
-        break;
-      case 90:
-        key='Z';
-        break;
-      case 91:
-        key="[";
-        break;
-      case 92:
-        key='&#92;';
-        break;
-      case 93:
-        key=']';
-        break;
-      case 86:
-        key='V';
-        break;
-      case 47:
-        key='/';
-        break;
-      case 61:
-        key='=';
-        break;
-      case 43:
-        key='+'
-        break;
-      default:
-        key = 'unexpected keypress';
-    }
+    console.log('handleKeyPress triggered');
+    console.log(this.state.textBoxFocused);
+    if (this.state.textBoxFocused){
+      console.log('+++++++');
+      console.log(event.keyCode);
+      var key = '';
+      switch(event.keyCode){
+        case 119:
+          key = 'w';
+          break;
+        case 97:
+          key = 'a';
+          break;
+        case 100:
+          key = 'd';
+          break;
+        case 115:
+          key = 's';
+          break;
+        case 32:
+          key = ' ';
+          break;
+        case 120:
+          key = 'x';
+          break;
+        case 101:
+          key='e';
+          break;
+        case 114:
+          key= 'r';
+          break;
+        // numbers
+        case 48:
+          key= '0';
+          break;
+        case 49:
+          key= '1';
+          break;
+        case 50:
+          key= '2';
+          break;
+        case 51:
+          key= '3';
+          break;
+        case 52:
+          key= '4';
+          break;
+        case 53:
+          key= '5';
+          break;
+        case 54:
+          key= '6';
+          break;
+        case 55:
+          key= '7';
+          break;
+        case 56:
+          key= '8';
+          break;
+        case 57:
+          key= '9';
+          break;
+        case 38:
+          key= '&';
+          break;
+        case 42:
+          key='*';
+          break;
+        case 40:
+          key='(';
+          break;
+        case 41:
+          key=')';
+          break;
+        case 117:
+          key='u';
+          break;
+        case 94:
+          key='^';
+          break;
+        case 121:
+          key='y';
+          break;
+        case 104:
+          key='h';
+          break;
+        case 110:
+          key='n';
+          break;
+        case 106:
+          key='j';
+          break;
+        case 109:
+          key='m';
+          break;
+        case 105:
+          key='i';
+          break;
+        case 107:
+          key='k';
+          break;
+        case 44:
+          key=',';
+          break;
+        case 40:
+          key='(';
+          break;
+        case 111:
+          key='o';
+          break;
+        case 108:
+          key='l';
+          break;
+        case 46:
+          key='.';
+          break;
+        case 102:
+          key='f';
+          break;
+        case 103:
+          key='g';
+          break;
+        case 122:
+          key='z';
+          break;
+        case 99:
+          key='c';
+          break;
+        case 118:
+          key='v';
+          break;
+        case 98:
+          key='b';
+          break;
+        case 96:
+          key='`';
+          break;
+        case 116:
+          key='t';
+          break;
+        case 112:
+          key='p';
+          break;
+        case 45:
+          key='-';
+          break;
+        case 113:
+          key='q';
+          break;
+        case 59:
+          key=';';
+          break;
+        case 39:
+          key="'";
+          break;
+        case 90:
+          key='Z';
+          break;
+        case 91:
+          key="[";
+          break;
+        case 92:
+          key='&#92;';
+          break;
+        case 93:
+          key=']';
+          break;
+        case 86:
+          key='V';
+          break;
+        case 47:
+          key='/';
+          break;
+        case 61:
+          key='=';
+          break;
+        case 43:
+          key='+'
+          break;
+        default:
+          key = 'unexpected keypress';
+        }
+      } else {
+       console.log('textbox is focused?');
+      }
 
-    this.setState({
-      keyPressed: key,
-    });
-    console.log('keypress state:');
-    console.log(this.state.keyPressed);
+      this.setState({
+        keyPressed: key,
+      });
+      console.log('keypress state:');
+      console.log(this.state.keyPressed);
 
-    var controlCommands = {
-                            'Z':'back',
-                            'w':'upArrow',
-                            'a':'leftArrow',
-                            's':'downArrow',
-                            'd':'rightArrow',
-                            'e':'menu',
-                            'r':'red',
-                            'x':'exit',
-                            'c':'rewind',
-                            'v':'play',
-                            'b':'fastforward',
-                            't':'chanup',
-                            'q':'guide',
-                            ' ':'select',
-                            'f':'info',
-                            'g':'chandown',
-                            'z':'dash',
-                            'V':'record',
-                            '1': '1',
-                            '2': '2',
-                            '3': '3',
-                            '4': '4',
-                            '5': '5',
-                            '6': '6',
-                            '7': '7',
-                            '8': '8',
-                            '9': '9',
-                            '0': '0',
-                            '`': 'prev'
-                              };
-  //var viewerPositionMapping = {
-  //                          '': '0',
-  //                          '^':'1',
-  //                          'y':'2',
-  //                          'h':'3',
-  //                          'n':'4',
-  //                          '&':'5',
-  //                          'u':'6', 
-  //                          'j':'7',
-  //                          'm':'8', 
-  //                          '*':'9',
-  //                          'i':'10',
-  //                          'k':'11', 
-  //                         ',':'12', 
-  //                          '(':'13', 
-  //                          'o':'14',
-  //                          'l':'15',
-  //                          '.':'16',
-  //                          ')':'17',
-  //                          '-':'18',
-  //                          'p':'19',
-  //                          '/':'1-16'
-  //                          };
+      var controlCommands = {
+                              'Z':'back',
+                              'w':'upArrow',
+                              'a':'leftArrow',
+                              's':'downArrow',
+                              'd':'rightArrow',
+                              'e':'menu',
+                              'r':'red',
+                              'x':'exit',
+                              'c':'rewind',
+                              'v':'play',
+                              'b':'fastforward',
+                              't':'chanup',
+                              'q':'guide',
+                              ' ':'select',
+                              'f':'info',
+                              'g':'chandown',
+                              'z':'dash',
+                              'V':'record',
+                              '1': '1',
+                              '2': '2',
+                              '3': '3',
+                              '4': '4',
+                              '5': '5',
+                              '6': '6',
+                              '7': '7',
+                              '8': '8',
+                              '9': '9',
+                              '0': '0',
+                              '`': 'prev'
+                                };
+    //var viewerPositionMapping = {
+    //                          '': '0',
+    //                          '^':'1',
+    //                          'y':'2',
+    //                          'h':'3',
+    //                          'n':'4',
+    //                          '&':'5',
+    //                          'u':'6', 
+    //                          'j':'7',
+    //                          'm':'8', 
+    //                          '*':'9',
+    //                          'i':'10',
+    //                          'k':'11', 
+    //                         ',':'12', 
+    //                          '(':'13', 
+    //                          'o':'14',
+    //                          'l':'15',
+    //                          '.':'16',
+    //                          ')':'17',
+    //                          '-':'18',
+    //                          'p':'19',
+    //                          '/':'1-16'
+    //                          };
 
-  var viewerPositionMapping = {
-                        'test':'0',
-                        '^': this.state.view1,
-                        'y': this.state.view2,
-                        'h': this.state.view3,
-                        'n': this.state.view4,
-                        '&': this.state.view5,
-                        'u': this.state.view6,
-                        'j': this.state.view7,
-                        'm': this.state.view8,
-                        '*': this.state.view9,
-                        'i': this.state.view10,
-                        'k': this.state.view11,
-                        ',': this.state.view12,
-                        '(': this.state.view13,
-                        'o': this.state.view14,
-                        'l': this.state.view15,
-                        '.': this.state.view16,
-                        };
-
-
-    var multiviewAPI = {
-                      '=':'toggleLayout',
-                      '+':'toggleSolo',
-                      };
-    console.log('viewerPositionMapping');
-    console.log(viewerPositionMapping[key]);                        
-    var stbs = {
-      '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500', vidRouteMoniker: 'r3s1'},
-      '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
-      '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '5', model: 'HR44-700'},
-      '4': {macAddr: '00-80-A3-A9-E3-6A', slot: '10', model: 'C41-500'},
-      '5': {macAddr: '00-80-A3-A9-E3-6A', slot: '14', model: 'C31-700'},
-      '6': {macAddr: '00-80-A3-A9-E3-6A', slot: '16', model: 'C41-700'},
-      '7': {macAddr: '00-80-A3-A9-E3-6A', slot: '9', model: 'C51-100'},
-      '8': {macAddr: '00-80-A3-A9-E3-6A', slot: '11', model: 'C41w-100'},
-      '9': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500'},
-      '10':{macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500'},
-      '11':{macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700'},
-      '12':{macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C51-700'},
-      '13':{macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100'},
-      '14':{macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700'},
-      '15':{macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C51-500'},
-      '16':{macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61w-700'},
-      '17':{macAddr: '00-80-A3-9D-86-D0', slot: '1-16'},
-      '18':{macAddr: '00-80-A3-9D-86-D1', slot: '1-16'},
-      '19':{macAddr: '00-80-A3-9D-86-D3', slot: '1-16'},
-
-    };
-
-    var multiviewConfig = {
-                          '[':'multiviewerConfig1',
-                          ']':'multiviewerConfig2',
-                          '&#92;':'multiviewerConfig3',
-                          ';':'multiviewerConfig4',
-                          "'":'multiviewerConfig5'
+    var viewerPositionMapping = {
+                          'test':'0',
+                          '^': this.state.view1,
+                          'y': this.state.view2,
+                          'h': this.state.view3,
+                          'n': this.state.view4,
+                          '&': this.state.view5,
+                          'u': this.state.view6,
+                          'j': this.state.view7,
+                          'm': this.state.view8,
+                          '*': this.state.view9,
+                          'i': this.state.view10,
+                          'k': this.state.view11,
+                          ',': this.state.view12,
+                          '(': this.state.view13,
+                          'o': this.state.view14,
+                          'l': this.state.view15,
+                          '.': this.state.view16,
                           };
 
 
+      var multiviewAPI = {
+                        '=':'toggleLayout',
+                        '+':'toggleSolo',
+                        };
+      console.log('viewerPositionMapping');
+      console.log(viewerPositionMapping[key]);                        
+      var stbs = {
+        '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500', vidRouteMoniker: 'r3s1'},
+        '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
+        '3': {macAddr: '00-80-A3-A9-E3-7A', slot: '5', model: 'HR44-700'},
+        '4': {macAddr: '00-80-A3-A9-E3-6A', slot: '10', model: 'C41-500'},
+        '5': {macAddr: '00-80-A3-A9-E3-6A', slot: '14', model: 'C31-700'},
+        '6': {macAddr: '00-80-A3-A9-E3-6A', slot: '16', model: 'C41-700'},
+        '7': {macAddr: '00-80-A3-A9-E3-6A', slot: '9', model: 'C51-100'},
+        '8': {macAddr: '00-80-A3-A9-E3-6A', slot: '11', model: 'C41w-100'},
+        '9': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500'},
+        '10':{macAddr: '00-80-A3-A9-E3-6A', slot: '2', model: 'C41-500'},
+        '11':{macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700'},
+        '12':{macAddr: '00-80-A3-A9-E3-6A', slot: '5', model: 'C51-700'},
+        '13':{macAddr: '00-80-A3-A9-E3-6A', slot: '1', model: 'C51-100'},
+        '14':{macAddr: '00-80-A3-A9-E3-6A', slot: '3', model: 'C41-700'},
+        '15':{macAddr: '00-80-A3-A9-E3-6A', slot: '4', model: 'C51-500'},
+        '16':{macAddr: '00-80-A3-A9-E3-6A', slot: '6', model: 'C61w-700'},
+        '17':{macAddr: '00-80-A3-9D-86-D0', slot: '1-16'},
+        '18':{macAddr: '00-80-A3-9D-86-D1', slot: '1-16'},
+        '19':{macAddr: '00-80-A3-9D-86-D3', slot: '1-16'},
 
-    var macMapping = {
-                          '1' :'00-80-A3-A9-E3-7A',
-                          '2' :'00-80-A3-A9-E3-6A',
-                          '3' :'00-80-A3-A9-E3-7A',
-                          '17':'00-80-A3-9D-86-D0',
-                          '18':'00-80-A3-9D-86-D1',
-                          '19':'00-80-A3-9D-86-D3'
+      };
+
+      var multiviewConfig = {
+                            '[':'multiviewerConfig1',
+                            ']':'multiviewerConfig2',
+                            '&#92;':'multiviewerConfig3',
+                            ';':'multiviewerConfig4',
+                            "'":'multiviewerConfig5'
                             };
-    
 
-    console.log(viewerPositionMapping[key]);
-    console.log('viewerPositionMapping[key]:');
-    console.log(this.state.configs[this.state.chosenConfig][1].macAddr);
-    if(viewerPositionMapping[key] == '1-16'){
+
+
+      var macMapping = {
+                            '1' :'00-80-A3-A9-E3-7A',
+                            '2' :'00-80-A3-A9-E3-6A',
+                            '3' :'00-80-A3-A9-E3-7A',
+                            '17':'00-80-A3-9D-86-D0',
+                            '18':'00-80-A3-9D-86-D1',
+                            '19':'00-80-A3-9D-86-D3'
+                              };
       
 
-      this.setState({
-        viewerPosition: viewerPositionMapping[key],
-        irnetboxMac: this.state.configs[this.state.chosenConfig][1].macAddr,
-        slot: '1-16',
-      });
+      console.log(viewerPositionMapping[key]);
+      console.log('viewerPositionMapping[key]:');
+      console.log(this.state.configs[this.state.chosenConfig][1].macAddr);
+      if(viewerPositionMapping[key] == '1-16'){
+        
+
+        this.setState({
+          viewerPosition: viewerPositionMapping[key],
+          irnetboxMac: this.state.configs[this.state.chosenConfig][1].macAddr,
+          slot: '1-16',
+        });
 
 
-    } else if (viewerPositionMapping[key]){
-        //this.setState({
-        ////irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
-        ////slot: stbs[viewerPositionMapping[key]].slot
-        //viewerPosition: viewerPositionMapping[key],
-        //irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
+      } else if (viewerPositionMapping[key]){
+          //this.setState({
+          ////irnetboxMac: stbs[viewerPositionMapping[key]].macAddr,
+          ////slot: stbs[viewerPositionMapping[key]].slot
+          //viewerPosition: viewerPositionMapping[key],
+          //irnetboxMac: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].macAddr,
+        
+          //slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
+          //multipleMacs: false,
+          //console.log('test log');
+          
+          //});
+          
+          console.log(viewerPositionMapping[key].macAddr);
+          console.log(this.state.view16);
+          console.log('$$$$$$$$$');
+          console.log(this.state.keyPressed);
+          var viewMappings = {
+                  "^" : '1',
+                  "y" : '2',
+                  "h" : '3',
+                  "n" : '4',
+                  "&" : '5',
+                  "u" : '6',
+                  "j" : '7',
+                  "m" : '8',
+                  "*" : '9',
+                  "i" : '10',
+                  "k" : '11',
+                  "," : '12',
+                  "(" : '13',
+                  "o" : '14',
+                  "l" : '15',
+                  "." : '16',
+          }
+
+          this.setState({
+            viewerPosition: viewMappings[this.state.keyPressed],
+            irnetboxMac: viewerPositionMapping[key].macAddr,
+            slot: viewerPositionMapping[key].slot,
+          }) 
+      } else {
+        console.log('viewerPostionMapping[key] not detected');
+      }
+
       
-        //slot: this.state.configs[this.state.chosenConfig][viewerPositionMapping[key]].slot,
-        //multipleMacs: false,
-        //console.log('test log');
+      
+      if(multiviewConfig[key]){
         
-        //});
-        
-        console.log(viewerPositionMapping[key].macAddr);
-        console.log(this.state.view16);
-        console.log('$$$$$$$$$');
-        console.log(this.state.keyPressed);
-        var viewMappings = {
-                "^" : '1',
-                "y" : '2',
-                "h" : '3',
-                "n" : '4',
-                "&" : '5',
-                "u" : '6',
-                "j" : '7',
-                "m" : '8',
-                "*" : '9',
-                "i" : '10',
-                "k" : '11',
-                "," : '12',
-                "(" : '13',
-                "o" : '14',
-                "l" : '15',
-                "." : '16',
+        // logic check all unique macs, so that it can be used for the send all stb's function
+        var arr = this.state.configs[this.state.chosenConfig];
+        var lookForUniques = [];
+        for (var keyItem in arr){
+          console.log(keyItem);
+          lookForUniques.push(arr[keyItem].macAddr);
+        }
+        var onlyUniques = lookForUniques.filter(function(value, index, self){
+          return self.indexOf(value) === index;
+        });
+        if(onlyUniques.length > 1){
+          this.setState({
+            multipleMacs: true,
+            macsInConfig: onlyUniques
+          });
         }
 
+        //4 quadConf
         this.setState({
-          viewerPosition: viewMappings[this.state.keyPressed],
-          irnetboxMac: viewerPositionMapping[key].macAddr,
-          slot: viewerPositionMapping[key].slot,
-        }) 
-    } else {
-      console.log('viewerPostionMapping[key] not detected');
-    }
-
-    
-    
-    if(multiviewConfig[key]){
-      
-      // logic check all unique macs, so that it can be used for the send all stb's function
-      var arr = this.state.configs[this.state.chosenConfig];
-      var lookForUniques = [];
-      for (var keyItem in arr){
-        console.log(keyItem);
-        lookForUniques.push(arr[keyItem].macAddr);
-      }
-      var onlyUniques = lookForUniques.filter(function(value, index, self){
-        return self.indexOf(value) === index;
-      });
-      if(onlyUniques.length > 1){
-        this.setState({
-          multipleMacs: true,
-          macsInConfig: onlyUniques
+          chosenConfig: multiviewConfig[key]
         });
+
+        console.log('this.state.chosenConfig:');
+        console.log(this.state.chosenConfig);
+        // build url string for setVideo api call
+        var urlBuilder = [];
+        console.log('stb info should display below:');
+        console.log(this.state.configs[multiviewConfig[key]]);
+        for (var configKey in this.state.configs[multiviewConfig[key]]){
+          // build url by taking all the vidRouteMonikers and converting them to a url string[]
+          urlBuilder.push(this.state.configs[multiviewConfig[key]][configKey].vidRouteMoniker);
+        }
+        var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
+        console.log('setVideoCall:');
+        console.log(setVideoCall);
+        
+        fetch(setVideoCall);
+
+        this.sendLabelNames();
       }
 
-      //4 quadConf
-      this.setState({
-        chosenConfig: multiviewConfig[key]
-      });
 
-      console.log('this.state.chosenConfig:');
-      console.log(this.state.chosenConfig);
-      // build url string for setVideo api call
-      var urlBuilder = [];
-      console.log('stb info should display below:');
-      console.log(this.state.configs[multiviewConfig[key]]);
-      for (var configKey in this.state.configs[multiviewConfig[key]]){
-        // build url by taking all the vidRouteMonikers and converting them to a url string[]
-        urlBuilder.push(this.state.configs[multiviewConfig[key]][configKey].vidRouteMoniker);
+
+
+      if(controlCommands[key]){
+        this.setState({
+          command: controlCommands[key]
+        });
+        this.sendCommands();
+        
       }
-      var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
-      console.log('setVideoCall:');
-      console.log(setVideoCall);
-      
-      fetch(setVideoCall);
 
-      this.sendLabelNames();
-    }
+      // handle multiviewAPI
+      if (multiviewAPI[key]){
+        console.log('multiViewAPI call detected');
+        console.log(multiviewAPI[key]);
+        // intializing these temp view states, so they can be used to reset the views.
+        
+        switch(multiviewAPI[key]){
 
-
-
-
-    if(controlCommands[key]){
-      this.setState({
-        command: controlCommands[key]
-      });
-      this.sendCommands();
-      
-    }
-
-    // handle multiviewAPI
-    if (multiviewAPI[key]){
-      console.log('multiViewAPI call detected');
-      console.log(multiviewAPI[key]);
-      // intializing these temp view states, so they can be used to reset the views.
-      
-      switch(multiviewAPI[key]){
-
-        case 'toggleLayout':
-          console.log("##########");
-          console.log(this.state.viewMode16);
-          var gridConfig = ""
-          if (this.state.viewMode16){
-            gridConfig = "2x2"
+          case 'toggleLayout':
+            console.log("##########");
+            console.log(this.state.viewMode16);
+            var gridConfig = ""
+            if (this.state.viewMode16){
+              gridConfig = "2x2"
+              this.setState({
+                view5: this.state.toggleTempView3,
+                view6: this.state.toggleTempView4,
+              })
+              //var setVideoCall = 'http://localhost:3000/setVideo/;
+              //console.log('setVideoCall:');
+              //console.log(setVideoCall);
+        
+              //fetch(setVideoCall);
+            } else {
+              gridConfig = "4x4"
+              this.setState({
+                view3: this.state.toggleTempView3,
+                view4: this.state.toggleTempView4,
+                view5: this.state.toggleTempView5,
+                view6: this.state.toggleTempView6,
+              })
+            }
+            var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
+            console.log(setGridCall);
+            fetch(setGridCall);
             this.setState({
-              view5: this.state.toggleTempView3,
-              view6: this.state.toggleTempView4,
+              viewMode16: !this.state.viewMode16,
             })
-            //var setVideoCall = 'http://localhost:3000/setVideo/;
-            //console.log('setVideoCall:');
-            //console.log(setVideoCall);
-      
-            //fetch(setVideoCall);
-          } else {
-            gridConfig = "4x4"
+            break;
+
+          case 'toggleSolo':
+            console.log('toggleSolo triggered!');
+            console.log(this.state.soloMode)
+
+            var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+this.state.soloMode;
+            fetch(setSoloCall);
             this.setState({
-              view3: this.state.toggleTempView3,
-              view4: this.state.toggleTempView4,
-              view5: this.state.toggleTempView5,
-              view6: this.state.toggleTempView6,
+              soloMode: !this.state.soloMode,
             })
-          }
-          var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
-          console.log(setGridCall);
-          fetch(setGridCall);
-          this.setState({
-            viewMode16: !this.state.viewMode16,
-          })
-          break;
+            break;
+          
+        }
+        
+      }
 
-        case 'toggleSolo':
-          console.log('toggleSolo triggered!');
-          console.log(this.state.soloMode)
 
-          var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+this.state.soloMode;
-          fetch(setSoloCall);
-          this.setState({
-            soloMode: !this.state.soloMode,
-          })
-          break;
-        } 
       
-    }
-
-
+      console.log('reached end of script');
     
-    console.log('reached end of script');
+}
 
+
+   focusFunction(){
+    console.log('searchFunction triggered!');
+    this.setState({
+      textBoxFocused: false,
+    })
   }
 
+  blurFunction(){
+    console.log('blurFunction triggered!');
+    this.setState({
+      textBoxFocused: true,
+    })
+  }
 
-
+  handleChange(event){
+    console.log('handleChange triggered');
+    console.log(event.target.value);
+  }
 
 
     
@@ -1003,6 +1051,7 @@ class Main extends React.Component {
       return(
         <div className="containerMain">
           <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData} />
+          <input placeholder="Searcher1" onFocus={this.focusFunction} onBlur={this.blurFunction} onChange={this.handleChange} />
           <div className="row shadow">
 
                   <ul className="list-group list-group-horizontal">
@@ -1304,8 +1353,9 @@ class Main extends React.Component {
                     </td>
                     <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 6</span><br />
-                      <span> U</span>
+                     
                       <span className="cell-text-container">{this.state.view6.model}</span><br />
+                       <span> U</span>
                     </td>
                     <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
