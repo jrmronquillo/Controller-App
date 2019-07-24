@@ -18,6 +18,21 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
+# Decorator that adds JSONP support 
+# https://gist.github.com/farazdagi/1089923
+def support_jsonp(f):
+    """Wraps JSONified output for JSONP"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        callback = request.args.get('callback', False)
+        if callback:
+            content = str(callback) + '(' + str(f().data) + ')'
+            return current_app.response_class(content, mimetype='application/json')
+        else:
+            return f(*args, **kwargs)
+    return decorated_function
+
+
 def login_required(func):
     """
     Validation that user is logged in before accessing function,

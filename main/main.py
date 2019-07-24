@@ -29,7 +29,10 @@ import os
 import subprocess
 import re       # regex library
 
-from handlers.decorators import (login_required, category_exists, item_exists,
+# used for setting cors headers
+from flask_cors import CORS 
+
+from handlers.decorators import (support_jsonp, login_required, category_exists, item_exists,
                                  user_created_category, user_created_item, jsonp, 
                                  testcase_exists, clear_db, update_DB_with_files)
 # separate config file to distinguish between test and production configurations
@@ -41,6 +44,8 @@ config = testConfig
 # test text to see if this shows up in the testBranch
 
 app = Flask(__name__)
+cors = CORS(app, resources={r"/rssTest": {"origins": "*"}})
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 CLIENT_ID = json.loads(
@@ -300,6 +305,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/rssTest')
+@support_jsonp 
 def rssTest():
     print rssFeedConverter()
     fullData= rssFeedConverter()
@@ -313,67 +319,88 @@ def rssTest():
     
     # return
 
-@app.route('/jsonTest')
-def jsonTest():
-    config1={
-        '1': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
-        '2': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '2', 'model': 'H21-200', 'vidRouteMoniker': 'r14s2'},
-        '3': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '3', 'model': 'H23-600', 'vidRouteMoniker': 'r14s3'},
-        '4': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '4', 'model': 'HR20-100', 'vidRouteMoniker': 'r14s4'},
-        '5': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '5', 'model': 'HR20-700', 'vidRouteMoniker': 'r14s5'},
-        '6': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '6', 'model': 'HR21-100', 'vidRouteMoniker': 'r14s6'},
-        '7': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '7', 'model': 'HR22-100', 'vidRouteMoniker': 'r14s7'},
-        '8': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '8', 'model': 'HR24-500', 'vidRouteMoniker': 'r14s8'},
-        '9': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '1', 'model': 'THR22-100', 'vidRouteMoniker': 'r15s1'},
-        '10': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '2', 'model': 'HR21-200', 'vidRouteMoniker': 'r15s2'},
-        '11': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '3', 'model': 'HR21P-200', 'vidRouteMoniker': 'r15s3'},
-        '12': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '4', 'model': 'R22-100', 'vidRouteMoniker': 'r15s4'},
-        '13': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '5', 'model': 'HR24-200', 'vidRouteMoniker': 'r15s5'},
-        '14': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '6', 'model': 'HR21-700', 'vidRouteMoniker': 'r15s6'},
-        '15': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '7', 'model': 'HR23-700', 'vidRouteMoniker': 'r15s7'},
-        '16': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '8', 'model': 'HR24-500', 'vidRouteMoniker': 'r15s8'},
-    }
+@app.route('/jsonTest/<string:configNum>/')
+def jsonTest(configNum):
+    configArr = [
+        {
+            '1': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
+            '2': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '2', 'model': 'H21-200', 'vidRouteMoniker': 'r14s2'},
+            '3': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '3', 'model': 'H23-600', 'vidRouteMoniker': 'r14s3'},
+            '4': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '4', 'model': 'HR20-100', 'vidRouteMoniker': 'r14s4'},
+            '5': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '5', 'model': 'HR20-700', 'vidRouteMoniker': 'r14s5'},
+            '6': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '6', 'model': 'HR21-100', 'vidRouteMoniker': 'r14s6'},
+            '7': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '7', 'model': 'HR22-100', 'vidRouteMoniker': 'r14s7'},
+            '8': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '8', 'model': 'HR24-500', 'vidRouteMoniker': 'r14s8'},
+            '9': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '1', 'model': 'THR22-100', 'vidRouteMoniker': 'r15s1'},
+            '10': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '2', 'model': 'HR21-200', 'vidRouteMoniker': 'r15s2'},
+            '11': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '3', 'model': 'HR21P-200', 'vidRouteMoniker': 'r15s3'},
+            '12': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '4', 'model': 'R22-100', 'vidRouteMoniker': 'r15s4'},
+            '13': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '5', 'model': 'HR24-200', 'vidRouteMoniker': 'r15s5'},
+            '14': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '6', 'model': 'HR21-700', 'vidRouteMoniker': 'r15s6'},
+            '15': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '7', 'model': 'HR23-700', 'vidRouteMoniker': 'r15s7'},
+            '16': {'macAddr': '00-80-A3-9D-86-D3', 'slot': '8', 'model': 'HR24-500', 'vidRouteMoniker': 'r15s8'},
+        },
 
-    config2={
-       '1': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
-       '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
-       '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
-       '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
-       '5': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '5', 'model': 'HR44-700', 'vidRouteMoniker': 'r3s5'},
-       '6': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '6', 'model': 'HR44-500', 'vidRouteMoniker': 'r3s6'},
-       '7': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '7', 'model': 'HR44-200', 'vidRouteMoniker': 'r3s7'},
-       '8': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '8', 'model': 'HR34-700', 'vidRouteMoniker': 'r3s8'},
-       '9': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '1', 'model': 'C51-100(H44-500)', 'vidRouteMoniker': 'r2s1'},
-       '10': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '2', 'model': 'C41-700(H44-500)', 'vidRouteMoniker': 'r2s2'},
-       '11': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '3', 'model': 'C41-700(H44-500)', 'vidRouteMoniker': 'r2s3'},
-       '12': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '4', 'model': 'C51-500(HR54R1-700)', 'vidRouteMoniker': 'r2s4'},
-       '13': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '5', 'model': 'C61-700(HR54R1-700)', 'vidRouteMoniker': 'r2s5'},
-       '14': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '6', 'model': 'C61w-700(HR54R1-700)', 'vidRouteMoniker': 'r2s6'},
-       '15': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '7', 'model': 'C51-500(HR54-500)', 'vidRouteMoniker': 'r2s7'},
-       '16': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '8', 'model': 'C41-700(HR54-200)', 'vidRouteMoniker': 'r2s8'},   
-    }
+        {
+           '1': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
+           '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
+           '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
+           '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
+           '5': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '5', 'model': 'HR44-700', 'vidRouteMoniker': 'r3s5'},
+           '6': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '6', 'model': 'HR44-500', 'vidRouteMoniker': 'r3s6'},
+           '7': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '7', 'model': 'HR44-200', 'vidRouteMoniker': 'r3s7'},
+           '8': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '8', 'model': 'HR34-700', 'vidRouteMoniker': 'r3s8'},
+           '9': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '1', 'model': 'C51-100(H44-500)', 'vidRouteMoniker': 'r2s1'},
+           '10': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '2', 'model': 'C41-700(H44-500)', 'vidRouteMoniker': 'r2s2'},
+           '11': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '3', 'model': 'C41-700(H44-500)', 'vidRouteMoniker': 'r2s3'},
+           '12': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '4', 'model': 'C51-500(HR54R1-700)', 'vidRouteMoniker': 'r2s4'},
+           '13': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '5', 'model': 'C61-700(HR54R1-700)', 'vidRouteMoniker': 'r2s5'},
+           '14': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '6', 'model': 'C61w-700(HR54R1-700)', 'vidRouteMoniker': 'r2s6'},
+           '15': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '7', 'model': 'C51-500(HR54-500)', 'vidRouteMoniker': 'r2s7'},
+           '16': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '8', 'model': 'C41-700(HR54-200)', 'vidRouteMoniker': 'r2s8'},   
+        },
 
-    #rack A09
-    config3={
-        '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '1', 'model': 'HR44-200', 'vidRouteMoniker':'r9s1'}, 
-       '2': {'macAddr': '00-80-A3-9E-67-34', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r9s2'},
-       '3': {'macAddr': '00-80-A3-9E-67-34', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r9s3'},
-       '4': {'macAddr': '00-80-A3-9E-67-34', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r9s4'},
-       '5': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'HR44-500', 'vidRouteMoniker': 'r9s5'},
-       '6': {'macAddr': '00-80-A3-9E-67-34', 'slot': '6', 'model': 'client', 'vidRouteMoniker': 'r9s6'},
-       '7': {'macAddr': '00-80-A3-9E-67-34', 'slot': '7', 'model': 'client', 'vidRouteMoniker': 'r9s7'},
-       '8': {'macAddr': '00-80-A3-9E-67-34', 'slot': '8', 'model': 'client', 'vidRouteMoniker': 'r9s8'},
-       '9': {'macAddr': '00-80-A3-9E-67-34', 'slot': '9', 'model': 'HR44-700', 'vidRouteMoniker': 'r9s9'},
-       '10': {'macAddr': '00-80-A3-9E-67-34', 'slot': '10', 'model': 'client', 'vidRouteMoniker': 'r9s10'},
-       '11': {'macAddr': '00-80-A3-9E-67-34', 'slot': '11', 'model': 'client', 'vidRouteMoniker': 'r9s11'},
-       '12': {'macAddr': '00-80-A3-9E-67-34', 'slot': '12', 'model': 'client', 'vidRouteMoniker': 'r9s12'},
-       '13': {'macAddr': '00-80-A3-9E-67-34', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-       '14': {'macAddr': '00-80-A3-9E-67-34', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-       '15': {'macAddr': '00-80-A3-9E-67-34', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-       '16': {'macAddr': '00-80-A3-9E-67-34', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
-    }
+        #rack A09
+        {
+            '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '1', 'model': 'HR44-200', 'vidRouteMoniker':'r9s1'}, 
+           '2': {'macAddr': '00-80-A3-9E-67-34', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r9s2'},
+           '3': {'macAddr': '00-80-A3-9E-67-34', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r9s3'},
+           '4': {'macAddr': '00-80-A3-9E-67-34', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r9s4'},
+           '5': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'HR44-500', 'vidRouteMoniker': 'r9s5'},
+           '6': {'macAddr': '00-80-A3-9E-67-34', 'slot': '6', 'model': 'client', 'vidRouteMoniker': 'r9s6'},
+           '7': {'macAddr': '00-80-A3-9E-67-34', 'slot': '7', 'model': 'client', 'vidRouteMoniker': 'r9s7'},
+           '8': {'macAddr': '00-80-A3-9E-67-34', 'slot': '8', 'model': 'client', 'vidRouteMoniker': 'r9s8'},
+           '9': {'macAddr': '00-80-A3-9E-67-34', 'slot': '9', 'model': 'HR44-700', 'vidRouteMoniker': 'r9s9'},
+           '10': {'macAddr': '00-80-A3-9E-67-34', 'slot': '10', 'model': 'client', 'vidRouteMoniker': 'r9s10'},
+           '11': {'macAddr': '00-80-A3-9E-67-34', 'slot': '11', 'model': 'client', 'vidRouteMoniker': 'r9s11'},
+           '12': {'macAddr': '00-80-A3-9E-67-34', 'slot': '12', 'model': 'client', 'vidRouteMoniker': 'r9s12'},
+           '13': {'macAddr': '00-80-A3-9E-67-34', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '14': {'macAddr': '00-80-A3-9E-67-34', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '15': {'macAddr': '00-80-A3-9E-67-34', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '16': {'macAddr': '00-80-A3-9E-67-34', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
+        },
+
+        {
+           '1': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '1', 'model': 'HR54-200', 'vidRouteMoniker':'r9s1'}, 
+           '2': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r9s2'},
+           '3': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r9s3'},
+           '4': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r9s4'},
+           '5': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '5', 'model': 'HR54-500', 'vidRouteMoniker': 'r9s5'},
+           '6': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '6', 'model': 'client', 'vidRouteMoniker': 'r9s6'},
+           '7': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '7', 'model': 'client', 'vidRouteMoniker': 'r9s7'},
+           '8': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '8', 'model': 'client', 'vidRouteMoniker': 'r9s8'},
+           '9': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '9', 'model': 'HR54-700', 'vidRouteMoniker': 'r9s9'},
+           '10': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '10', 'model': 'client', 'vidRouteMoniker': 'r9s10'},
+           '11': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '11', 'model': 'client', 'vidRouteMoniker': 'r9s11'},
+           '12': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '12', 'model': 'client', 'vidRouteMoniker': 'r9s12'},
+           '13': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '14': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '15': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
+           '16': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
+        }
+    ]
     # return jsonify(fakeData={'1':{'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'H24-100', 'vidRouteMoniker':'r13s1'}})
-    return jsonify(fakeData=config1)
+    return jsonify(fakeData=configArr[int(configNum)-1])
 
 @app.route('/setCookie/', methods = ['POST', 'GET'])
 def setCookie():
@@ -1650,6 +1677,11 @@ def deletePost(post_id):
 @app.route('/redesign-mock')
 def redesign_mock():
     return render_template('redesign-mock.html')
+
+
+@app.route('/sampleWebkitApp')
+def sampleWebkitApp():
+    return render_template('sampleWebkitApp.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

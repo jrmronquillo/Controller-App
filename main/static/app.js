@@ -370,7 +370,7 @@ class Main extends React.Component {
       })
     }, 300000)
 
-    this.getJsonTest();
+    this.getJsonTest(1);
     this.logOutput();
   }
 
@@ -385,9 +385,9 @@ class Main extends React.Component {
     console.log(this.state.jsonDataReceived);
   }
 
-  getJsonTest(){
+  getJsonTest(configVal){
     var that = this;
-    fetch('http://localhost:3000/jsonTest')
+    fetch('http://localhost:3000/jsonTest/'+configVal+'/')
       .then(function(response){
         console.log('fetch function triggered!');
         if (response.status>= 400) {
@@ -504,8 +504,13 @@ class Main extends React.Component {
   }
 
   sendLabelNames(){
-    var stbLabelsArr = [];
-    for (var key in this.state.configs[this.state.chosenConfig]){
+    var stbLabelsArr = [
+                        this.state.view1.model, this.state.view2.model, this.state.view3.model, this.state.view4.model,
+                        this.state.view5.model, this.state.view6.model, this.state.view7.model, this.state.view8.model,
+                        this.state.view9.model, this.state.view10.model, this.state.view11.model, this.state.view12.model,
+                        this.state.view13.model, this.state.view14.model, this.state.view15.model, this.state.view16.model];
+    console.log('sendlabelnames--> '+stbLabelsArr)
+    /*for (var key in this.state.configs[this.state.chosenConfig]){
       console.log('sendLabelNames function:');
       console.log(this.state.configs[this.state.chosenConfig][key]);
       // need to sanitize question marks in model strings, by converting them to html entity %3F
@@ -513,7 +518,9 @@ class Main extends React.Component {
 
       //stbLabelsArr.push(this.state.multiviewerConfig1[key].model);
       stbLabelsArr.push(escapeQuestionMarks);
-    }
+    }*/
+
+
         
     if(stbLabelsArr.length == 16){
       var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
@@ -526,7 +533,7 @@ class Main extends React.Component {
 
   handleKeyPress(event){
     console.log('handleKeyPress triggered');
-    console.log(this.state.textBoxFocused);
+    console.log('textboxfocus state-->'+this.state.textBoxFocused);
     if (this.state.textBoxFocused){
       console.log('+++++++');
       console.log(event.keyCode);
@@ -708,7 +715,7 @@ class Main extends React.Component {
           key = 'unexpected keypress';
         }
       } else {
-       console.log('textbox is focused?');
+       console.log('textbox is not focused');
       }
 
       this.setState({
@@ -822,13 +829,23 @@ class Main extends React.Component {
 
       };
 
-      var multiviewConfig = {
+      var multiviewConfig_old = {
                             '[':'multiviewerConfig1',
                             ']':'multiviewerConfig2',
                             '&#92;':'multiviewerConfig3',
                             ';':'multiviewerConfig4',
                             "'":'multiviewerConfig5'
                             };
+
+      var multiviewConfig = {
+                            '[': 1,
+                            ']': 2,
+                            '&#92;':3,
+                            ';':4,
+                            "'":5,
+                            };
+
+
 
 
 
@@ -890,10 +907,11 @@ class Main extends React.Component {
                   "l" : '15',
                   "." : '16',
           }
-
+          //console.log('><>><><>< irnetboxMac is currently hard coded for 00-80-A3-9D-86-D5 ')
           this.setState({
             viewerPosition: viewMappings[this.state.keyPressed],
             irnetboxMac: viewerPositionMapping[key].macAddr,
+            //irnetboxMac: '00-80-A3-9D-86-D5',
             slot: viewerPositionMapping[key].slot,
           }) 
       } else {
@@ -903,9 +921,10 @@ class Main extends React.Component {
       
       
       if(multiviewConfig[key]){
-        
+        console.log('multviewConfig valid key found!');
+        console.log(multiviewConfig[key]);
         // logic check all unique macs, so that it can be used for the send all stb's function
-        var arr = this.state.configs[this.state.chosenConfig];
+        /*var arr = this.state.configs[this.state.chosenConfig];
         var lookForUniques = [];
         for (var keyItem in arr){
           console.log(keyItem);
@@ -931,16 +950,38 @@ class Main extends React.Component {
         // build url string for setVideo api call
         var urlBuilder = [];
         console.log('stb info should display below:');
-        console.log(this.state.configs[multiviewConfig[key]]);
-        for (var configKey in this.state.configs[multiviewConfig[key]]){
+        //console.log(this.state.configs[multiviewConfig[key]]);
+        //for (var configKey in this.state.configs[multiviewConfig[key]]){
           // build url by taking all the vidRouteMonikers and converting them to a url string[]
-          urlBuilder.push(this.state.configs[multiviewConfig[key]][configKey].vidRouteMoniker);
-        }
+          //urlBuilder.push(this.state.configs[multiviewConfig[key]][configKey].vidRouteMoniker);
+        //}
+        console.log(this.state.view1.vidRouteMoniker)
         var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
         console.log('setVideoCall:');
-        console.log(setVideoCall);
+        console.log(setVideoCall);*/
         
-        fetch(setVideoCall);
+        this.getJsonTest(multiviewConfig[key]);
+        var setVideoCall2 = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+                                                             +this.state.view2.vidRouteMoniker+'/'
+                                                             +this.state.view3.vidRouteMoniker+'/'
+                                                             +this.state.view4.vidRouteMoniker+'/'
+                                                             +this.state.view5.vidRouteMoniker+'/'
+                                                             +this.state.view6.vidRouteMoniker+'/'
+                                                             +this.state.view7.vidRouteMoniker+'/'
+                                                             +this.state.view8.vidRouteMoniker+'/'
+                                                             +this.state.view9.vidRouteMoniker+'/'
+                                                             +this.state.view10.vidRouteMoniker+'/'
+                                                             +this.state.view11.vidRouteMoniker+'/'
+                                                             +this.state.view12.vidRouteMoniker+'/'
+                                                             +this.state.view13.vidRouteMoniker+'/'
+                                                             +this.state.view14.vidRouteMoniker+'/'
+                                                             +this.state.view15.vidRouteMoniker+'/'
+                                                             +this.state.view16.vidRouteMoniker+'/'
+
+
+        console.log('setVideoCall2'+setVideoCall2);
+        
+        fetch(setVideoCall2);
 
         this.sendLabelNames();
       }
@@ -1033,8 +1074,11 @@ class Main extends React.Component {
   }
 
   handleChange(event){
+    var valueArr = ['bar', 'tar', 'jar', 'sar']
     console.log('handleChange triggered');
     console.log(event.target.value);
+    valueArr.filter(item=>event.target.value==item)
+    console.log(valuArr);
   }
 
 

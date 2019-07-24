@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 
+	
+	<title>sampleWebkitApp</title>
+	<link rel=stylesheet type=text/css href="{{ url_for('static', filename='sampleWebkitApp_styles.css') }}">
+	<!--<script type="text/javascript" src="app.js"></script>-->
+	<script type="text/javascript" src="{{ url_for('static', filename = 'sampleWebkitApp.js') }}"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+	<!--<script src="jquery-3.4.1.js"></script> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript">
+		//If we are a stb, set the resolution
+		if (!!navigator.setResolution) {
+		  navigator.setResolution(1920, 1080);
+		} else {
+			console.log('not an STB!');
+		}
+
+	</script>
+		
+</head>
+<body>
+		<div id="view-test"></div>
+		<div id="left-menu">
+				<div class="header-wrapper">
+					<span>Lorem Ipsum</span>
+				</div>
+				<div class="pig-container">
+					<div class="pig-left-bar"></div>
+					<div class="pig-placeholder"></div>
+					<div class="pig-right-bar"></div>
+					<div class="pig-bottom-bar"></div>
+				</div>
+				<div class="left-menu-list-container">
+					<ul id="list-container-1" class="left-menu-list">
+						<li id='leaderboard' class="left-menu-items">Leaderboards</li>
+						<li id="scorecard"  class="left-menu-items">Scorecard</li>
+						<li class="left-menu-items" >Groups & Tee Times</li>
+						<li class="left-menu-items" >Videos</li>
+						<li class="left-menu-items">THE OPEN Mix</li>
+					</ul>
+
+				</div>
+		</div>
+
+		<div id="canvas1" class="canvas">
+			<div class="canvas-title">The Experience</div>
+			<div class="canvas-data-title">Leaderboard</div>
+			<div id='error-message'></div>
+			<div id='canvas-data'>
+			</div>
+
+			<div id='data2-container'>
+			</div>
+			
+
+		</div>
+
+		<!-- <div class="main-backdrop">
+			
+			
+			<div class="footer-color"></div>
+			
+			<h1 class="main-title"></h1>
+			<div id="test-div"></div>
+			<div id="key-down"></div>
+			<div id="react_main_container"></div>
+		</div> -->
+
+
+	
+
+
+	<!-- Load React. -->
+  <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+ 	
+
+  <!-- Load our React component. -->
+   <!--<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+  <!-- <script src="/reactApp.js"></script> -->
+ 
+  
+</body>
+</html>
