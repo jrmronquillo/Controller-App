@@ -14,6 +14,8 @@ a{
   text-decoration: none;
 }
 
+
+
 .backdrop-display{
   width:100vw;
   height: 100vh;
@@ -79,6 +81,10 @@ a{
   z-index: 2;
 }
 
+.display-off{
+  display: none !important;
+}
+
 .hidden-left-border{
   border-left-style: hidden;
 }
@@ -91,6 +97,14 @@ a{
   border-top-style: hidden;
 }
 
+
+.input-customize{
+  position: absolute !important;
+  top:10vh;
+  left: 10vw;
+  width: 40vw !important;
+  z-index: 4;
+}
 
 
 .viewbox{
@@ -204,6 +218,15 @@ a{
    color: #fff;
    }
 
+#default1{
+  padding: 0;
+  position: relative;
+  top: 0;
+  width: 100%;
+  background-color: black;
+  /*overflow: scroll;*/
+}
+
 fieldset{
   color: #FFF;
 }
@@ -221,14 +244,14 @@ fieldset{
 
 .letter, .letter-selected, .letter-unused{
   /*font-size: 2em;*/
-  width: 75px;
-  height: 75px;
+  width: 7vh;
+  height: 7vh;
   padding: 0px;
   text-align: center;
 }
 
 .letter{
-  color: green;
+  color: white;
 }
 
 .letter-selected{
@@ -325,6 +348,10 @@ td {
   background-color: black;
 }
 
+.padding-sm{
+  padding: 2%;
+}
+
 .screensave-data{
   position: relative;
   top: 75px;
@@ -342,6 +369,20 @@ td {
   animation-iteration-count: 1;
   animation-timing-function: ease-in;
   /*animation-fill-mode: forwards;*/
+}
+
+#state_container{
+  border: 1px solid red;
+  color: white;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 25vw;
+  height: 17vw;
+  background: #26374a;
+  opacity: .8;
+  z-index: 999;
+  overflow-y: auto;
 }
 
 .table-style{
@@ -454,6 +495,71 @@ td {
   color: black;
 }
 
+.searchContainer{
+  /*border: 1px solid red !important;*/
+  position: absolute;
+  top: 10vh;
+  left: 15vw;
+  width: 50vw;
+  height: 70vh;
+  z-index: 3;
+  text-align: center;
+  overflow: scroll;
+}
+
+.search-backdrop{
+  position: absolute;
+  top:0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: .7;
+  z-index: 3;
+}
+
+.search-backdrop-invisible{
+  display: none;
+}
+
+.searchContainer-none{
+   visibility: hidden;
+}
+
+
+.searchListItems{
+  background-color: #4E719E;
+  color: white;
+
+  list-style: none;
+  padding: 20px;
+  
+}
+
+.searchItemCenter{
+  margin: 0 auto;
+}
+
+.searchBox{
+  width: 50%;
+  height: 100%;
+}
+
+#searchButton{
+  width: 25vw;
+  height: 5vh;
+  border: 1px solid red !important;
+  font-size: 20px;
+}
+
+.search-button{
+  width: 40vw;
+}
+
+#searchSuggestions{
+  position: absolute;
+  top: 20vh;
+}
+
 .sections{
   /* The image used */
     background-image: url('./landscape_placeholder.jpg');
@@ -483,6 +589,33 @@ td {
   /*background-color: #4F788D;*/
   background-image: url('/landscape_placeholder.jpg');
 }
+
+.testInput_container{
+  display: none;
+  position: absolute;
+  top: 10vh;
+  left: 10vw;
+  width: 66vw;
+  height: 12vh;
+  z-index: 4;
+  border: 1px solid red !important;
+}
+
+.search-icon{
+  font-size: 3em;
+}
+
+#testInput{
+  display: none;
+  position: absolute;
+  top: 10vh;
+  left: 15vw;
+  width: 60vw;
+  height: 10vh;
+  z-index: 4;
+}
+
+
 
 @media(min-width: 800px){
    .transparency_test_text{

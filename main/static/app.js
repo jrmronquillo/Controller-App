@@ -12,8 +12,13 @@ class Search extends React.Component {
 
   render(){
     return(
-      <div>
+      <div >
         <input placeholder="Search" />
+        <div>
+          {this.props.searchData}
+        </div>
+        <ul id="searchSuggestions">
+        </ul>
       </div>
       )
   }
@@ -69,6 +74,18 @@ class MultiViewButtons extends React.Component {
                     <span> &#92; </span>
                   </div>  
                 </td>
+                <td className={this.props.keyPressed ==';'? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">B11</span><br />
+                    <span> ; </span>
+                  </div>  
+                </td>
+                <td className={this.props.keyPressed =='&apos;'? 'letter lightblue-bg': 'letter'}>
+                  <div id="`" data-txt="guide" className="cell-text-container">
+                    <span className="cell-text">B11</span><br />
+                    <span> &apos;</span>
+                  </div>  
+                </td>
               </tr>
               </tbody>
           </table>
@@ -117,10 +134,12 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      searchResults: [],
       testEnv: true, 
       liked: false,
       display: true,
-      textBoxFocused: false,
+      displaySearchBar: false,
+      textBoxFocused: true,
       keyPressed: '',
       command: '',
       windowFocused: true,
@@ -266,6 +285,10 @@ class Main extends React.Component {
     this.focusFunction = this.focusFunction.bind(this);
     this.blurFunction = this.blurFunction.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.searchBarDisplay = this.searchBarDisplay.bind(this);
+    this.setFocus = this.setFocus.bind(this);
+    this.handleOffClick = this.handleOffClick.bind(this);
+    this.setFocusState = this.setFocusState.bind(this);
   }
 
   componentDidMount(){
@@ -287,8 +310,13 @@ class Main extends React.Component {
     //}
     console.log('document focus var');
     console.log(document.hasFocus());
-    window.addEventListener("blur", this.focusTest);
-    window.addEventListener("focus", this.focused);
+
+    //commented the lines below so the screensaver wouldn't interrupt debugging
+    //window.addEventListener("blur", this.focusTest);
+    //window.addEventListener("focus", this.focused);
+
+    document.addEventListener('click', this.handleOffClick);
+    
     document.addEventListener('keypress', this.handleKeyPress);
     console.log('stb object test');
     console.log(this.state.stbObjTest);
@@ -420,6 +448,7 @@ class Main extends React.Component {
           view14: data['fakeData']['14'],
           view15: data['fakeData']['15'],
           view16: data['fakeData']['16'],
+          irnetboxMac: data['fakeData']['1']['macAddr']
           });
 
         });
@@ -445,6 +474,26 @@ class Main extends React.Component {
     this.setState({
       display: !this.state.display
       });
+  }
+
+  setViewerPosition(viewerPos){
+    this.setState({
+      viewerPosition: viewerPos,
+    })
+    console.log('setViewerPosition')
+  }
+
+  searchBarDisplay(){
+    console.log('changing search bar display');
+
+    this.setState({
+      displaySearchBar: true,
+    });
+
+    this.focusFunction();
+
+ 
+
   }
 
   focused(){
@@ -531,10 +580,531 @@ class Main extends React.Component {
     }
   }
 
+  handleKeys_textbox(key){
+    console.log('handleKeys_textbox triggered '+key);
+    if(key == 13){
+      console.log('enter key detected');
+      console.log(this.state.searchResults);
+      switch(this.state.searchResults[0]){
+        case 'config 1': 
+          console.log('A03 was entered')
+          this.setVideoRouteConfig(1);
+          break;
+        case 'config 2':
+          console.log('config 2 was entered');
+          this.setVideoRouteConfig(2);
+          break;
+        case 'config 3':
+          console.log('config 3 was entered');
+          this.setVideoRouteConfig(3);
+          break;
+        case 'config 4':
+          console.log('config 4 was entered');
+          this.setVideoRouteConfig(4);
+          break;
+        case 'config 5':
+          console.log('config 5 was entered');
+          this.setVideoRouteConfig(5);
+          break;
+        case '4x4':
+          console.log('4x4 config was entered')
+          this.setGridCall('4x4');
+          break;
+        case '2x2':
+          console.log('2x2 config was entered')
+          this.setGridCall('2x2');
+          break;
+        case '3x3':
+          console.log('3x3 config was entered')
+          this.setGridCall('3x3');
+          break;
+        case 'solo on':
+          console.log('solo on was entered')
+          this.setSoloMode('true');
+          break;
+        case 'solo off':
+          console.log('solo off was entered')
+          this.setSoloMode('false');
+          break;
+        case 'solo 1':
+          console.log('solo 1 was entered')
+          this.setSoloPosition('1');
+          this.setViewerPosition('1');
+          break;
+        case 'solo 2':
+          console.log('solo 2 was entered')
+          this.setSoloPosition('2');
+          this.setViewerPosition('2');
+          break;
+        case 'solo 3':
+          console.log('solo 3 was entered')
+          this.setSoloPosition('3');
+          this.setViewerPosition('3');
+          break;
+        case 'solo 4':
+          console.log('solo 4 was entered')
+          this.setSoloPosition('4');
+          this.setViewerPosition('4');
+          break;
+        case 'solo 5':
+          console.log('solo 5 was entered')
+          this.setSoloPosition('5');
+          this.setViewerPositin('5');
+          break;
+        case 'solo 6':
+          console.log('solo 6 was entered')
+          this.setSoloPosition('6');
+          this.setViewerPosition('6');
+          break;
+        case 'solo 7':
+          console.log('solo 7 was entered')
+          this.setSoloPosition('7');
+          this.setViewerPosition('7');
+          break;
+        case 'solo 8':
+          console.log('solo 8 was entered')
+          this.setSoloPosition('8');
+          this.setViewerPosition('8');
+          break;
+        case 'solo 9':
+          console.log('solo 9 was entered')
+          this.setSoloPosition('9')
+          this.setViewerPosition('9');
+          break;
+        case 'solo 10':
+          console.log('solo 10 was entered');
+          this.setSoloPosition('10');
+          this.setViewerPosition('10');
+          break;
+        case 'solo 11':
+          console.log('solo 11 was entered');
+          this.setSoloPosition('11');
+          this.setViewerPosition('11');
+          break;
+        case 'solo 12':
+          console.log('solo 12 was entered');
+          this.setSoloPosition('12');
+          this.setViewerPosition('12');
+          break;
+        case 'solo 13':
+          console.log('solo 13 was entered');
+          this.setSoloPosition('13');
+          this.setViewerPosition('13');
+          break;
+        case 'solo 14':
+          console.log('solo 14 was entered');
+          this.setSoloPosition('14');
+          this.setViewerPosition('14');
+          break;
+        case 'solo 15':
+          console.log('solo 15 was entered');
+          this.setSoloPosition('15');
+          this.setViewerPosition('15');
+          break;
+        case 'solo 16':
+          console.log('solo 16 was entered');
+          this.setSoloPosition('16');
+          this.setViewerPosition('16');
+          break;
+        default:
+          console.log('error with search results')
+          console.log(this.state.searchResults[0]);
+      }
+      console.log('triggering blurfunction after enter key');
+      this.blurFunction();
+    }
+  }
+
+  handleKeys_default(inputKey){
+    console.log('handleKeys_default triggered! '+ inputKey)
+     var key = '';
+    switch(inputKey){
+      case 119:
+        key = 'w';
+        break;
+      case 97:
+        key = 'a';
+        break;
+      case 100:
+        key = 'd';
+        break;
+      case 115:
+        key = 's';
+        break;
+      case 32:
+        key = ' ';
+        break;
+      case 120:
+        key = 'x';
+        break;
+      case 101:
+        key='e';
+        break;
+      case 114:
+        key= 'r';
+        break;
+      // numbers
+      case 48:
+        key= '0';
+        break;
+      case 49:
+        key= '1';
+        break;
+      case 50:
+        key= '2';
+        break;
+      case 51:
+        key= '3';
+        break;
+      case 52:
+        key= '4';
+        break;
+      case 53:
+        key= '5';
+        break;
+      case 54:
+        key= '6';
+        break;
+      case 55:
+        key= '7';
+        break;
+      case 56:
+        key= '8';
+        break;
+      case 57:
+        key= '9';
+        break;
+      case 38:
+        key= '&';
+        break;
+      case 42:
+        key='*';
+        break;
+      case 40:
+        key='(';
+        break;
+      case 41:
+        key=')';
+        break;
+      case 117:
+        key='u';
+        break;
+      case 94:
+        key='^';
+        break;
+      case 121:
+        key='y';
+        break;
+      case 104:
+        key='h';
+        break;
+      case 110:
+        key='n';
+        break;
+      case 106:
+        key='j';
+        break;
+      case 109:
+        key='m';
+        break;
+      case 105:
+        key='i';
+        break;
+      case 107:
+        key='k';
+        break;
+      case 44:
+        key=',';
+        break;
+      case 40:
+        key='(';
+        break;
+      case 111:
+        key='o';
+        break;
+      case 108:
+        key='l';
+        break;
+      case 46:
+        key='.';
+        break;
+      case 102:
+        key='f';
+        break;
+      case 103:
+        key='g';
+        break;
+      case 122:
+        key='z';
+        break;
+      case 99:
+        key='c';
+        break;
+      case 118:
+        key='v';
+        break;
+      case 98:
+        key='b';
+        break;
+      case 96:
+        key='`';
+        break;
+      case 116:
+        key='t';
+        break;
+      case 112:
+        key='p';
+        break;
+      case 45:
+        key='-';
+        break;
+      case 113:
+        key='q';
+        break;
+      case 59:
+        key=';';
+        break;
+      case 39:
+        key="&apos;";
+        break;
+      case 90:
+        key='Z';
+        break;
+      case 91:
+        key="[";
+        break;
+      case 92:
+        key='&#92;';
+        break;
+      case 93:
+        key=']';
+        break;
+      case 86:
+        key='V';
+        break;
+      case 47:
+        key='/';
+        break;
+      case 61:
+        key='=';
+        break;
+      case 43:
+        key='+'
+        break;
+      case 13:
+        key='enter'
+        break;
+      case 63:
+        key='?'
+        break;
+      default:
+        key = 'unexpected keypress';
+      }
+
+      console.log('key translated to'+key)
+      this.setState({
+        keyPressed: key,
+      });
+      console.log('keypress state:');
+      console.log(this.state.keyPressed);
+
+      if(key=='?'){
+        console.log('question mark detected');
+        this.setFocusState();
+        this.setFocus()
+        this.clearSearchBox();
+        //this.setFocus();
+      }
+
+    var controlCommands = {
+                              'Z':'back',
+                              'w':'upArrow',
+                              'a':'leftArrow',
+                              's':'downArrow',
+                              'd':'rightArrow',
+                              'e':'menu',
+                              'r':'red',
+                              'x':'exit',
+                              'c':'rewind',
+                              'v':'play',
+                              'b':'fastforward',
+                              't':'chanup',
+                              'q':'guide',
+                              ' ':'select',
+                              'f':'info',
+                              'g':'chandown',
+                              'z':'dash',
+                              'V':'record',
+                              '1': '1',
+                              '2': '2',
+                              '3': '3',
+                              '4': '4',
+                              '5': '5',
+                              '6': '6',
+                              '7': '7',
+                              '8': '8',
+                              '9': '9',
+                              '0': '0',
+                              '`': 'prev'
+                                };
+    
+     var viewerPositionMapping = {
+                          'test':'0',
+                          '^': '1',
+                          'y': '2',
+                          'h': '3',
+                          'n': '4',
+                          '&': '5',
+                          'u': '6',
+                          'j': '7',
+                          'm': '8',
+                          '*': '9',
+                          'i': '10',
+                          'k': '11',
+                          ',': '12',
+                          '(': '13',
+                          'o': '14',
+                          'l': '15',
+                          '.': '16',
+    };
+
+    var viewerPositionConversion = {
+      '1': this.state.view1,
+      '2': this.state.view2,
+      '3': this.state.view3,
+      '4': this.state.view4,
+      '5': this.state.view5,
+      '6': this.state.view6,
+      '7': this.state.view7,
+      '8': this.state.view8,
+      '9': this.state.view9,
+      '10': this.state.view10,
+      '11': this.state.view11,
+      '12': this.state.view12,
+      '13': this.state.view13,
+      '14': this.state.view14,
+      '15': this.state.view15,
+      '16': this.state.view16,
+    }
+    var multiviewAPI = {
+                        '=':'toggleLayout',
+                        '+':'toggleSolo',
+                        };
+
+    var multiviewConfig = {
+                            '[': 1,
+                            ']': 2,
+                            '&#92;':3,
+                            ';':4,
+                            "&apos;":5,
+                            };
+
+    if(viewerPositionMapping[key]){
+      console.log('viewerPositionMapping');
+      console.log(viewerPositionMapping[key]);
+
+      this.setState({
+        irnetboxMac: viewerPositionConversion[viewerPositionMapping[key]].macAddr,
+        slot: viewerPositionConversion[viewerPositionMapping[key]].slot,
+        viewerPosition: viewerPositionMapping[key],
+      })
+    } else if(key == '/'){
+      this.setState({
+        slot: '1-16',
+      })
+    }else{
+      console.log('viewerPositionMapping key not found');
+      //this.setState({
+      //  slot: '1-16',
+      //})
+    }
+
+    if(controlCommands[key]){
+      console.log('command key detected');
+      console.log(controlCommands[key]);
+      this.setState({
+          command: controlCommands[key]
+        });
+      this.sendCommands();
+    }
+
+    if(multiviewConfig[key]){
+      console.log('multiviewConfig[key] detected')
+      this.getJsonTest(multiviewConfig[key]);
+      var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+                                                           +this.state.view2.vidRouteMoniker+'/'
+                                                           +this.state.view3.vidRouteMoniker+'/'
+                                                           +this.state.view4.vidRouteMoniker+'/'
+                                                           +this.state.view5.vidRouteMoniker+'/'
+                                                           +this.state.view6.vidRouteMoniker+'/'
+                                                           +this.state.view7.vidRouteMoniker+'/'
+                                                           +this.state.view8.vidRouteMoniker+'/'
+                                                           +this.state.view9.vidRouteMoniker+'/'
+                                                           +this.state.view10.vidRouteMoniker+'/'
+                                                           +this.state.view11.vidRouteMoniker+'/'
+                                                           +this.state.view12.vidRouteMoniker+'/'
+                                                           +this.state.view13.vidRouteMoniker+'/'
+                                                           +this.state.view14.vidRouteMoniker+'/'
+                                                           +this.state.view15.vidRouteMoniker+'/'
+                                                           +this.state.view16.vidRouteMoniker+'/'
+
+
+          console.log('setVideoCall--->'+setVideoCall);
+          
+          fetch(setVideoCall);
+
+          this.sendLabelNames();
+    }
+    
+  }
+
+  clearSearchBox(){
+    console.log('clearSearchBox triggered!');
+    console.log(document.activeElement.tagName);
+    document.getElementById('testInput').value='';
+  }
+
+  setVideoRouteConfig(configKey){
+    this.getJsonTest(configKey);
+    var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+                                                         +this.state.view2.vidRouteMoniker+'/'
+                                                         +this.state.view3.vidRouteMoniker+'/'
+                                                         +this.state.view4.vidRouteMoniker+'/'
+                                                         +this.state.view5.vidRouteMoniker+'/'
+                                                         +this.state.view6.vidRouteMoniker+'/'
+                                                         +this.state.view7.vidRouteMoniker+'/'
+                                                         +this.state.view8.vidRouteMoniker+'/'
+                                                         +this.state.view9.vidRouteMoniker+'/'
+                                                         +this.state.view10.vidRouteMoniker+'/'
+                                                         +this.state.view11.vidRouteMoniker+'/'
+                                                         +this.state.view12.vidRouteMoniker+'/'
+                                                         +this.state.view13.vidRouteMoniker+'/'
+                                                         +this.state.view14.vidRouteMoniker+'/'
+                                                         +this.state.view15.vidRouteMoniker+'/'
+                                                         +this.state.view16.vidRouteMoniker+'/'
+
+
+    console.log('setVideoCall--->'+setVideoCall);
+          
+    fetch(setVideoCall);
+
+    this.sendLabelNames();
+
+  }
+
   handleKeyPress(event){
     console.log('handleKeyPress triggered');
     console.log('textboxfocus state-->'+this.state.textBoxFocused);
-    if (this.state.textBoxFocused){
+
+    // if textbox is focused handle keys differently
+    if(this.state.textBoxFocused){
+      this.handleKeys_default(event.keyCode);
+    } else {
+      this.handleKeys_textbox(event.keyCode);
+    }
+
+
+    /*if (this.state.textBoxFocused){
       console.log('+++++++');
       console.log(event.keyCode);
       var key = '';
@@ -685,7 +1255,7 @@ class Main extends React.Component {
           key=';';
           break;
         case 39:
-          key="'";
+          key="&apos;";
           break;
         case 90:
           key='Z';
@@ -711,18 +1281,28 @@ class Main extends React.Component {
         case 43:
           key='+'
           break;
+        case 13:
+          key='enter'
+          break;
         default:
           key = 'unexpected keypress';
         }
       } else {
        console.log('textbox is not focused');
       }
+      
 
       this.setState({
         keyPressed: key,
       });
       console.log('keypress state:');
       console.log(this.state.keyPressed);
+    
+      
+
+
+
+
 
       var controlCommands = {
                               'Z':'back',
@@ -755,6 +1335,7 @@ class Main extends React.Component {
                               '0': '0',
                               '`': 'prev'
                                 };
+      
     //var viewerPositionMapping = {
     //                          '': '0',
     //                          '^':'1',
@@ -798,14 +1379,16 @@ class Main extends React.Component {
                           'l': this.state.view15,
                           '.': this.state.view16,
                           };
-
+      
 
       var multiviewAPI = {
                         '=':'toggleLayout',
                         '+':'toggleSolo',
                         };
+
       console.log('viewerPositionMapping');
       console.log(viewerPositionMapping[key]);                        
+      
       var stbs = {
         '1': {macAddr: '00-80-A3-A9-E3-7A', slot: '1', model: 'H44-500', vidRouteMoniker: 'r3s1'},
         '2': {macAddr: '00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
@@ -834,7 +1417,7 @@ class Main extends React.Component {
                             ']':'multiviewerConfig2',
                             '&#92;':'multiviewerConfig3',
                             ';':'multiviewerConfig4',
-                            "'":'multiviewerConfig5'
+                            "&apos;":'multiviewerConfig5'
                             };
 
       var multiviewConfig = {
@@ -842,7 +1425,7 @@ class Main extends React.Component {
                             ']': 2,
                             '&#92;':3,
                             ';':4,
-                            "'":5,
+                            "&apos;":5,
                             };
 
 
@@ -916,6 +1499,9 @@ class Main extends React.Component {
           }) 
       } else {
         console.log('viewerPostionMapping[key] not detected');
+        this.setState({
+          slot: "1-16",
+        })
       }
 
       
@@ -958,7 +1544,7 @@ class Main extends React.Component {
         console.log(this.state.view1.vidRouteMoniker)
         var setVideoCall = 'http://localhost:3000/setVideo/'+urlBuilder.join('/')+'/';
         console.log('setVideoCall:');
-        console.log(setVideoCall);*/
+        console.log(setVideoCall);
         
         this.getJsonTest(multiviewConfig[key]);
         var setVideoCall2 = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
@@ -979,12 +1565,14 @@ class Main extends React.Component {
                                                              +this.state.view16.vidRouteMoniker+'/'
 
 
-        console.log('setVideoCall2'+setVideoCall2);
+        console.log('setVideoCall2--->'+setVideoCall2);
         
         fetch(setVideoCall2);
 
         this.sendLabelNames();
       }
+
+
 
 
 
@@ -1055,30 +1643,185 @@ class Main extends React.Component {
 
       
       console.log('reached end of script');
-    
+    */
 }
 
 
    focusFunction(){
-    console.log('searchFunction triggered!');
-    this.setState({
-      textBoxFocused: false,
-    })
+    console.log('focusFunction triggered!');
+    var elem2focus = document.getElementById('searchBox1');
+    console.log('elem2focus:'+elem2focus.tagName);
+    //this.setState({
+    //  textBoxFocused: false,
+    //})
+    elem2focus.focus();
+
+    console.log('activeElem: '+ document.activeElement.tagName);
+    console.log('reached end of focusFunction');
   }
 
   blurFunction(){
     console.log('blurFunction triggered!');
+    //var elem2blur = document.getElementById('searchBox1');
+    //elem2blur.blur();
     this.setState({
       textBoxFocused: true,
+      displaySearchBar: false,
+    })
+
+    var searchInputBar = document.getElementById('testInput')
+    var searchSuggestions = document.getElementById('searchSuggesions')
+    searchInputBar.style.display ='none';
+    //searchSuggestions.style.display = 'none';
+
+    console.log('activeElem: '+document.activeElement.tagName);
+  }
+
+  updateSearchSuggestions(){
+
+  }
+
+
+  setGridCall(gridConfig){
+    var validConfigs = ['2x2', '3x3', '4x4']
+    if(validConfigs.indexOf(gridConfig) > -1){
+      var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
+      console.log(setGridCall);
+      fetch(setGridCall);
+    }
+  }
+
+  setSoloMode(mode){
+    // mode should only be true or false
+    var validVars = ['true', 'false']
+    console.log('toggleSolo triggered!');
+    console.log(this.state.soloMode)
+
+    //var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+this.state.soloMode;
+    var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+mode;
+    console.log('setSolo call:'+setSoloCall)
+    console.log(validVars.indexOf(mode))
+    if(validVars.indexOf(mode)>-1){
+      fetch(setSoloCall);
+    }
+    this.setState({
+      soloMode: !this.state.soloMode,
+    })
+    //break;
+  }
+
+  setSoloPosition(position){
+    var validPositions = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+                          '11', '12', '13', '14', '15', '16'];
+
+    var setSoloPositionCall = 'http://localhost:3000/redesign/setSoloPosition/'+position
+    console.log('setSoloPosition call:'+setSoloPositionCall)
+    if(validPositions.indexOf(position)>-1){
+      fetch(setSoloPositionCall);
+    }
+
+  }
+
+  setFocusState(){
+    console.log('setFocusState Triggered!');
+     this.setState({
+      textBoxFocused: false,
     })
   }
 
+  setFocus(){
+    console.log('setFocus function triggered');
+    //var elemTestContainer = document.getElementById('searchInputBox-container')
+    var elemTest = document.getElementById('searchInputBox')
+    console.log('setFocus elements declared');
+    elemTest.style.display ='block';
+    //elemTestContainer.focus();
+    //document.getElementById('searchInputBox').focus();
+    elemTest.focus();
+    console.log('value:'+elemTest.value)
+    console.log('focus functions executed');
+
+    //seting state to ____
+   
+    console.log('active element>'+document.activeElement.tagName);
+  }
+
+  handleOffClick(){
+    console.log('handleOffClick Triggered');
+    console.log(document.activeElement.tagName);
+    if(document.activeElement.tagName == 'BODY'){
+      this.blurFunction();
+    }
+    //this.blurFunction();
+  }
+
+
   handleChange(event){
-    var valueArr = ['bar', 'tar', 'jar', 'sar']
+    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'sar', '4x4','3x3','2x2', 
+                    'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
+                    'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
+                    'solo 13', 'solo 14', 'solo 15', 'solo 16']
     console.log('handleChange triggered');
-    console.log(event.target.value);
-    valueArr.filter(item=>event.target.value==item)
-    console.log(valuArr);
+    console.log('event.target.value:'+event.target.value);
+    
+    // this makes sure the search box is cleared of any text when it launches by the ? key
+    if (event.target.value == '?' ){
+      document.getElementById('searchInputBox').value='';
+    }
+    
+    var filteredArr = []
+    for(var i=0; i<valueArr.length; i++){
+      console.log('inside for loop')
+      console.log(valueArr[i]);
+
+      console.log('checking index:');
+      console.log(valueArr[i].indexOf(event.target.value));
+      if(valueArr[i].indexOf(event.target.value) > -1){
+        filteredArr.push(valueArr[i]);
+      } 
+      console.log('filtered arr:');
+      console.log(filteredArr);
+
+      var searchSugg = document.getElementById('searchSuggestions');
+      var newElemA = document.createElement("UL");
+      newElemA.id='default1';
+      newElemA.classList.add('list-group', 'searchItemCenter')
+
+      filteredArr.forEach(function(searchItemA){
+        var listElemA = document.createElement("LI")
+        listElemA.classList.add('searchListItems');
+        var textNodeA = document.createTextNode(searchItemA);
+        listElemA.appendChild(textNodeA);
+        newElemA.appendChild(listElemA);
+      })
+      var searchSugg = document.getElementById('searchSuggestions');
+      searchSugg.replaceChild(newElemA, document.getElementById('default1'));
+
+      this.setState({
+        searchResults: filteredArr,
+      })
+    }
+
+
+    var output = valueArr.filter(item=>event.target.value==item)
+    console.log(valueArr);
+    console.log(output);
+    /*
+    var searchSugg = document.getElementById('searchSuggestions')
+    var newElem = document.createElement("UL");
+    newElem.id='default1';
+    var testVar = this.state.searchResults.forEach(function(searchItem){
+      var listElem = document.createElement("LI")
+      var textNode = document.createTextNode(searchItem);
+      listElem.appendChild(textNode);
+      newElem.appendChild(listElem);
+    })
+    console.log(testVar)
+    searchSugg.replaceChild(newElem, document.getElementById('default1'));
+    */
+    
+
+    
   }
 
 
@@ -1094,8 +1837,43 @@ class Main extends React.Component {
     if(this.state.display){
       return(
         <div className="containerMain">
+          <div id="state_container">
+            <div> displaySearchBar: {this.state.displaySearchBar ? "true": "false"}</div>
+            <div> textBoxFocused: {this.state.textBoxFocused ? "true": "false"} </div>
+             <div>view1: {this.state.view1.macAddr}</div>
+             <div>view9: {this.state.view9.macAddr}</div>
+
+            <div>viewerPosition: {this.state.viewerPosition}</div>
+            <div>irnetboxMac: {this.state.irnetboxMac}</div>
+            <div>slot: {this.state.slot} </div>
+            <div>searchResults: {this.state.searchResults}</div>
+            <div> keypressed: {this.state.keyPressed}</div>
+
+          </div>
           <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData} />
-          <input placeholder="Searcher1" onFocus={this.focusFunction} onBlur={this.blurFunction} onChange={this.handleChange} />
+          <div class='alert alert-secondary search-button' onClick={this.setFocus}><i class="fas fa-search padding-sm"></i>Keyboard Shortcut: "?"</div>
+          
+            <div className={this.state.textBoxFocused ? 'search-backdrop-invisible':'search-backdrop'} onClick={this.handleOffClick}></div>
+            <div className="testInput_container">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <div id='searchInputBox-container' className={this.state.textBoxFocused ? "display-off input-group mb-3" : 'input-group mb-3 input-customize' }>
+              <div className="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1"><i class="fas fa-search search-icon"></i></span>
+              </div>
+              <input id='searchInputBox' type="text" class="form-control" placeholder="Start typing..." onChange={this.handleChange} pattern="[A-Za-z]" aria-label="Username" aria-describedby="basic-addon1" />
+            </div>
+            <input id='testInput' placeholder='start typing...' className={this.state.textBoxFocused ? 'testInput-close' : 'alert alert-secondary' } onChange={this.handleChange} pattern="[A-Za-z]"></input>
+            
+            <div id="searchSuggestions" className={this.state.textBoxFocused ? "searchContainer-none" : "searchContainer"}  >
+                <ul id='default1' >
+                </ul>
+                
+            </div>
+
+            
+          
           <div className="row shadow">
 
                   <ul className="list-group list-group-horizontal">
@@ -1114,7 +1892,7 @@ class Main extends React.Component {
           </div>
         <div className="row">
           
-          <div className="col-md-4">
+          <div className="col-md-6">
             <h1>Controls </h1>
             <table className="table table-config-1">
                 <tbody>
@@ -1324,17 +2102,8 @@ class Main extends React.Component {
                   </tr>
                 </tbody>
             </table>
-            <p>key pressed: </p>
-            <h1>{this.state.keyPressed}</h1>
-            <p>command:</p>
-            <h1>{this.state.command}</h1>
-            <h1>true</h1>
-            <form method='post'>
-              <input type='text' name='name' />
-              <input type='submit' key='submit' />
-            </form>
           </div>
-          <div className="col-md-4">
+          <div className="col-md-6">
              <h1>Device Selector</h1>
 
               {!this.state.viewMode16 &&
@@ -1456,18 +2225,20 @@ class Main extends React.Component {
                       <span>.</span>
                     </td>
                   </tr>
+                  <tr>
+                    <td className={this.state.slot == '1-16' ? 'letter lightblue-bg': 'letter'}>
+                      <span className="cell-text-container">all slots</span><br />
+                      <span className="cell-text-container">1-16</span><br />
+                      <span>/</span>
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             }
 
 
-             
-            <p>viewer position:</p>
-            <h1>{this.state.viewerPosition}</h1>
           </div>
-          <div className="col-md-4">
-            <MultiViewButtons keyPressed={this.state.keyPressed} view16={this.state.view16} soloMode={this.state.soloMode} />
-          </div>
+          
       </div>
       </div>
         )

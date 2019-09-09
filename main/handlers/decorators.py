@@ -58,7 +58,7 @@ def category_exists(function):
         if categoryToDelete:
             return function(category_id)
         else:
-            print "category not found"
+            # print "category not found"
             flash("Failed to show/modify Category because Category ID was "
                   "not found")
             # return render_template('404.html'), 404
@@ -76,7 +76,7 @@ def testcase_exists(function):
         if testcaseToDelete:
             return function(testcase_id)
         else:
-            print "testcase id not found in DB"
+            # print "testcase id not found in DB"
             flash("Failed to show/modify testcase because testcase ID was "
                   "not found")
             # return render_template('404.html'), 404
@@ -95,7 +95,7 @@ def item_exists(function):
         if categoryitemToDelete:
             return function(category_id, categoryitem_id)
         else:
-            print "item not found"
+            # print "item not found"
             flash("Failed to show/modify Item because Item ID was not found")
             return redirect(url_for('showItems', category_id=category_id))
             # return render_template('404.html'), 404
@@ -130,9 +130,9 @@ def user_created_item(function):
     def wrapper(category_id, categoryitem_id):
         categoryItemToModify = session.query(CategoryItem).filter_by(
             id=categoryitem_id).filter_by(category_id=category_id).first()
-        print categoryItemToModify.user.name
+        # print categoryItemToModify.user.name
         if categoryItemToModify.user.name == login_session['username']:
-            print 'user matches!'
+            # print 'user matches!'
             return function(category_id, categoryitem_id)
         else:
             flash("Only Item Creator can edit and/or delete item.")
@@ -159,7 +159,7 @@ def clear_db(function):
     """
     @wraps(function)
     def wrapper(*args, **kwargs):
-        print "wrapper stuff happened"
+        # print "wrapper stuff happened"
         testcasesToClear = session.query(TestCasesV2).all()
         for i in testcasesToClear:
             session.delete(i)
@@ -173,12 +173,12 @@ def update_DB_with_files(function):
     """
     @wraps(function)
     def wrapper(*args, **kwargs):
-        print "wrapper stuff happened"
+        # print "wrapper stuff happened"
          # grab designated command from config file
         commands = config.config['testcases_config']
     
-        print commands
-        print commands[0]["list_command"]
+        # print commands
+        # print commands[0]["list_command"]
 
         listCommand = commands[0]["list_command"]
         p = subprocess.check_output(listCommand, shell=True)
