@@ -14,6 +14,10 @@ a{
   text-decoration: none;
 }
 
+body{
+  line-height: 1 !important;
+}
+
 
 
 .backdrop-display{
@@ -81,7 +85,7 @@ a{
   z-index: 2;
 }
 
-.display-off{
+.hide{
   display: none !important;
 }
 
@@ -102,7 +106,7 @@ a{
   position: absolute !important;
   top:10vh;
   left: 10vw;
-  width: 40vw !important;
+  width: 55vw !important;
   z-index: 4;
 }
 
@@ -225,6 +229,10 @@ a{
   width: 100%;
   background-color: black;
   /*overflow: scroll;*/
+}
+
+#default1::-webkit-scrollbar{
+  display:none;
 }
 
 fieldset{
@@ -378,7 +386,7 @@ td {
   top: 50px;
   right: 0px;
   width: 25vw;
-  height: 17vw;
+  height: 10vw;
   background: #26374a;
   opacity: .8;
   z-index: 999;
@@ -510,6 +518,7 @@ td {
 .search-backdrop{
   position: absolute;
   top:0;
+  left:0;
   width: 100vw;
   height: 100vh;
   background-color: black;
