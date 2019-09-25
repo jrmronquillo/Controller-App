@@ -706,6 +706,22 @@ class Main extends React.Component {
           this.setSoloPosition('16');
           this.setViewerPosition('16');
           break;
+        case 'labels on':
+          console.log('labels on was entered')
+          this.setLabelsMode('true');
+          break;
+        case 'labels off':
+          console.log('labels off was entered');
+          this.setLabelsMode('false');
+          break;
+        case 'audio meters on':
+          console.log('audio meters on was entered')
+          this.setAudioMeters('true');
+          break;
+        case 'audio meters off':
+          console.log('audio meters off was entered')
+          this.setAudioMeters('false');
+          break;
         default:
           console.log('error with search results')
           console.log(this.state.searchResults[0]);
@@ -1172,6 +1188,8 @@ class Main extends React.Component {
     //break;
   }
 
+
+
   setSoloPosition(position){
     var validPositions = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
                           '11', '12', '13', '14', '15', '16'];
@@ -1182,6 +1200,18 @@ class Main extends React.Component {
       fetch(setSoloPositionCall);
     }
 
+  }
+
+  setLabelsMode(labelsMode){
+    var setLabelsModeCall = 'http://localhost:3000/redesign/labelsMode/'+labelsMode
+    fetch(setLabelsModeCall);
+  }
+
+  setAudioMeters(mode){
+    console.log('setAudioMeters function executed')
+    var setAudioMetersCall = 'http://localhost:3000/redesign/audioMeters/'+mode
+    console.log(setAudioMetersCall);
+    fetch(setAudioMetersCall);
   }
 
   setFocusState(){
@@ -1222,7 +1252,8 @@ class Main extends React.Component {
     var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'sar', '4x4','3x3','2x2', 
                     'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
                     'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
-                    'solo 13', 'solo 14', 'solo 15', 'solo 16']
+                    'solo 13', 'solo 14', 'solo 15', 'solo 16', 'labels on', 'labels off',
+                     'audio meters on', 'audio meters off']
     console.log('handleChange triggered');
     console.log('event.target.value:'+event.target.value);
     

@@ -230,6 +230,41 @@ def setLabels(labelArr):
 
     return "set labels executed!!"
 
+def labelsDisplay(labelsMode):
+    tn = telnetlib.Telnet("10.23.223.93", "9990")
+    print(labelsMode)
+    validModes = ['true', 'false']
+    labelsModeStr = str(labelsMode)
+    if labelsModeStr in validModes:
+        # set labels config
+        print(labelsModeStr) 
+        tn.write("CONFIGURATION:\n")
+        # tn.write("Display labels: "+ labelsModeStr +"\n")
+        tn.write("Display labels: "+labelsModeStr+"\n")
+        tn.write("\n") 
+        tn.close()
+        print("labelsDisplay executed")
+        return "labels display executed"
+    else:
+        print "invalid mode"
+        return "invalid mode"
+
+def audioMeters(audioMode):
+    tn = telnetlib.Telnet("10.23.223.93", "9990")
+    print(audioMode)
+    validModes = ['true', 'false']
+    audioModeStr = str(audioMode)
+    if audioModeStr in validModes:
+        # set labels config
+        print(audioModeStr) 
+        tn.write("CONFIGURATION:\n")
+        # tn.write("Display labels: "+ labelsModeStr +"\n")
+        tn.write("Display audio meters: "+audioModeStr+"\n")
+        tn.write("\n") 
+        tn.close()
+        print("audioMeters executed")
+        return "audioMeters executed"
+
 def setGrid(gridConfig):
     validVals = ["2x2", "3x3","4x4"]
     strVal = str(gridConfig)
@@ -872,6 +907,15 @@ def setSoloPosition(position):
     else:
         return 'setSoloPosition executed - invalid position entered: '+position
 
+@app.route('/redesign/labelsMode/<string:mode>')
+def labelsMode(mode):
+    labelsDisplay(mode)
+    return 'labels mode executed'
+
+@app.route('/redesign/audioMeters/<string:mode>')
+def audioMetersDisplay(mode):
+    audioMeters(mode)
+    return 'audioMeters executed'
 
 
 
