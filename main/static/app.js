@@ -13,6 +13,7 @@ class Search extends React.Component {
   render(){
     return(
       <div >
+        <span> test</span>
         <input placeholder="Search" />
         <div>
           {this.props.searchData}
@@ -178,6 +179,7 @@ class Main extends React.Component {
       toggleTempView5: 'null',
       toggleTempView6: 'null',
       screenSaverData: 'null',
+      rackSlotData:    'null',
       chosenConfig: 'multiviewerConfig1',
       multipleMacs: false,
       viewMode16: true,
@@ -318,11 +320,24 @@ class Main extends React.Component {
     document.addEventListener('click', this.handleOffClick);
     
     document.addEventListener('keypress', this.handleKeyPress);
-    console.log('stb object test');
-    console.log(this.state.stbObjTest);
-    //this.getItems();
     var that = this;
-    console.log(that.state.chosenConfig);
+
+    fetch('http://localhost:3000/stbs/JSON')
+      .then(function(response){
+        if(response.status==400){
+          throw new Error("Bad Response for the server");
+        }
+        return response.json();
+      })
+      .then(function(data1){
+        console.log('response was good! stb data found')
+        console.log(data1);
+        var rackSlotsArr = data1.stbInfoData;
+        this.setState({
+          rackSlotData: rackSlotsArr,
+        })
+
+      })
 
     // initial load of data
     fetch('http://localhost:3000/rssTest')
@@ -1249,7 +1264,7 @@ class Main extends React.Component {
 
 
   handleChange(event){
-    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'sar', '4x4','3x3','2x2', 
+    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'sar', '4x4','3x3','2x2', 
                     'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
                     'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
                     'solo 13', 'solo 14', 'solo 15', 'solo 16', 'labels on', 'labels off',

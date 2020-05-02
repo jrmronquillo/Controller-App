@@ -15,7 +15,30 @@
 
 </div>
 
-<h1>Test</h1>
+<h1>Testjjj</h1>
+<form action='/stbs/' method="POST">
+  rack id: 
+  <input 
+    type='text' 
+    name='rackNumber'
+    value='A06' />
+  <br>
+  irnetbox mac: 
+  <input type='text' 
+     name='irnetboxMac'
+     value='00-00-00-00-00' />
+  <br>
+  slot: 
+  <input type='text' name='slot' value='1'></input>
+  <br>
+  videoRoute: 
+  <input type='text' name='videoRoute' value='r6s1'></input>
+  <br>
+  stb model:
+  <input type='text' name='stbModel' value='hr44-200' />
+  <input type='submit'></input>
+
+</form>
 
 {% if stbinfo != []%}
 	{% for stb in stbinfo %}
@@ -28,4 +51,40 @@
 {% else %}
 	<p> No Data </p>
 {% endif %}
+<hr>
+
+{% if rackInfo !=[] %}
+  {% for rack in rackInfo %}
+    <hr>
+    <div>
+      <p>
+        db id: 
+        {{rack.id}} 
+        |
+        rack number:
+        {{rack.rackNumber}}
+        | 
+        irnetbox:      
+        {{rack.irnetboxMac}} 
+        |
+        rack slot:       
+        {{rack.slot}}
+        |       
+        video route:
+        {{rack.videoRoute}}
+        |       
+        stb model:
+        {{rack.stbModel}}</p>
+        <form action='/editRackSlots/{{rack.id}}/'>
+          <input type='submit' value='edit'>
+        </form>
+        <form action='/deleteRackSlot/{{rack.id}}/'>
+          <input type='submit' value='delete'>
+        </form>
+    </div>
+  {% endfor %}
+{% else %}
+  <p> no rack data </p>
+{% endif %}
 {% endblock %}
+

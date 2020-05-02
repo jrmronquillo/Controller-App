@@ -26,6 +26,24 @@ class Stb(Base):
             'model': self.model,
             }
 
+class RackSlot(Base):
+    __tablename__='rackInfo'
+    id = Column(Integer, primary_key=True)
+    rackNumber = Column(String(250), nullable=False)
+    irnetboxMac = Column(String(250), nullable=False)
+    slot = Column(String(250), nullable=False)
+    videoRoute = Column(String(250), nullable=False)
+    stbModel = Column(String(250), nullable=False)
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'rackNumber': self.rackNumber,
+            'irnetboxMac': self.irnetboxMac,
+            'slot': self.slot,
+            'videoRoute': self.videoRoute,
+            'stbModel': self.stbModel,
+            }
 
 
 engine = create_engine('sqlite:///stbInfo.db')

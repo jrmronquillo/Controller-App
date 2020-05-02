@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class = 'pane'>
+<div class = 'flash'>
+              {% with messages = get_flashed_messages() %}
+      {% if messages %}
+
+        <ul>
+        {% for message in messages %}
+            <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+
+<h1>Edit Info for this Rack Slot</h1>
+
+<form action='#' method="POST">
+  db id: {{rackSlotToEdit.id}}
+  <br>
+  rack number:
+  <input 
+    type='text' 
+    name='rackNumber'
+    value={{rackSlotToEdit.rackNumber}} />
+  <br>
+  irnetbox mac: 
+  <input type='text' 
+     name='irnetboxMac'
+     value={{rackSlotToEdit.irnetboxMac}} />
+  <br>
+  slot: 
+  <input type='text' name='slot' value={{rackSlotToEdit.slot}}></input>
+  <br>
+  videoRoute: 
+  <input type='text' name='videoRoute' value={{rackSlotToEdit.videoRoute}}></input>
+  <br>
+  stb model:
+  <input type='text' name='stbModel' value={{rackSlotToEdit.stbModel}} />
+  <input type='submit'></input>
+
+</form>
+
+
+
+
+{% endblock %}
+

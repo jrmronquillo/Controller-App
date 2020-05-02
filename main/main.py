@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, redirect, jsonify, url_for,
                    flash)
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, Stb
+from database_setup import Base, Stb, RackSlot
 from flask import session as login_session
 import random
 import string
@@ -365,13 +365,17 @@ def rssTest():
     
     return jsonify(title=testArr)
     
-    # return
+    # return jsonify(fakeData=configArr[int(configNum)-1])
+
+
+
+
 
 @app.route('/jsonTest/<string:configNum>/')
 def jsonTest(configNum):
     configArr = [
         {
-            '1': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
+            '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
             '2': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '2', 'model': 'H21-200', 'vidRouteMoniker': 'r14s2'},
             '3': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '3', 'model': 'H23-600', 'vidRouteMoniker': 'r14s3'},
             '4': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '4', 'model': 'HR20-100', 'vidRouteMoniker': 'r14s4'},
@@ -448,7 +452,7 @@ def jsonTest(configNum):
         },
 
         {
-           '1': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r9s1'}, 
+           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r9s1'}, 
            '2': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '2', 'model': 'new', 'vidRouteMoniker':'r9s2'},
            '3': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '3', 'model': 'new', 'vidRouteMoniker': 'r9s3'},
            '4': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '4', 'model': 'new', 'vidRouteMoniker': 'r9s4'},
@@ -465,6 +469,26 @@ def jsonTest(configNum):
            '15': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '15', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
            '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'new', 'vidRouteMoniker': 'r9s12'}, 
         },
+        {
+           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'hs17', 'vidRouteMoniker':'r9s1'}, 
+           '2': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '2', 'model': 'hs17', 'vidRouteMoniker':'r9s2'},
+           '3': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '3', 'model': 'hs17', 'vidRouteMoniker': 'r9s3'},
+           '4': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '4', 'model': 'hs17', 'vidRouteMoniker': 'r9s4'},
+           '5': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '5', 'model': 'hs17', 'vidRouteMoniker': 'r9s5'},
+           '6': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '6', 'model': 'hs17', 'vidRouteMoniker': 'r9s6'},
+           '7': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '7', 'model': 'hs17', 'vidRouteMoniker': 'r9s7'},
+           '8': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '8', 'model': 'hs17', 'vidRouteMoniker': 'r9s8'},
+           '9': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '9', 'model': 'hs17', 'vidRouteMoniker': 'r9s9'},
+           '10': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '10', 'model': 'hs17', 'vidRouteMoniker': 'r9s10'},
+           '11': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '11', 'model': 'hs17', 'vidRouteMoniker': 'r9s11'},
+           '12': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '12', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+           '13': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '13', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+           '14': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '14', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+           '15': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '15', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+           '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+        },
+
+        #
 
 
     ]
@@ -498,16 +522,26 @@ def editStbPosition(id, rsPosition):
  
 @app.route('/stbs/JSON')
 def showStbsJSON(): 
-    stbInfo = session.query(Stb).all()
-    return jsonify(stbInfoData=[i.serialize for i in stbInfo])
+    rackInfo = session.query(RackSlot).all()
+    return jsonify(stbInfoData=[i.serialize for i in rackInfo])
 
-@app.route('/stbs/')
+@app.route('/stbs/', methods=['GET', 'POST'])
 def showStbs():
     stbInfo = session.query(Stb).all()
-    #print 'stbInfo:'
-    #print stbInfo
-    #print 'showStb api executed'
-    return render_template('stbInfo.html', stbinfo=stbInfo)
+    rackInfo = session.query(RackSlot).all()
+    if request.method == 'POST':
+        rackSlotObject = RackSlot(
+                                rackNumber=request.form['rackNumber'],
+                                irnetboxMac=request.form['irnetboxMac'],
+                                slot=request.form['slot'],
+                                videoRoute=request.form['videoRoute'],
+                                stbModel=request.form['stbModel'])
+        session.add(rackSlotObject)
+        session.commit()
+        #print 'stbInfo:'
+        #print stbInfo
+        #print 'showStb api executed'
+    return render_template('stbInfo.html', stbinfo=stbInfo, rackInfo=rackInfo)
 
 stbs = {
     '1': {'mac':'00:00:00:00', 'slot': '1', 'model': 'testModel'}
@@ -525,11 +559,42 @@ def newStb():
         return render_template('stbInfo.html', stbinfo='')
     else:
         # print stbs
-        newStb = Stb(mac='0000', slot='1', model='hr44-800', rackslot_id='r3s1')
+        newStb = RackSlot(rackNumber='A03', irnetboxMac='00-00-01',
+                            slot='1', videoRoute='r3s1',
+                            stbModel='hr44-500')
         session.add(newStb)
         session.commit()
-        return render_template('stbInfo.html', stbinfo='')
+        return render_template('stbInfo     .html', stbinfo='')
 
+
+@app.route('/editRackSlots/<string:rack_id>/', methods=['GET', 'POST'])
+def editRackSlots(rack_id):
+    rackSlotToEdit = session.query(
+        RackSlot).filter_by(id=rack_id).first()
+    print rackSlotToEdit
+    if rackSlotToEdit == None:
+        print 'Error: db entry not found'
+        return redirect(url_for('showStbs'))
+
+    if request.method == 'POST':
+        rackSlotToEdit.rackNumber = request.form['rackNumber']
+        rackSlotToEdit.irnetboxMac = request.form['irnetboxMac']
+        rackSlotToEdit.slot = request.form['slot']
+        rackSlotToEdit.videoRoute = request.form['videoRoute']
+        rackSlotToEdit.stbModel = request.form['stbModel']
+        return redirect(url_for('showStbs'))
+
+    return render_template('editRackSlots.html', rackSlotToEdit=rackSlotToEdit)
+
+@app.route('/deleteRackSlot/<string:rackslot_id>/', methods=["GET", "POST"])
+def deleteRackSlot(rackslot_id):
+    rackSlotToDelete = session.query(RackSlot).filter_by(id=rackslot_id).first()
+    #delete file from DB
+    if request.method == 'POST':
+        session.delete(rackSlotToDelete)
+        session.commit()
+        return redirect(url_for('showStbs'))
+    return render_template('deleteRackSlot.html', rackSlotToDelete=rackSlotToDelete)
 # Create anti-forgery state token
 @app.route('/login')
 def showLogin():
@@ -631,6 +696,11 @@ def gconnect():
     print("done!")
     return output
 
+
+def createStbObject():
+    newSTB = Stb(mac='00-00', slot='1', model='hr44', rackslot_id='1' )
+    session.add(Stb);
+    return 'test'
 
 def createUser(login_session):
     newUser = User(name=login_session['username'], email=login_session[
