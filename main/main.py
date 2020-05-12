@@ -352,6 +352,12 @@ def rssFeedConverter():
 def home():
     return render_template('home.html')
 
+@app.route('/controller_beta')
+def controller_beta():
+    return render_template('controller_beta.html')
+
+
+
 @app.route('/rssTest')
 @support_jsonp 
 def rssTest():
@@ -452,7 +458,7 @@ def jsonTest(configNum):
         },
 
         {
-           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r9s1'}, 
+           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r6s1'}, 
            '2': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '2', 'model': 'new', 'vidRouteMoniker':'r9s2'},
            '3': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '3', 'model': 'new', 'vidRouteMoniker': 'r9s3'},
            '4': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '4', 'model': 'new', 'vidRouteMoniker': 'r9s4'},
@@ -469,23 +475,24 @@ def jsonTest(configNum):
            '15': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '15', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
            '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'new', 'vidRouteMoniker': 'r9s12'}, 
         },
+        # config 6
         {
-           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'hs17', 'vidRouteMoniker':'r9s1'}, 
-           '2': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '2', 'model': 'hs17', 'vidRouteMoniker':'r9s2'},
-           '3': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '3', 'model': 'hs17', 'vidRouteMoniker': 'r9s3'},
-           '4': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '4', 'model': 'hs17', 'vidRouteMoniker': 'r9s4'},
-           '5': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '5', 'model': 'hs17', 'vidRouteMoniker': 'r9s5'},
-           '6': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '6', 'model': 'hs17', 'vidRouteMoniker': 'r9s6'},
-           '7': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '7', 'model': 'hs17', 'vidRouteMoniker': 'r9s7'},
-           '8': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '8', 'model': 'hs17', 'vidRouteMoniker': 'r9s8'},
-           '9': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '9', 'model': 'hs17', 'vidRouteMoniker': 'r9s9'},
-           '10': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '10', 'model': 'hs17', 'vidRouteMoniker': 'r9s10'},
-           '11': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '11', 'model': 'hs17', 'vidRouteMoniker': 'r9s11'},
-           '12': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '12', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
-           '13': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '13', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
-           '14': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '14', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
-           '15': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '15', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
-           '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'hs17', 'vidRouteMoniker': 'r9s12'},
+           '1': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '1', 'model': 'r4s1', 'vidRouteMoniker':'r4s1'}, 
+           '2': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '2', 'model': 'r4s2', 'vidRouteMoniker':'r4s2'},
+           '3': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '3', 'model': 'r4s3', 'vidRouteMoniker': 'r4s3'},
+           '4': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '4', 'model': 'r4s4', 'vidRouteMoniker': 'r4s4'},
+           '5': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '5', 'model': 'r4s5', 'vidRouteMoniker': 'r4s5'},
+           '6': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '6', 'model': 'r4s6', 'vidRouteMoniker': 'r4s6'},
+           '7': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '7', 'model': 'r4s7', 'vidRouteMoniker': 'r4s7'},
+           '8': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '8', 'model': 'r4s8', 'vidRouteMoniker': 'r4s8'},
+           '9': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '9', 'model': 'rack5-1', 'vidRouteMoniker': 'r5s1'},
+           '10': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '10', 'model': 'rack5-2', 'vidRouteMoniker': 'r5s2'},
+           '11': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '11', 'model': 'rack5-3', 'vidRouteMoniker': 'r5s3'},
+           '12': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '12', 'model': 'rack5-4', 'vidRouteMoniker': 'r5s4'},
+           '13': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '13', 'model': 'rack5-5', 'vidRouteMoniker': 'r5s5'},
+           '14': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '14', 'model': 'rack5-6', 'vidRouteMoniker': 'r5s6'},
+           '15': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '15', 'model': 'rack5-7', 'vidRouteMoniker': 'r5s7'},
+           '16': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '16', 'model': 'rack5-8', 'vidRouteMoniker': 'r5s8'},
         },
 
         #

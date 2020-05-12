@@ -621,6 +621,9 @@ class Main extends React.Component {
           console.log('config 5 was entered');
           this.setVideoRouteConfig(5);
           break;
+        case 'config 6':
+          console.log('config 6 - rack A06 was entered');
+          this.setVideoRouteConfig(6);
         case '4x4':
           console.log('4x4 config was entered')
           this.setGridCall('4x4');
@@ -1028,6 +1031,7 @@ class Main extends React.Component {
                             '&#92;':3,
                             ';':4,
                             "&apos;":5,
+                            '/': 6,
                             };
 
     if(viewerPositionMapping[key]){
@@ -1264,7 +1268,7 @@ class Main extends React.Component {
 
 
   handleChange(event){
-    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'sar', '4x4','3x3','2x2', 
+    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'config 6', 'sar', '4x4','3x3','2x2', 
                     'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
                     'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
                     'solo 13', 'solo 14', 'solo 15', 'solo 16', 'labels on', 'labels off',
