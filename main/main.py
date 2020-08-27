@@ -141,6 +141,17 @@ def setVideo(config):
                 'r15s5':'212', 'r15s6':'213', 'r15s7':'214', 'r15s8':'215',
                 'r16s1':'216', 'r16s2':'217', 'r16s3':'218', 'r16s4':'219',
                 'r16s5':'220', 'r16s6':'221', 'r16s7':'222', 'r16s8':'223',
+                'r17s1':'224', 'r17s2':'225', 'r17s3':'226', 'r17s4':'227',
+                'r17s5':'228', 'r17s6':'229', 'r17s7':'230', 'r17s8':'231',
+                'r18s1':'232', 'r18s2':'233', 'r18s3':'234', 'r18s4':'235',
+                'r18s5':'236', 'r18s6':'237', 'r18s7':'238', 'r18s8':'239',
+                'r19s1':'240', 'r19s2':'241', 'r19s3':'242', 'r19s4':'243',
+                'r19s5':'244', 'r19s6':'245', 'r19s7':'246', 'r19s8':'247',
+                'r20s1':'248', 'r20s2':'249', 'r20s3':'250', 'r20s4':'251',
+                'r20s5':'252', 'r20s6':'253', 'r20s7':'254', 'r20s8':'255',
+                'r21s1':'256', 'r21s2':'257', 'r21s3':'258', 'r21s4':'259',
+                'r21s5':'260', 'r21s6':'261', 'r21s7':'262', 'r21s8':'263',
+
             }
             #print 'updatedConfig:'
             #print updatedConfig[value]
@@ -374,14 +385,1775 @@ def rssTest():
     # return jsonify(fakeData=configArr[int(configNum)-1])
 
 
-
-
+@app.route('/deviceInfo/')
+def deviceInfo():
+    # return hardcoded stb info below
+    #"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
+    #             "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
+    #             "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
+    #             "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+    #             "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
+    #             "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
+    #             "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
+    #             "14":"00-80-A3-9D-86-D2", "15":"00-80-A3-9E-67-3B",
+    #             "16":"00-80-A3-9E-67-36", "17":"00-80-A3-9E-67-32",
+    #             "18":"00-80-A3-9D-86-D6", "19":"00-80-A3-9D-86-D3",
+    #             "20":"00-80-A3-9D-86-D1", "21":"00-80-A3-9D-86-D0",
+    #             "22":"00-20-4A-DF-64-55", "23":"00-80-A3-A1-7C-3C",
+    #             "24":"00-80-A3-A2-48-5C", "25":"00-20-4A-DF-65-A0",
+    #             "26":"00-80-A3-9E-67-3A"
+    deviceInfo = {
+        'A00' : {
+                'macAddr':'00-80-A3-A2-D9-13',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    }, 
+                },
+        'A01': {
+                'macAddr': '00-80-A3-A9-E3-68',
+                '1':{
+                        'model':'hr-test1',
+                        'vidRouteMoniker':'r1s1',
+                        'port':'8011',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r1s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'hrtest-16',
+                        'vidRouteMoniker':'r1s16',
+                        'port':'',
+                    },
+                },
+        'A02': {
+                'macAddr': '00-80-A3-A9-E3-6A',
+                '1':{
+                        'model':'client1',
+                        'vidRouteMoniker':'r2s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'client2',
+                        'vidRouteMoniker':'r2s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'client3',
+                        'vidRouteMoniker':'r2s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'client4',
+                        'vidRouteMoniker':'r2s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'client5',
+                        'vidRouteMoniker':'r2s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'client6',
+                        'vidRouteMoniker':'r2s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'client7',
+                        'vidRouteMoniker':'r2s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'client8',
+                        'vidRouteMoniker':'r2s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'client9',
+                        'vidRouteMoniker':'r2s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'client10',
+                        'vidRouteMoniker':'r2s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'client11',
+                        'vidRouteMoniker':'r2s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'client12',
+                        'vidRouteMoniker':'r2s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'client13',
+                        'vidRouteMoniker':'r2s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'client14',
+                        'vidRouteMoniker':'r2s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'client15',
+                        'vidRouteMoniker':'r2s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'client16',
+                        'vidRouteMoniker':'r2s16',
+                        'port':'',
+                    },
+                },
+        'A03': {
+                'macAddr': '00-80-A3-A9-E3-7A',
+                '1':{
+                        'model':'H44',
+                        'vidRouteMoniker':'r3s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'HR54-700',
+                        'vidRouteMoniker':'r3s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'HR54-500',
+                        'vidRouteMoniker':'r3s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'HR54-200',
+                        'vidRouteMoniker':'r3s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'HR44-700',
+                        'vidRouteMoniker':'r3s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'HR44-500',
+                        'vidRouteMoniker':'r3s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'HR44-200',
+                        'vidRouteMoniker':'r3s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'HR34-700',
+                        'vidRouteMoniker':'r3s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r3s16',
+                        'port':'',
+                    },   
+            },
+        'A04':{
+                'macAddr': '00-80-A3-A9-DA-67',
+                '1':{
+                        'model':'r4s1',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s4',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r4s16',
+                        'port':'',
+                    },
+            },
+        'A05':{
+                'macAddr':'00-80-A3-A9-E3-79',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r5s16',
+                        'port':'',
+                    },
+            },
+        'A06':{
+                'macAddr':'00-80-A3-A9-E3-78',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r6s16',
+                        'port':'',
+                    },
+            },
+        'A07':{
+            'macAddr':'00-80-A3-9E-67-37',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r7s16',
+                        'port':'',
+                    },
+            },
+        'A08':{
+                'macAddr':'00-80-A3-9D-86-D5',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r8s16',
+                        'port':'',
+                    },
+                },
+            'A09':{
+                    'macAddr':'00-80-A3-9E-67-34',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r9s16',
+                        'port':'',
+                    },
+                },
+            'A10':{
+                'macAddr':'00-80-A3-9E-67-27',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r10s16',
+                        'port':'',
+                    },
+            },
+        'A11':{
+                'macAddr':'00-80-A3-9D-86-CF',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s9',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s10',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s11',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s12',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s13',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s14',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s15',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'r11s16',
+                        'port':'',
+                    },
+                },
+            'B04':{
+                    'macAddr':'00-20-4A-BD-C5-1D',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r21s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B05':{
+                    'macAddr':'00-80-A3-9D-86-D2',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r20s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B06':{
+                    'macAddr':'00-80-A3-9E-67-3B',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r19s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B07':{
+                    'macAddr':'00-80-A3-9E-67-36',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r18s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B08':{
+                    'macAddr':'00-80-A3-9E-67-32',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r17s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B09': {
+                    'macAddr':'00-80-A3-9D-86-D6',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r16s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B10': {
+                    'macAddr':'00-80-A3-9D-86-D3',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r15s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B11':{
+                    'macAddr':'00-80-A3-9D-86-D1',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r14s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+            'B12':{
+                    'macAddr':'00-80-A3-9D-86-D0',
+                '1':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s1',
+                        'port':'',
+                    },
+                '2':{
+                        'model':'',
+                        'vidRouteMoniker':'r12s2',
+                        'port':'',
+                    },
+                '3':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s3',
+                        'port':'',
+                    },
+                '4':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s4',
+                        'port':'',
+                    },
+                '5':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s5',
+                        'port':'',
+                    },
+                '6':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s6',
+                        'port':'',
+                    },
+                '7':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s7',
+                        'port':'',
+                    },
+                '8':{
+                        'model':'',
+                        'vidRouteMoniker':'r13s8',
+                        'port':'',
+                    },
+                '9':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '10':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '11':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '12':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '13':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '14':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '15':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                '16':{
+                        'model':'',
+                        'vidRouteMoniker':'',
+                        'port':'',
+                    },
+                },
+    }
+    return jsonify(deviceInfo)
 
 @app.route('/jsonTest/<string:configNum>/')
 def jsonTest(configNum):
     configArr = [
         {
-            '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
+            '1': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
             '2': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '2', 'model': 'H21-200', 'vidRouteMoniker': 'r14s2'},
             '3': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '3', 'model': 'H23-600', 'vidRouteMoniker': 'r14s3'},
             '4': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '4', 'model': 'HR20-100', 'vidRouteMoniker': 'r14s4'},
@@ -400,7 +2172,7 @@ def jsonTest(configNum):
         },
 
         {
-           '1': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '1', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
+           '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
            '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
            '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
            '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
@@ -428,14 +2200,14 @@ def jsonTest(configNum):
            '6': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '6', 'model': 'client', 'vidRouteMoniker': 'r6s6'},
            '7': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '7', 'model': 'client', 'vidRouteMoniker': 'r6s7'},
            '8': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '8', 'model': 'client', 'vidRouteMoniker': 'r6s8'},
-           '9': {'macAddr': '00-80-A3-9E-67-34', 'slot': '9', 'model': 'HR44-700', 'vidRouteMoniker': 'r9s9'},
-           '10': {'macAddr': '00-80-A3-9E-67-34', 'slot': '10', 'model': 'client', 'vidRouteMoniker': 'r9s10'},
-           '11': {'macAddr': '00-80-A3-9E-67-34', 'slot': '11', 'model': 'client', 'vidRouteMoniker': 'r9s11'},
-           '12': {'macAddr': '00-80-A3-9E-67-34', 'slot': '12', 'model': 'client', 'vidRouteMoniker': 'r9s12'},
-           '13': {'macAddr': '00-80-A3-9E-67-34', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-           '14': {'macAddr': '00-80-A3-9E-67-34', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-           '15': {'macAddr': '00-80-A3-9E-67-34', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-           '16': {'macAddr': '00-80-A3-9E-67-34', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
+           '9': {'macAddr': '00-80-A3-9E-67-37', 'slot': '1', 'model': 'HR44-700', 'vidRouteMoniker': 'r7s1'},
+           '10': {'macAddr': '00-80-A3-9E-67-37', 'slot': '2', 'model': 'client', 'vidRouteMoniker': 'r7s2'},
+           '11': {'macAddr': '00-80-A3-9E-67-37', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r7s3'},
+           '12': {'macAddr': '00-80-A3-9E-67-37', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r7s4'},
+           '13': {'macAddr': '00-80-A3-9E-67-37', 'slot': '5', 'model': 'null', 'vidRouteMoniker': 'r7s5'},
+           '14': {'macAddr': '00-80-A3-9E-67-37', 'slot': '6', 'model': 'null', 'vidRouteMoniker': 'r7s6'},
+           '15': {'macAddr': '00-80-A3-9E-67-37', 'slot': '7', 'model': 'null', 'vidRouteMoniker': 'r7s7'},
+           '16': {'macAddr': '00-80-A3-9E-67-37', 'slot': '8', 'model': 'null', 'vidRouteMoniker': 'r7s8'}, 
         },
 
         {
@@ -494,8 +2266,25 @@ def jsonTest(configNum):
            '15': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '15', 'model': 'rack5-7', 'vidRouteMoniker': 'r5s7'},
            '16': {'macAddr': '00-80-A3-A9-E3-79', 'slot': '16', 'model': 'rack5-8', 'vidRouteMoniker': 'r5s8'},
         },
-
-        #
+        # config 7 - rack b12; rack b11
+        {
+           '1': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'h25-100', 'vidRouteMoniker':'r13s1'}, 
+           '2': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '2', 'model': 'h25-500', 'vidRouteMoniker':'r13s2'},
+           '3': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '3', 'model': 'h25-700', 'vidRouteMoniker': 'r13s3'},
+           '4': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '4', 'model': 'empty', 'vidRouteMoniker': 'r13s4'},
+           '5': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '5', 'model': 'hr34-700', 'vidRouteMoniker': 'r13s5'},
+           '6': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '6', 'model': 'C31-700', 'vidRouteMoniker': 'r13s6'},
+           '7': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '7', 'model': 'empty', 'vidRouteMoniker': 'r13s7'},
+           '8': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '8', 'model': 'empty', 'vidRouteMoniker': 'r13s8'},
+           '9': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '1', 'model': 'H21-100', 'vidRouteMoniker': 'r14s1'},
+           '10': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '2', 'model': 'H21-200', 'vidRouteMoniker': 'r14s2'},
+           '11': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '3', 'model': 'H23-600', 'vidRouteMoniker': 'r14s3'},
+           '12': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '4', 'model': 'HR20-100', 'vidRouteMoniker': 'r14s4'},
+           '13': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '5', 'model': 'HR20-700', 'vidRouteMoniker': 'r14s5'},
+           '14': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '6', 'model': 'HR21-100', 'vidRouteMoniker': 'r14s6'},
+           '15': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '7', 'model': 'HR22-100', 'vidRouteMoniker': 'r14s7'},
+           '16': {'macAddr': '00-80-A3-9D-86-D1', 'slot': '8', 'model': 'HR24-500', 'vidRouteMoniker': 'r14s8'},
+        }
 
 
     ]
@@ -515,255 +2304,9 @@ def getCookie():
     return cookieContents
 
 
-@app.route('/stbPosition/<int:id>/edit/<string:rsPosition>/', methods=['GET', 'POST'])
-def editStbPosition(id, rsPosition):
-    editedStb = session.query(
-        Stb).filter_by(id=id).first()
-    editedStb.rackslot_id = rsPosition
-    if request.method == 'POST':
-        if request.form['name']:
-            editedCategory.name = request.form['name']
-            return redirect(url_for('showCategories'))
-    else:
-        return 'stb position edit executed'
- 
-@app.route('/stbs/JSON')
-def showStbsJSON(): 
-    rackInfo = session.query(RackSlot).all()
-    return jsonify(stbInfoData=[i.serialize for i in rackInfo])
-
-@app.route('/stbs/', methods=['GET', 'POST'])
-def showStbs():
-    stbInfo = session.query(Stb).all()
-    rackInfo = session.query(RackSlot).all()
-    if request.method == 'POST':
-        rackSlotObject = RackSlot(
-                                rackNumber=request.form['rackNumber'],
-                                irnetboxMac=request.form['irnetboxMac'],
-                                slot=request.form['slot'],
-                                videoRoute=request.form['videoRoute'],
-                                stbModel=request.form['stbModel'])
-        session.add(rackSlotObject)
-        session.commit()
-        #print 'stbInfo:'
-        #print stbInfo
-        #print 'showStb api executed'
-    return render_template('stbInfo.html', stbinfo=stbInfo, rackInfo=rackInfo)
-
-stbs = {
-    '1': {'mac':'00:00:00:00', 'slot': '1', 'model': 'testModel'}
-}
-@app.route('/stbs/new/')
-def newStb():
-    stbs = {'1': {'mac':'001', 'slot': '2'}
-            }
-    
-    if request.method =='POST':
-        
-        newStb = Stb(mac='0000', slot='1', model='hr44-800', rackslot_id='r3s1')
-        session.add(newSTB)
-        session.commit()
-        return render_template('stbInfo.html', stbinfo='')
-    else:
-        # print stbs
-        newStb = RackSlot(rackNumber='A03', irnetboxMac='00-00-01',
-                            slot='1', videoRoute='r3s1',
-                            stbModel='hr44-500')
-        session.add(newStb)
-        session.commit()
-        return render_template('stbInfo     .html', stbinfo='')
 
 
-@app.route('/editRackSlots/<string:rack_id>/', methods=['GET', 'POST'])
-def editRackSlots(rack_id):
-    rackSlotToEdit = session.query(
-        RackSlot).filter_by(id=rack_id).first()
-    print rackSlotToEdit
-    if rackSlotToEdit == None:
-        print 'Error: db entry not found'
-        return redirect(url_for('showStbs'))
 
-    if request.method == 'POST':
-        rackSlotToEdit.rackNumber = request.form['rackNumber']
-        rackSlotToEdit.irnetboxMac = request.form['irnetboxMac']
-        rackSlotToEdit.slot = request.form['slot']
-        rackSlotToEdit.videoRoute = request.form['videoRoute']
-        rackSlotToEdit.stbModel = request.form['stbModel']
-        return redirect(url_for('showStbs'))
-
-    return render_template('editRackSlots.html', rackSlotToEdit=rackSlotToEdit)
-
-@app.route('/deleteRackSlot/<string:rackslot_id>/', methods=["GET", "POST"])
-def deleteRackSlot(rackslot_id):
-    rackSlotToDelete = session.query(RackSlot).filter_by(id=rackslot_id).first()
-    #delete file from DB
-    if request.method == 'POST':
-        session.delete(rackSlotToDelete)
-        session.commit()
-        return redirect(url_for('showStbs'))
-    return render_template('deleteRackSlot.html', rackSlotToDelete=rackSlotToDelete)
-# Create anti-forgery state token
-@app.route('/login')
-def showLogin():
-    state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                    for x in xrange(32))
-    login_session['state'] = state
-    return render_template('login.html', STATE=state)
-    # return "The current session state is %s" % login_session['state']
-
-
-@app.route('/gconnect', methods=['POST'])
-def gconnect():
-    # Validate state token
-    if request.args.get('state') != login_session['state']:
-        response = make_response(json.dumps('Invalid state parameter.'), 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-    # Obtain authorization code
-    code = request.data
-
-    try:
-        # Upgrade the authorization code into a credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
-        oauth_flow.redirect_uri = 'postmessage'
-        credentials = oauth_flow.step2_exchange(code)
-    except FlowExchangeError:
-        response = make_response(
-            json.dumps('Failed to upgrade the authorization code.'), 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
-    # Check that the access token is valid.
-    access_token = credentials.access_token
-    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
-           % access_token)
-    h = httplib2.Http()
-    result = json.loads(h.request(url, 'GET')[1])
-    # If there was an error in the access token info, abort.
-    if result.get('error') is not None:
-        response = make_response(json.dumps(result.get('error')), 500)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
-    # Verify that the access token is used for the intended user.
-    gplus_id = credentials.id_token['sub']
-    if result['user_id'] != gplus_id:
-        response = make_response(
-            json.dumps("Token's user ID doesn't match given user ID."), 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
-    # Verify that the access token is valid for this app.
-    if result['issued_to'] != CLIENT_ID:
-        response = make_response(
-            json.dumps("Token's client ID does not match app's."), 401)
-        print ("Token's client ID does not match app's.")
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
-    stored_credentials = login_session.get('credentials')
-    stored_gplus_id = login_session.get('gplus_id')
-    if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is '
-                                            'already connected.'),
-                                 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-
-    # Store the access token in the session for later use.
-    login_session['access_token'] = credentials.access_token
-    login_session['gplus_id'] = gplus_id
-
-    # Get user info
-    userinfo_url = "https://www.googleapis.com/oauth2/v1/userinfo"
-    params = {'access_token': credentials.access_token, 'alt': 'json'}
-    answer = requests.get(userinfo_url, params=params)
-
-    data = answer.json()
-
-    login_session['username'] = data['name']
-    login_session['picture'] = data['picture']
-    login_session['email'] = data['email']
-
-    # see if user exists, if it doens't make a new one
-    user_id = getUserID(login_session['email'])
-    if not user_id:
-        user_id = createUser(login_session)
-    login_session['user_id'] = user_id
-
-    output = ''
-    output += '<h1>Welcome, '
-    output += login_session['username']
-    output += '!</h1>'
-    output += '<img src="'
-    output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;"'
-    output += '"-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    flash("You are now logged in as %s" % login_session['username'])
-    print("done!")
-    return output
-
-
-def createStbObject():
-    newSTB = Stb(mac='00-00', slot='1', model='hr44', rackslot_id='1' )
-    session.add(Stb);
-    return 'test'
-
-def createUser(login_session):
-    newUser = User(name=login_session['username'], email=login_session[
-                   'email'], picture=login_session['picture'])
-    session.add(newUser)
-    session.commit()
-    user = session.query(User).filter_by(email=login_session['email']).one()
-    return user.id
-
-
-def getUserInfo(user_id):
-    user = session.query(User).filter_by(id=user_id).one()
-    return user
-
-
-def getUserID(email):
-    try:
-        user = session.query(User).filter_by(email=email).one()
-        return user.id
-    except:
-        return None
-
-
-@app.route('/gdisconnect')
-def gdisconnect():
-    access_token = login_session.get('access_token')
-    print( 'In gdisconnect access token is %s', access_token)
-    print('User name is: ')
-    # print login_session['username']
-    if access_token is None:
-        print ('Access Token is None')
-        response = make_response(json.dumps('Current user not connected.'),
-                                 401)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-    url = 'https://accounts.google.com/o/oauth2/'
-    url += 'revoke?token=%s' % login_session['access_token']
-    h = httplib2.Http()
-    result = h.request(url, 'GET')[0]
-    print ('result is ')
-    print (result)
-    if result['status'] == '200':
-        del login_session['access_token']
-        del login_session['gplus_id']
-        del login_session['username']
-        del login_session['email']
-        del login_session['picture']
-        response = make_response(json.dumps('Successfully disconnected.'), 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
-    else:
-
-        response = make_response(json.dumps('Failed to revoke token for '
-                                            'given user.', 400))
-        response.headers['Content-Type'] = 'application/json'
-        return response
 
 # Test to see if socket is reachable
 @app.route('/check', methods=['GET', 'POST'])
@@ -777,26 +2320,7 @@ def check():
     else:
         print("problem : the query returned %s because %s" % (res.status, res.reason) )
 
-# Test page for development
-@app.route('/test', methods=['GET', 'POST'])
-@app.route('/test/', methods=['GET', 'POST'])
-# @login_required
-def test():
-    if request.method == 'POST':
-        print('test')
-        print(request.form)
-        test=request.form.to_dict()
-        print(test)
-        print("test:"+test['name'])
-        if 'rack' in request.form:
-            rack=request.form['rack']
-            # print "Rack was in request form"
-        else:
-            # print "Rack was not found in request form"
-            error = "Rack was not selected, please select rack to continue."
-        return render_template('controller_main.html', error=error)
-    else:
-        return render_template('controller_main.html')
+
 
 @app.route('/testingPage', methods=['GET', 'POST'])
 def testingPage():
@@ -814,16 +2338,19 @@ def testingPage2():
 # @app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
 def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                  cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16):
-    # sanitize inputs
+    # todo: sanitize inputs
 
     #
     vidPositionArr = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                       cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16]
+    print "vidPositionArr: "
+    print vidPositionArr
     vidPositionDict = {}
     for i in vidPositionArr:
-        vidPositionDict[str(vidPositionArr.index(i)+1)] = i
-    # print "vidPositionDict:"
-    # print vidPositionDict  
+        if i != 'null':
+            vidPositionDict[str(vidPositionArr.index(i)+1)] = i
+    print "vidPositionDict:"
+    print vidPositionDict  
 
     physicalPosition = {
                             'r3s1':'H44-500',
@@ -1435,42 +2962,12 @@ def sampleApp2():
 def page2():
     return render_template('page1.html')
 
-@app.route('/postTest', methods=['GET', 'POST'])
-@app.route('/postTest/', methods=['GET', 'POST'])
-def postTest():
-    #r = requests.post("http://localhost:5000/postTest", data={'foo': 'bar'})
-    #rint (r.text)
 
-    if request.method == 'POST':
-        # print request.form['name']
-
-        d = datetime.datetime.now()
-        d_utc = datetime.datetime.utcnow()
-        localTZ = tzlocal.get_localzone()
-        tt = d_utc.replace(tzinfo=pytz.utc).astimezone(localTZ).strftime("%b %-d %H:%M:%S")
-        # print tt
-
-        newData = PostData(data=request.form['name'], green=True, formatted_date=tt)
-        session.add(newData)
-        session.commit()
-    else:
-        # print "Get request executed"
-        timeVar = time.strftime('%b %-d %H:%M:%S', time.gmtime())
-        # print timeVar  
-        # print request.args.get('name', '')
-        newData = PostData(data=request.args.get('name', ''), 
-                           green=request.args.get('green', ''),
-                           formatted_date=timeVar
-                           )
-        session.add(newData)
-        session.commit()
-    return render_template('postTest.html')
-    
 
 @app.route('/reporting', methods=['GET', 'POST'])
 @app.route('/reporting/', methods=['GET', 'POST'])
 def reporting():
-    data = session.query(PostData).all()
+    # data = session.query(PostData).all()
     # print "data:"+str(data)
     # using current time to pass into jinja template, so that it can be used to append
     # img url to make it unique and therefore avoid the img-caching issue
@@ -1480,12 +2977,7 @@ def reporting():
         print(item.data)
     return render_template('reporting.html', data=data, tme=datetime.datetime.now().time())
 
-@app.route('/reporting/JSON')
-@jsonp
-def reportingJSON():
-    data = session.query(PostData).all()
 
-    return jsonify(dataList=[i.serialize for i in data])
 
 @app.route('/pythonTest')
 def pythonTest():
@@ -1493,30 +2985,30 @@ def pythonTest():
     var2 = datetime.datetime.now().strftime("%-m/%-d/%y")
     return "python test executed: " + str(var)+ " " + str(var2)
 
-@app.route('/scriptStart/', methods=['GET','POST'])
-def scriptStart():
-    if request.method == 'POST':
-        script_id = request.form['script_id']
-        if script_id:
-            test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
-            if test_cases:
-                for i in test_cases:
-                    name = i.name
-                    path = i.path
-                    commandString = "stbt run "+path
-                    # print commandString
-                    p = subprocess.Popen(commandString, shell=True)
-            else:
-                message = "Did not find any matching test cases with that id, did not run script"
-                # print message
-                return message
-        else:
-            message = "script_id needed to start script"
-            # print message
-            return message
-        return render_template('scriptStart.html', output=p)
-    else:
-        return render_template('scriptStart.html')
+#@app.route('/scriptStart/', methods=['GET','POST'])
+#def scriptStart():
+#    if request.method == 'POST':
+#        script_id = request.form['script_id']
+#        if script_id:
+#            test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
+#            if test_cases:
+#                for i in test_cases:
+#                    name = i.name
+#                    path = i.path
+#                    commandString = "stbt run "+path
+#                    # print commandString
+#                    p = subprocess.Popen(commandString, shell=True)
+#            else:
+#                message = "Did not find any matching test cases with that id, did not run script"
+#                # print message
+#                return message
+#        else:
+#            message = "script_id needed to start script"
+#            # print message
+#            return message
+#        return render_template('scriptStart.html', output=p)
+#    else:
+#        return render_template('scriptStart.html')
 
 @app.route('/screenshot/', methods=['GET','POST'])
 def screenshot():
@@ -1541,145 +3033,13 @@ def screenshot():
     else:
         return render_template('screenshot.html')
 
-@app.route('/testcases/', methods=['GET', 'POST'])
-@clear_db
-@update_DB_with_files
-def showTestCases():  
-    if request.method == 'POST':
-        script_id = request.form['script_id']
-        rack = request.form['rack']
-        slot = request.form['slot']
-        if script_id:
-            test_cases = session.query(TestCasesV2).filter_by(id=script_id).all()
-            if test_cases:
-                for i in test_cases:
-                    name = i.name
-                    path = i.path
-                    commandString = "stbt run "+path+" "+rack+" "+slot
-                    # print commandString
-                    p = subprocess.Popen(commandString, shell=True)
-                    return redirect(url_for('reporting'))
-            else:
-                message = "Did not find any matching test cases with that id, did not run script"
-                # print message
-                return message
-        else:
-            message = "script_id needed to start script"
-            # print message
-            return message
-        return render_template('testcases.html', output=p)
-    else:
-        test_cases = session.query(TestCasesV2).all()
-        return render_template("testcases.html", test_cases=test_cases)
+
 
 
     
-@app.route('/testcases/JSON')
-@jsonp
-@clear_db
-@update_DB_with_files
-def testcasesJSON():
-    testcases = session.query(TestCasesV2).all()
-    return jsonify(testcaseList=[i.serialize for i in testcases])
 
-@app.route('/testcase/new/', methods=['GET', 'POST'])
-def createTestCase():
-    if request.method == 'POST':
-        if 'name' in request.form:
-            print("found name")
-        else:
-            # print "request.form was null"
-            return "request.form was null"
-        
-        scriptname=str(request.form['name'])
-        
-        # replaces whitespace with underscore, to avoid error with any modifications of linux directory
-        editedScriptname=scriptname.replace(" ", "_")
-        # print editedScriptname
-        
-        path = config.config['createtestcase_config'][0]['dir_path']
-        complete_path = str(path) + editedScriptname  
-        command = "mkdir %s" % complete_path
-        
-        #print command
-        p = subprocess.check_output(command, shell=True)
 
-        # below is deprecated, no longer necessary to store name in DB manually. 
-        # /testcases/JSON will instead check available files in
-        # main directory and store representation in DB automatically.
-        #
-        # testcase_info = TestCases(name=request.form['name'], path=completePath)
-        # session.add(testcase_info)
-        # session.commit()
-        return redirect(url_for('showTestCases'))
-    else:
-        return render_template('newtestcase.html')
 
-@app.route('/testcases/<int:testcase_id>/')
-@app.route('/testcases/<int:testcase_id>/steps/', methods=['GET', 'POST'])
-def showCaseSteps(testcase_id):
-    items = session.query(TestSteps).filter_by(
-        testcase_id=testcase_id).all()
-
-    if request.method == 'POST':
-        stepData = request.form['keypress']
-        newStep = TestSteps(testcase_id=testcase_id,
-                           step=stepData
-                           )
-        session.add(newStep)
-        session.commit()
-        return redirect(url_for('showCaseSteps', testcase_id=testcase_id))
-    return render_template('steps.html', testcase_id=testcase_id, items=items)
-
-@app.route('/testcases/<int:testcase_id>/steps/new/', methods=['GET', 'POST'])
-def newStep(testcase_id):
-    if request.method == 'POST':
-        stepData = request.form['stepData']
-        newStep = TestSteps(testcase_id=testcase_id,
-                           step=stepData
-                           )
-        session.add(newStep)
-        session.commit()
-        return redirect(url_for('showCaseSteps', testcase_id=testcase_id))
-    else: 
-        return render_template('newStep.html')
-
-@app.route('/testcases/<int:testcase_id>/steps/JSON')
-@jsonp
-def stepsJSON(testcase_id):
-    items = session.query(TestSteps).filter_by(
-        testcase_id=testcase_id).all()
-    return jsonify(teststeps=[i.serialize for i in items])
-
-@app.route('/testcases/<int:testcase_id>/delete/', methods=['GET', 'POST'])
-@testcase_exists
-@clear_db
-@update_DB_with_files
-def deleteTestCase(testcase_id):
-    # initialize object for designated testcase_id    
-    testcaseToDelete = session.query(TestCasesV2).filter_by(id=testcase_id).first()
-    if request.method == 'POST':
-        # delete file from directory
-
-        fileToDelete =  str(testcaseToDelete.name).replace(" ", "\ ")
-        # print fileToDelete
-        # print "sss"
-        # create command using providing configurations
-        fileToDelete =  str(testcaseToDelete.name).replace(" ","\ ")
-        # print fileToDelete
-        
-        # create command using provided configurations
-        commandPath = config.config['deletetestcase_config'][0]['delete_command']
-        command = commandPath + "%s" % fileToDelete 
-        # print command
-        p = subprocess.check_output(command, shell=True)
-        
-        #delete file from DB
-        session.delete(testcaseToDelete)
-        session.commit()
-        return redirect(url_for('showTestCases'))    
-    else:
-        return render_template('deleteTestCase.html')
 
 @app.route('/tester/', methods=['GET', 'POST'])
 def testerAPI():
@@ -1694,6 +3054,10 @@ def testerAPI():
 @app.route('/automation/', methods=['GET', 'POST'])
 def automation():
     return render_template('automation.html')
+
+@app.route('/reactTest/')
+def reactTest():
+    return render_template('reactTest.html')
 
 @app.route('/redesign/', methods=['GET', 'POST'])
 def redesign():
@@ -1734,7 +3098,7 @@ def command(irnetboxMac, slot, action):
     command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow', 
                     'rightArrow', 'upArrow', 'downArrow', 'red', 'prev', 
                     'dash','rewind', 'play', 'fastforward', 'chanup', 'record',
-                    'chandown', '0','1','2','3','4','5','6','7','8','9', 'back']
+                    'chandown', '0','1','2','3','4','5','6','7','8','9', 'back', 'pause', 'enter', 'blue']
 
     slot_list = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '1-16']
 
@@ -1791,57 +3155,7 @@ def command(irnetboxMac, slot, action):
     # print viewerPositions[viewerPosition][0]
   
         
-@app.route('/blog/', methods=['GET', 'POST'])
-def blog():
-    blogposts = session.query(BlogPosts).all()
-    # print blogposts
-    for post in blogposts:
-        print(post.id)
-        print(post.title)
-        print(post.created_date)
 
-    if request.method == 'POST':
-        # print 'blog post created!'
-        blog_title = request.form.get('blog_title')
-        content = request.form.get('content')
-        # print blog_title
-        # print content
-        newPost = BlogPosts(title=blog_title, content=content
-                           )
-        session.add(newPost)
-        session.commit()
-        return render_template('blog.html', posts=blogposts)
-    else:
-        return render_template('blog.html', posts=blogposts)
-
-@app.route('/blog/newPost', methods=['GET', 'POST'])
-def newPost():
-    if request.method == 'POST':
-        post_title = request.form['blog_title']
-        post_content = request.form['content']
-        post_author = request.form['blog_author']
-        newPost = BlogPosts(title=post_title,
-                            content=post_content,
-                            author=post_author
-                           )
-        session.add(newPost)
-        session.commit()
-        return redirect(url_for('blog'))
-    else:
-        return render_template('newPost.html')
-
-
-@app.route('/blog/<int:post_id>/deletePost/', methods=['GET', 'POST'])
-def deletePost(post_id):
-    # print post_id
-    if request.method == 'POST':   
-        postToDelete = session.query(BlogPosts).filter_by(id=post_id).first()
-        #delete file from DB
-        session.delete(postToDelete)
-        session.commit()
-        return redirect(url_for('blog')) 
-    else:
-        return render_template('deletePost.html')
 
 @app.route('/redesign-mock')
 def redesign_mock():

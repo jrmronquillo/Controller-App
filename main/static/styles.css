@@ -18,7 +18,9 @@ body{
   line-height: 1 !important;
 }
 
-
+input[type="text"]{
+  font-family: FontAwesome;
+}
 
 .backdrop-display{
   width:100vw;
@@ -37,6 +39,10 @@ body{
   display: none;
 }
 
+.icon-inline{
+  display: inline;
+}
+
 #blog-form{
   margin-left: 50%;
 }
@@ -49,13 +55,17 @@ body{
   color: #FFF;
 }
 
+.cell-text{
+
+}
+
 .cell-text-container-info{
   color:white;
   font-size: .3em;
 }
 
 .cell-text-container{
-  font-size: .3em;
+  font-size: .9em;
 }
 .containerMain{
   margin: 25px;
@@ -104,7 +114,8 @@ body{
 
 .input-customize{
   position: absolute !important;
-  top:10vh;
+  /*top:10vh;*/
+  top: 20vh;
   left: 10vw;
   width: 55vw !important;
   z-index: 4;
@@ -389,7 +400,7 @@ td {
   height: 10vw;
   background: #26374a;
   opacity: .8;
-  z-index: 999;
+  z-index: 3;
   overflow-y: auto;
 }
 
@@ -504,10 +515,8 @@ td {
 }
 
 .searchContainer{
-  /*border: 1px solid red !important;*/
   position: absolute;
-  top: 10vh;
-  left: 15vw;
+  left: 5vw;
   width: 50vw;
   height: 70vh;
   z-index: 3;
@@ -544,6 +553,28 @@ td {
   
 }
 
+.backdrop-display-new{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(0,0,0,0.5);
+  z-index: 3;
+}
+
+.controls-key-text{
+  font-size: 3em;
+}
+
+.key-text{
+  font-size: 2em;
+}
+
+.rack-text{
+  color: red !important;
+}
+
 .searchItemCenter{
   margin: 0 auto;
 }
@@ -551,6 +582,29 @@ td {
 .searchBox{
   width: 50%;
   height: 100%;
+}
+
+#search-new{
+  position: relative;
+  display: inline;
+  width: 80%;
+  height: 5em;
+  border-radius: 20px;
+  z-index: 5;
+}
+
+.header-spacer{
+  position: relative;  
+  width: 100vw;
+  height: 7vh;
+}
+
+.search-new-container{
+  position: absolute;
+  top: 5vh;
+  width: 75vw;
+  /*height: 50vh;*/
+  z-index: 5;
 }
 
 #searchButton{
@@ -562,11 +616,13 @@ td {
 
 .search-button{
   width: 40vw;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 20px !important;
 }
 
 #searchSuggestions{
-  position: absolute;
-  top: 20vh;
+  /*position: absolute;*/
+  position: relative;
 }
 
 .sections{
@@ -583,6 +639,12 @@ td {
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+.section-header{
+  width: 100%;
+  height: 20%;
+  /*border: 1px black solid !important;*/
+}
 
 #section1-home{
   /*background-color: #4F788D;*/
@@ -608,6 +670,10 @@ td {
   height: 12vh;
   z-index: 4;
   border: 1px solid red !important;
+}
+
+.title-font{
+  font-size: 3em;
 }
 
 .search-icon{

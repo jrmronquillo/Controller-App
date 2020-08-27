@@ -135,8 +135,18 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      availableRacks: [],
+      deviceData: null,
+      dataLoaded: false,
+      searchActivated: false,
       searchResults: [],
-      testEnv: true, 
+      rackSelected: '',
+      testSearchItems: ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'config 6', 'config 7', 'sar', '4x4','3x3','2x2', 
+                    'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
+                    'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
+                    'solo 13', 'solo 14', 'solo 15', 'solo 16', 'labels on', 'labels off',
+                     'audio meters on', 'audio meters off'],
+      testEnv: false, 
       liked: false,
       display: true,
       displaySearchBar: false,
@@ -158,22 +168,22 @@ class Main extends React.Component {
       soloMode: false,
       slot: '1-16',
       stbLabels: ['HR34-700', 'HR25-100', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12','13', '14', '15', '16'],
-      view1: {macAddr:'00-80-A3-A9-E3-7A', slot: '1', model: 'H44-100', vidRouteMoniker: 'r3s1'},
-      view2: {macAddr:'00-80-A3-A9-E3-7A', slot: '2', model: 'HR54-700', vidRouteMoniker: 'r3s2'},
-      view3: {macAddr:'00-80-A3-A9-E3-7A', slot: '3', model: 'HR54-500', vidRouteMoniker: 'r3s3'},
-      view4: {macAddr:'00-80-A3-A9-E3-7A', slot: '4', model: 'HR54-200', vidRouteMoniker: 'r3s4'},
-      view5: {macAddr:'00-80-A3-A9-E3-7A', slot: '5', model: 'null', vidRouteMoniker: 'r3s5'},
-      view6: {macAddr:'00-80-A3-A9-E3-7A', slot: '6', model: 'null', vidRouteMoniker: 'r3s6'},
-      view7: {macAddr:'00-80-A3-A9-E3-7A', slot: '7', model: 'null', vidRouteMoniker: 'r3s7'},
-      view8: {macAddr:'00-80-A3-A9-E3-7A', slot: '8', model: 'null', vidRouteMoniker: 'r3s8'},
-      view9: {macAddr:'00-80-A3-A9-E3-6A', slot: '1', model: 'null', vidRouteMoniker: 'r2s1'},
-      view10: {macAddr:'00-80-A3-A9-E3-6A', slot: '2', model: 'null', vidRouteMoniker: 'r2s2'},
-      view11: {macAddr:'00-80-A3-A9-E3-6A', slot: '3', model: 'null', vidRouteMoniker: 'r2s3'},
-      view12: {macAddr:'00-80-A3-A9-E3-6A', slot: '4', model: 'null', vidRouteMoniker: 'r2s4'},
-      view13: {macAddr:'00-80-A3-A9-E3-6A', slot: '5', model: 'null', vidRouteMoniker: 'r2s5'},
-      view14: {macAddr:'00-80-A3-A9-E3-6A', slot: '6', model: 'null', vidRouteMoniker: 'r2s6'},
-      view15: {macAddr:'00-80-A3-A9-E3-6A', slot: '7', model: 'null', vidRouteMoniker: 'r2s7'},
-      view16: {macAddr:'00-80-A3-A9-E3-6A', slot: '8', model: 'null', vidRouteMoniker: 'r2s8'},
+      view1: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view2: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view3: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view4: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view5: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view6: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view7: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view8: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view9: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view10: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view11: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view12: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view13: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view14: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view15: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
+      view16: {macAddr:'', slot: '', model: '', vidRouteMoniker: ''},
       toggleTempView3: 'null',
       toggleTempView4: 'null',
       toggleTempView5: 'null',
@@ -291,11 +301,52 @@ class Main extends React.Component {
     this.setFocus = this.setFocus.bind(this);
     this.handleOffClick = this.handleOffClick.bind(this);
     this.setFocusState = this.setFocusState.bind(this);
+    this.pushDataToView = this.pushDataToView.bind(this);
+    this.setVideoRoutes = this.setVideoRoutes.bind(this);
+    this.checkNull = this.checkNull.bind(this);
+    this.clickToSearch = this.clickToSearch.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.init();
+  }
+
+  init(){
+    console.log('init called');
+    console.log('second comment');
+
   }
 
   componentDidMount(){
     console.log('00000000');
-    //console.log(document.hidden);
+    var that = this;
+    var rackNums;
+
+    /**
+     * load device info into app
+     */
+    fetch('http://localhost:3000/deviceInfo/')
+      .then(function(response){
+        if(response.status>=400){
+          throw new Error('Bad Response for the server');
+        }
+        return response.json();
+      })
+      .then(function(deviceData){
+        console.log("deviceData response was good, stb device info loading..")
+        console.log(deviceData);
+
+        // store the rack numbers (the keys) in an array and make sure they are upper case
+        var racks = Object.keys(deviceData).map(v=>v.toUpperCase());                                                                                                                                                                                                                    
+        var updatedSearchItems = that.state.testSearchItems.concat(racks);
+        that.setState({
+          deviceData: deviceData,
+          dataLoaded: true,
+          availableRacks: racks,
+          testSearchItems: updatedSearchItems,
+        })
+
+      });
+
+
     // initialize temp view values so that they get be set to reset the views in the toggle function
     this.setState({
           toggleTempView3: this.state.view3,
@@ -317,11 +368,12 @@ class Main extends React.Component {
     //window.addEventListener("blur", this.focusTest);
     //window.addEventListener("focus", this.focused);
 
+    //document.addEventListener('click', this.handleClick);
     document.addEventListener('click', this.handleOffClick);
-    
-    document.addEventListener('keypress', this.handleKeyPress);
-    var that = this;
 
+    document.addEventListener('keypress', this.handleKeyPress);
+    
+   /*
     fetch('http://localhost:3000/stbs/JSON')
       .then(function(response){
         if(response.status==400){
@@ -338,6 +390,7 @@ class Main extends React.Component {
         })
 
       })
+    */
 
     // initial load of data
     fetch('http://localhost:3000/rssTest')
@@ -412,8 +465,10 @@ class Main extends React.Component {
         });
       })
     }, 300000)
-
+    /* will depecrate auto loading and moving to search logic
     this.getJsonTest(1);
+    */
+
     this.logOutput();
   }
 
@@ -427,6 +482,8 @@ class Main extends React.Component {
     console.log('&&&');
     console.log(this.state.jsonDataReceived);
   }
+
+
 
   getJsonTest(configVal){
     var that = this;
@@ -483,6 +540,11 @@ class Main extends React.Component {
         })
       }
     });
+  }
+
+  handleClick(){
+    console.log('Click registered!');
+    console.log(document.activeElement.tagName);
   }
 
   toggleDisplay(){
@@ -573,21 +635,31 @@ class Main extends React.Component {
                         this.state.view5.model, this.state.view6.model, this.state.view7.model, this.state.view8.model,
                         this.state.view9.model, this.state.view10.model, this.state.view11.model, this.state.view12.model,
                         this.state.view13.model, this.state.view14.model, this.state.view15.model, this.state.view16.model];
-    console.log('sendlabelnames--> '+stbLabelsArr)
-    /*for (var key in this.state.configs[this.state.chosenConfig]){
-      console.log('sendLabelNames function:');
-      console.log(this.state.configs[this.state.chosenConfig][key]);
-      // need to sanitize question marks in model strings, by converting them to html entity %3F
-      var escapeQuestionMarks = this.state.configs[this.state.chosenConfig][key].model.replace("?", "%3F");
+    console.log('sendlabelnames--> '+stbLabelsArr);
+    
+    var stbObjsArr = [this.state.view1, this.state.view2, this.state.view3, this.state.view4,
+                      this.state.view5, this.state.view6, this.state.view7, this.state.view8,
+                      this.state.view9, this.state.view10, this.state.view11, this.state.view12,
+                      this.state.view13, this.state.view14, this.state.view15, this.state.view16];
+    var labelsArr = [];
+    // convert empty model to rack/slot position
+    for(let i=0; i<stbObjsArr.length; i++){
+      var tempModelVar;
+      // if model is empty, convert it to vidroutemoniker instead
+      if(stbObjsArr[i].model==''){ 
+        tempModelVar = stbObjsArr[i].vidRouteMoniker;
+        } else {
+          tempModelVar = stbObjsArr[i].model;
+        }
 
-      //stbLabelsArr.push(this.state.multiviewerConfig1[key].model);
-      stbLabelsArr.push(escapeQuestionMarks);
-    }*/
+        labelsArr.push(tempModelVar);
+    }
 
-
+    console.log('labelsArr:'+labelsArr);
         
     if(stbLabelsArr.length == 16){
-      var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
+      //var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
+      var commandStr = 'http://localhost:3000/setLabels/'+labelsArr.join('/');
       console.log(commandStr);
       fetch(commandStr);
     } else{
@@ -595,12 +667,126 @@ class Main extends React.Component {
     }
   }
 
+  checkNull(item){
+    console.log('[checkNull]')
+    console.log(item)
+    return item !='';
+  }
+
+  setVideoRoutes(){
+    // check if routes were configured
+    var vidRoutesArr = [this.state.view1.vidRouteMoniker,
+                        this.state.view2.vidRouteMoniker,
+                        this.state.view3.vidRouteMoniker,
+                        this.state.view4.vidRouteMoniker,
+                        this.state.view5.vidRouteMoniker,
+                        this.state.view6.vidRouteMoniker,
+                        this.state.view7.vidRouteMoniker,
+                        this.state.view8.vidRouteMoniker,
+                        this.state.view9.vidRouteMoniker,
+                        this.state.view10.vidRouteMoniker,
+                        this.state.view11.vidRouteMoniker,
+                        this.state.view12.vidRouteMoniker,
+                        this.state.view13.vidRouteMoniker,
+                        this.state.view14.vidRouteMoniker,
+                        this.state.view15.vidRouteMoniker,
+                        this.state.view16.vidRouteMoniker]
+
+
+    var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+                                                           +this.state.view2.vidRouteMoniker+'/'
+                                                           +this.state.view3.vidRouteMoniker+'/'
+                                                           +this.state.view4.vidRouteMoniker+'/'
+                                                           +this.state.view5.vidRouteMoniker+'/'
+                                                           +this.state.view6.vidRouteMoniker+'/'
+                                                           +this.state.view7.vidRouteMoniker+'/'
+                                                           +this.state.view8.vidRouteMoniker+'/'
+                                                           +this.state.view9.vidRouteMoniker+'/'
+                                                           +this.state.view10.vidRouteMoniker+'/'
+                                                           +this.state.view11.vidRouteMoniker+'/'
+                                                           +this.state.view12.vidRouteMoniker+'/'
+                                                           +this.state.view13.vidRouteMoniker+'/'
+                                                           +this.state.view14.vidRouteMoniker+'/'
+                                                           +this.state.view15.vidRouteMoniker+'/'
+                                                           +this.state.view16.vidRouteMoniker+'/'
+  
+    if(vidRoutesArr.indexOf('') < 0){
+
+      console.log('setVideoCall--->'+setVideoCall);
+            
+      fetch(setVideoCall);
+    } else {
+      console.log('Error: Invalid set video call: ' + setVideoCall)
+    }
+
+    
+
+  }
+
+  pushDataToView(){
+    var rackSelection = this.state.searchResults[0];
+    var keysArr = Object.keys(this.state.deviceData[rackSelection]);
+    var addedMacSlotArr = [];
+    for(let i=1; i<=keysArr.length-1; i++){
+      var tempObj = this.state.deviceData[rackSelection][i.toString()]
+
+      tempObj['macAddr'] = this.state.deviceData[rackSelection]['macAddr'];
+      tempObj['slot'] = i;
+      
+      
+      // convert empty vidRouteMoniker to null to be compatible with setVideo api
+      if(tempObj['vidRouteMoniker'] == ''){
+        tempObj['vidRouteMoniker'] = 'null';
+      }
+
+
+      addedMacSlotArr.push(tempObj);
+    }
+    
+    // load rack info into 'Device Selector View'
+    this.setState({
+      view1: addedMacSlotArr[0],
+      view2: addedMacSlotArr[1],
+      view3: addedMacSlotArr[2],
+      view4: addedMacSlotArr[3],
+      view5: addedMacSlotArr[4],
+      view6: addedMacSlotArr[5],
+      view7: addedMacSlotArr[6],
+      view8: addedMacSlotArr[7],
+      view9: addedMacSlotArr[8],
+      view10: addedMacSlotArr[9],
+      view11: addedMacSlotArr[10],
+      view12: addedMacSlotArr[11],
+      view13: addedMacSlotArr[12],
+      view14: addedMacSlotArr[13],
+      view15: addedMacSlotArr[14],
+      view16: addedMacSlotArr[15],
+      irnetboxMac: this.state.deviceData[rackSelection]['macAddr'],
+    });
+  }
+
   handleKeys_textbox(key){
     console.log('handleKeys_textbox triggered '+key);
     if(key == 13){
       console.log('enter key detected');
       console.log(this.state.searchResults);
-      switch(this.state.searchResults[0]){
+
+      // check if entry is a rack number
+      if(this.state.availableRacks.indexOf(this.state.searchResults[0]) > 0){
+        console.log('should be a qualified rack');
+        this.setState({
+          rackSelected: this.state.searchResults[0],
+        })
+        this.pushDataToView();
+        this.setVideoRoutes();
+
+        // setLabels
+        this.sendLabelNames();
+
+      } else {
+        console.log('configs-->')
+
+        switch(this.state.searchResults[0]){
         case 'config 1': 
           console.log('A03 was entered')
           this.setVideoRouteConfig(1);
@@ -624,6 +810,9 @@ class Main extends React.Component {
         case 'config 6':
           console.log('config 6 - rack A06 was entered');
           this.setVideoRouteConfig(6);
+        case 'config 7':
+          console.log('config 7 - b12;b11')
+          this.setVideoRouteConfig(7);
         case '4x4':
           console.log('4x4 config was entered')
           this.setGridCall('4x4');
@@ -636,114 +825,117 @@ class Main extends React.Component {
           console.log('3x3 config was entered')
           this.setGridCall('3x3');
           break;
-        case 'solo on':
+        case 'SOLO ON':
           console.log('solo on was entered')
           this.setSoloMode('true');
           break;
-        case 'solo off':
+        case 'SOLO OFF':
           console.log('solo off was entered')
           this.setSoloMode('false');
           break;
-        case 'solo 1':
+        case 'SOLO 1':
           console.log('solo 1 was entered')
           this.setSoloPosition('1');
           this.setViewerPosition('1');
           break;
-        case 'solo 2':
+        case 'SOLO 2':
           console.log('solo 2 was entered')
           this.setSoloPosition('2');
           this.setViewerPosition('2');
           break;
-        case 'solo 3':
+        case 'SOLO 3':
           console.log('solo 3 was entered')
           this.setSoloPosition('3');
           this.setViewerPosition('3');
           break;
-        case 'solo 4':
+        case 'SOLO 4':
           console.log('solo 4 was entered')
           this.setSoloPosition('4');
           this.setViewerPosition('4');
           break;
-        case 'solo 5':
+        case 'SOLO 5':
           console.log('solo 5 was entered')
           this.setSoloPosition('5');
           this.setViewerPositin('5');
           break;
-        case 'solo 6':
+        case 'SOLO 6':
           console.log('solo 6 was entered')
           this.setSoloPosition('6');
           this.setViewerPosition('6');
           break;
-        case 'solo 7':
+        case 'SOLO 7':
           console.log('solo 7 was entered')
           this.setSoloPosition('7');
           this.setViewerPosition('7');
           break;
-        case 'solo 8':
+        case 'SOLO 8':
           console.log('solo 8 was entered')
           this.setSoloPosition('8');
           this.setViewerPosition('8');
           break;
-        case 'solo 9':
+        case 'SOLO 9':
           console.log('solo 9 was entered')
           this.setSoloPosition('9')
           this.setViewerPosition('9');
           break;
-        case 'solo 10':
+        case 'SOLO 10':
           console.log('solo 10 was entered');
           this.setSoloPosition('10');
           this.setViewerPosition('10');
           break;
-        case 'solo 11':
+        case 'SOLO 11':
           console.log('solo 11 was entered');
           this.setSoloPosition('11');
           this.setViewerPosition('11');
           break;
-        case 'solo 12':
+        case 'SOLO 12':
           console.log('solo 12 was entered');
           this.setSoloPosition('12');
           this.setViewerPosition('12');
           break;
-        case 'solo 13':
+        case 'SOLO 13':
           console.log('solo 13 was entered');
           this.setSoloPosition('13');
           this.setViewerPosition('13');
           break;
-        case 'solo 14':
+        case 'SOLO 14':
           console.log('solo 14 was entered');
           this.setSoloPosition('14');
           this.setViewerPosition('14');
           break;
-        case 'solo 15':
+        case 'SOLO 15':
           console.log('solo 15 was entered');
           this.setSoloPosition('15');
           this.setViewerPosition('15');
           break;
-        case 'solo 16':
+        case 'SOLO 16':
           console.log('solo 16 was entered');
           this.setSoloPosition('16');
           this.setViewerPosition('16');
           break;
-        case 'labels on':
+        case 'LABELS ON':
           console.log('labels on was entered')
           this.setLabelsMode('true');
           break;
-        case 'labels off':
+        case 'LABELS OFF':
           console.log('labels off was entered');
           this.setLabelsMode('false');
           break;
-        case 'audio meters on':
+        case 'AUDIO METERS ON':
           console.log('audio meters on was entered')
           this.setAudioMeters('true');
           break;
-        case 'audio meters off':
+        case 'AUDIO METERS OFF':
           console.log('audio meters off was entered')
           this.setAudioMeters('false');
           break;
         default:
           console.log('error with search results')
           console.log(this.state.searchResults[0]);
+        }
       }
+
+      
       console.log('triggering blurfunction after enter key');
       this.blurFunction();
     }
@@ -931,6 +1123,9 @@ class Main extends React.Component {
       case 63:
         key='?'
         break;
+      case 71:
+        key='G'
+        break;
       default:
         key = 'unexpected keypress';
       }
@@ -945,9 +1140,9 @@ class Main extends React.Component {
       if(key=='?'){
         console.log('question mark detected');
         this.setFocusState();
-        this.setFocus()
+        this.setFocus();
         this.clearSearchBox();
-        //this.setFocus();
+        this.setFocus();
       }
 
     var controlCommands = {
@@ -969,6 +1164,7 @@ class Main extends React.Component {
                               'g':'chandown',
                               'z':'dash',
                               'V':'record',
+                              'G': 'pause',
                               '1': '1',
                               '2': '2',
                               '3': '3',
@@ -1020,6 +1216,7 @@ class Main extends React.Component {
       '15': this.state.view15,
       '16': this.state.view16,
     }
+    /* will depecrate below and moving to search feature logic instead of key shortcuts
     var multiviewAPI = {
                         '=':'toggleLayout',
                         '+':'toggleSolo',
@@ -1031,13 +1228,12 @@ class Main extends React.Component {
                             '&#92;':3,
                             ';':4,
                             "&apos;":5,
-                            '/': 6,
                             };
-
+    */
     if(viewerPositionMapping[key]){
       console.log('viewerPositionMapping');
       console.log(viewerPositionMapping[key]);
-
+      console.log('[handleKeys - viewerpositionmapping]')
       this.setState({
         irnetboxMac: viewerPositionConversion[viewerPositionMapping[key]].macAddr,
         slot: viewerPositionConversion[viewerPositionMapping[key]].slot,
@@ -1063,6 +1259,7 @@ class Main extends React.Component {
       this.sendCommands();
     }
 
+    /* will deprecate and move toward search logid instead of key shortcuts
     if(multiviewConfig[key]){
       console.log('multiviewConfig[key] detected')
       this.getJsonTest(multiviewConfig[key]);
@@ -1089,13 +1286,13 @@ class Main extends React.Component {
           fetch(setVideoCall);
 
           this.sendLabelNames();
-    }
+    }*/
     
   }
 
   clearSearchBox(){
     console.log('clearSearchBox triggered!');
-    console.log(document.activeElement.tagName);
+    console.log('[clearSearchBox] active element:'+document.activeElement.tagName);
     document.getElementById('testInput').value='';
   }
 
@@ -1127,16 +1324,28 @@ class Main extends React.Component {
 
   }
 
+  activateVideoRouteConfig(){
+
+  }
+
   handleKeyPress(event){
     console.log('handleKeyPress triggered');
     console.log('textboxfocus state-->'+this.state.textBoxFocused);
 
+    // textbox focused redo
+    if(!this.state.searchActivated){
+      this.handleKeys_default(event.keyCode);
+    } else {
+      this.handleKeys_textbox(event.keyCode);
+    }
+
+    /*
     // if textbox is focused handle keys differently
     if(this.state.textBoxFocused){
       this.handleKeys_default(event.keyCode);
     } else {
       this.handleKeys_textbox(event.keyCode);
-    }
+    }*/
 }
 
 
@@ -1155,14 +1364,19 @@ class Main extends React.Component {
 
   blurFunction(){
     console.log('blurFunction triggered!');
-    //var elem2blur = document.getElementById('searchBox1');
-    //elem2blur.blur();
+
+    // remove focus from input element 
+    var inputElem2Blur = document.getElementById('search-new');
+    inputElem2Blur.blur();
+
 
     // clear the text box so that so that it is clear next time it is triggered
     document.getElementById('searchInputBox').value='';
+    document.getElementById('search-new').value='';
     
     this.setState({
       textBoxFocused: true,
+      searchActivated: false,
       displaySearchBar: false,
     })
 
@@ -1243,18 +1457,30 @@ class Main extends React.Component {
   setFocus(){
     console.log('setFocus function triggered');
     //var elemTestContainer = document.getElementById('searchInputBox-container')
-    var elemTest = document.getElementById('searchInputBox')
+    var elemTest = document.getElementById('searchInputBox');
     console.log('setFocus elements declared');
     elemTest.style.display ='block';
     //elemTestContainer.focus();
     //document.getElementById('searchInputBox').focus();
     elemTest.focus();
-    console.log('value:'+elemTest.value)
+    console.log('value:'+elemTest.value);
     console.log('focus functions executed');
 
     //seting state to ____
    
     console.log('active element>'+document.activeElement.tagName);
+  }
+
+
+  clickToSearch(){
+    console.log('clicktosearch called!');
+    this.setState({
+      searchActivated: true,
+      searchResults: [],
+    });
+
+
+   
   }
 
   handleOffClick(){
@@ -1268,27 +1494,34 @@ class Main extends React.Component {
 
 
   handleChange(event){
-    var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'config 6', 'sar', '4x4','3x3','2x2', 
+    /*var valueArr = ['config 1','config 2', 'config 3', 'config 4', 'config 5', 'config 6', 'config 7', 'sar', '4x4','3x3','2x2', 
                     'solo on', 'solo off', 'solo 1', 'solo 2', 'solo 3', 'solo 4', 'solo 5',
                     'solo 6', 'solo 7', 'solo 8', 'solo 9', 'solo 10', 'solo 11', 'solo 12',
                     'solo 13', 'solo 14', 'solo 15', 'solo 16', 'labels on', 'labels off',
                      'audio meters on', 'audio meters off']
+    */
+    // convert all search items strings to upper case
+    var valueArr = this.state.testSearchItems.map(item=>item.toUpperCase());
+    console.log(this.state.testSearchItems);
     console.log('handleChange triggered');
     console.log('event.target.value:'+event.target.value);
-    
+    // convert value to upper case
+    var upperCaseVar = event.target.value.toUpperCase();
+    console.log('upperCase'+upperCaseVar);
+
     // this makes sure the search box is cleared of any text when it launches by the ? key
     if (event.target.value == '?' ){
       document.getElementById('searchInputBox').value='';
     }
     
-    var filteredArr = []
+    var filteredArr = [];
     for(var i=0; i<valueArr.length; i++){
       console.log('inside for loop')
       console.log(valueArr[i]);
 
       console.log('checking index:');
       console.log(valueArr[i].indexOf(event.target.value));
-      if(valueArr[i].indexOf(event.target.value) > -1){
+      if(valueArr[i].indexOf(upperCaseVar) > -1){
         filteredArr.push(valueArr[i]);
       } 
       console.log('filtered arr:');
@@ -1345,26 +1578,30 @@ class Main extends React.Component {
   
 
   render() {
-    
     if(this.state.display){
       return(
         <div className="containerMain">
-          <div id="state_container">
-            <div> displaySearchBar: {this.state.displaySearchBar ? "true": "false"}</div>
-            <div> textBoxFocused: {this.state.textBoxFocused ? "true": "false"} </div>
-             <div>view1: {this.state.view1.macAddr}</div>
-             <div>view9: {this.state.view9.macAddr}</div>
-
-            <div>viewerPosition: {this.state.viewerPosition}</div>
-            <div>irnetboxMac: {this.state.irnetboxMac}</div>
-            <div>slot: {this.state.slot} </div>
-            <div>searchResults: {this.state.searchResults}</div>
-            <div> keypressed: {this.state.keyPressed}</div>
+          <div className="header-spacer"></div>
+          <div> 
+            Device Data loaded:{this.state.dataLoaded ? "Yes":"No"}
 
           </div>
+          <div className="search-new-container">
+            <span>
+              <i className="fas fa-search padding-sm icon-inline"></i>
+              <input id='search-new' type="text" className="form-control search-button" onChange={this.handleChange} 
+                    onFocus={this.clickToSearch} placeholder="Type to Search Features and press 'Enter' ">
+              </input>
+            </span>
+
+            <div id="searchSuggestions" className={this.state.searchActivated ? "searchContainer" : "searchContainer-none"}  >
+                <ul id='default1' >
+                </ul>
+                
+            </div>
+          </div>
+          <div className={this.state.searchActivated ? "backdrop-display-new": ""}></div>
           <BackDrop windowFocused={this.state.windowFocused} displayData={this.state.screenSaverData} />
-          {this.state.textBoxFocused && <div className='alert alert-info search-button' onClick={this.setFocus}><i className="fas fa-search padding-sm"></i>Keyboard Shortcut: "?"</div>}
-          
             <div className={this.state.textBoxFocused ? 'search-backdrop-invisible':'search-backdrop'} onClick={this.handleOffClick}></div>
             <div className="testInput_container">
               <i className="fas fa-search search-icon"></i>
@@ -1378,34 +1615,18 @@ class Main extends React.Component {
             </div>
             <input id='testInput' placeholder='start typing...' className={this.state.textBoxFocused ? 'testInput-close' : 'alert alert-info' } onChange={this.handleChange} pattern="[A-Za-z]"></input>
             
-            <div id="searchSuggestions" className={this.state.textBoxFocused ? "searchContainer-none" : "searchContainer"}  >
-                <ul id='default1' >
-                </ul>
-                
-            </div>
+            
 
             
           
-          <div className="row shadow">
+             
 
-                  <ul className="list-group list-group-horizontal">
-                    <li className={!this.state.viewerPosition ? "list-group-item list-group-item-success active": "list-group-item"}>1. Select Device </li>
-                    {!this.state.viewerPosition && <li className="list-group-item active"><i>-use keyboard</i></li>}
-                    {this.state.viewerPosition && <li className="list-group-item">{this.state.viewerPosition}</li>}
-                  </ul>
-                  <ul className="list-group list-group-horizontal">
-                      <li className={this.state.viewerPosition && this.state.command ? "list-group-item" :  this.state.viewerPosition ? "list-group-item active": "list-group-item"}>2. Select Control </li>
-                      { !this.state.viewerPosition && this.state.command ? 
-                          <li className="list-group-item list-group-item-danger"><i>^^Select device^^</i></li> : 
-                        !this.state.viewerPosition ? <li className="list-group-item"><i>-use keyboard</i></li> : 
-                        this.state.viewerPosition && this.state.command ?<li className="list-group-item">{this.state.command}</li> : <li className="list-group-item active"><i>-use keyboard</i></li>
-                      }
-                  </ul>
-          </div>
         <div className="row">
           
           <div className="col-md-6">
-            <h1>Controls </h1>
+            <div className="section-header">
+              <span className="title-font">Controls: </span> <span>{this.state.command}</span>
+            </div>
             <table className="table table-config-1">
                 <tbody>
                   <tr>
@@ -1471,130 +1692,130 @@ class Main extends React.Component {
                     </td>
                   </tr>
                   <tr>
-                    <td colspan='2' className={this.state.keyPressed =='q'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='q'? 'letter lightblue-bg': 'letter'}>
                       <div id="q" data-txt="guide" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">GUIDE</span><br />
-                        <span> Q</span>
+                        <span className="controls-key-text"> q</span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='w'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='w'? 'letter lightblue-bg': 'letter'}>
                       <div id="w" data-txt="upArrow" onClick={this.handleControlClick} className="cell-text-container">  
                         <span className="cell-text">&uarr;</span><br />
-                      <span > W </span>
+                      <span className="controls-key-text"> w </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='e'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='e'? 'letter lightblue-bg': 'letter'}>
                       <div id="e" data-txt="menu" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">MENU</span><br />
-                        <span> E </span>
+                        <span className="controls-key-text"> e </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='r'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='r'? 'letter lightblue-bg': 'letter'}>
                       <div id="r" data-txt="red" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">RED</span><br />
-                        <span > R </span>
+                        <span className="controls-key-text"> r </span>
                       </div>
                     </td>
-                     <td colspan='2' className={this.state.keyPressed =='t'? 'letter lightblue-bg': 'letter'}>
+                     <td colSpan='2' className={this.state.keyPressed =='t'? 'letter lightblue-bg': 'letter'}>
                         <div id="t" data-txt="chanup" onClick={this.handleControlClick} className="cell-text-container">
                           <span className="cell-text">&#9650;</span><br />
-                          <span > T </span>
+                          <span className="controls-key-text"> t </span>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan='2' className={this.state.keyPressed =='a'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='a'? 'letter lightblue-bg': 'letter'}>
                       <div id="a" data-txt="leftArrow" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">&larr;</span><br />
-                        <span> A</span>
+                        <span className="controls-key-text"> a</span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='s'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='s'? 'letter lightblue-bg': 'letter'}>
                       <div id="s" data-txt="downArrow" onClick={this.handleControlClick} className="cell-text-container">  
                         <span className="cell-text">&darr;</span><br />
-                      <span > S </span>
+                      <span className="controls-key-text"> s </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='d'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='d'? 'letter lightblue-bg': 'letter'}>
                       <div id="d" data-txt="rightArrow" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">&rarr;</span><br />
-                        <span> D </span>
+                        <span className="controls-key-text"> d </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='f'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='f'? 'letter lightblue-bg': 'letter'}>
                       <div id="f" data-txt="info" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">INFO</span><br />
-                        <span > F </span>
+                        <span className="controls-key-text"> f </span>
                       </div>
                     </td>
-                     <td colspan='2' className={this.state.keyPressed =='g'? 'letter lightblue-bg': 'letter'}>
+                     <td colSpan='2' className={this.state.keyPressed =='g'? 'letter lightblue-bg': 'letter'}>
                         <div id="g" data-txt="chandown" onClick={this.handleControlClick} className="cell-text-container">
                           <span className="cell-text">&#9660;</span><br />
-                          <span > G </span>
+                          <span className="controls-key-text"> g </span>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan='2' className={this.state.keyPressed =='Z'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='Z'? 'letter lightblue-bg': 'letter'}>
                       <div id="Z" data-txt="leftArrow" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">BACK</span><br />
-                        <span> CAP Z</span>
+                        <span className="controls-key-text"> Z </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='X'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='X'? 'letter lightblue-bg': 'letter'}>
                       <div id="X" data-txt="downArrow" onClick={this.handleControlClick} className="cell-text-container">  
                         <span className="cell-text">null</span><br />
-                      <span > CAP X </span>
+                      <span className="controls-key-text"> X </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='C'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='C'? 'letter lightblue-bg': 'letter'}>
                       <div id="C" data-txt="rightArrow" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">null</span><br />
-                        <span> CAP C </span>
+                        <span className="controls-key-text"> C </span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='V'? 'letter lightblue-bg': 'letter'}>
                       <div id="V" data-txt="info" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">RECORD</span><br />
-                        <span > CAP V </span>
+                        <span className="controls-key-text"> V </span>
                       </div>
                     </td>
-                     <td colspan='2' className={this.state.keyPressed =='G'? 'letter lightblue-bg': 'letter'}>
-                        <div id="G" data-txt="chandown" onClick={this.handleControlClick} className="cell-text-container">
+                     <td colSpan='2' className={this.state.keyPressed =='B'? 'letter lightblue-bg': 'letter'}>
+                        <div id="B" data-txt="chandown" onClick={this.handleControlClick} className="cell-text-container">
                           <span className="cell-text">null</span><br />
-                          <span > CAP G </span>
+                          <span className="controls-key-text"> B </span>
                         </div>
                     </td>
                   </tr>
                   <tr>
-                    <td colspan='2' className={this.state.keyPressed =='z'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='z'? 'letter lightblue-bg': 'letter'}>
                       <div id="z" data-txt="dash" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">DASH</span><br />
-                        <span>Z</span>
+                        <span className="controls-key-text">z</span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='x'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='x'? 'letter lightblue-bg': 'letter'}>
                       <div id="x" data-txt="exit" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">EXIT</span><br />
-                        <span>X</span>
+                        <span className="controls-key-text">x</span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='c'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='c'? 'letter lightblue-bg': 'letter'}>
                       <div id="c" data-txt="rewind" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">REW</span><br />
-                        <span>C</span>
+                        <span className="controls-key-text">c</span>
                       </div>
                     </td>
-                    <td colspan='2' className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
+                    <td colSpan='2' className={this.state.keyPressed =='v'? 'letter lightblue-bg': 'letter'}>
                       <div id="v" data-txt="play" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">PLAY</span><br />
-                        <span>V</span>
+                        <span className="controls-key-text">v</span>
                       </div>
                     </td>
-                     <td colspan='2' className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
+                     <td colSpan='2' className={this.state.keyPressed =='b'? 'letter lightblue-bg': 'letter'}>
                       <div id="b" data-txt="fastForward" onClick={this.handleControlClick} className="cell-text-container">
                         <span className="cell-text">FFWD</span><br />
-                        <span>B</span>
+                        <span className="controls-key-text">b</span>
                       </div>
                     </td>
                   </tr>
@@ -1646,26 +1867,28 @@ class Main extends React.Component {
             </table>
           </div>
           <div className="col-md-6">
-             <h1>Device Selector</h1>
-
+            <div className="section-header">
+              <span className="title-font">Device:</span>{!this.state.rackSelected && <span> First select rack # with search function </span>}{ this.state.rackSelected && <span className="rack-text">Rack-{this.state.rackSelected} Slot-{this.state.slot}</span>}
+            </div>
               {!this.state.viewMode16 &&
             <table className="table table-config-1">
               <tbody>
                   <tr>
                     <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
+                      
                       <span className="cell-text-container">Device 1 -{this.state.viewerPosition}</span><br />
-
-                      <span> ^</span>
+                      <span className="cell-text-container"> ^</span>
+                      
                     </td>
                     <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
-                    <span className="cell-text-container">Device 5</span><br />
+                      <span className="cell-text-container">Device 5</span><br />
                       <span> &</span>
                     </td>
                   </tr>
                   <tr>
                     <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
-                      <span>y</span>
+                      <span className="key-text">y</span>
                     </td>
                     <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
@@ -1681,96 +1904,96 @@ class Main extends React.Component {
                     <td className={this.state.viewerPosition == '1' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 1</span><br />
                       <span className="cell-text-container">{this.state.view1.model}</span><br />
-                      <span> ^</span>
+                      <span className="key-text"> ^</span>
                     </td>
                     <td className={this.state.viewerPosition == '5' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 5</span><br />
                     <span className="cell-text-container-info">{this.state.view5.model}</span><br />
-                      <span> &</span>
+                      <span className="key-text"> &</span>
 
                     </td>
                     <td className={this.state.viewerPosition == '9' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 9</span><br />
                       <span className="cell-text-container-info">{this.state.view9.model}</span><br />
-                      <span>*</span>
+                      <span className="key-text">*</span>
                     </td>
                     <td className={this.state.viewerPosition == '13' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 13</span><br />
                       <span className="cell-text-container">{this.state.view13.model}</span><br />
-                      <span> (</span>
+                      <span className="key-text"> (</span>
                     </td>
                   </tr>                  
                   <tr>
                     <td className={this.state.viewerPosition == '2' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 2</span><br />
                       <span className="cell-text-container">{this.state.view2.model}</span><br />
-                      <span> Y</span>
+                      <span className="key-text"> y</span>
                     </td>
                     <td className={this.state.viewerPosition == '6' ? 'letter lightblue-bg': 'letter'}>
                     <span className="cell-text-container">Device 6</span><br />
                      
                       <span className="cell-text-container">{this.state.view6.model}</span><br />
-                       <span> U</span>
+                       <span className="key-text"> u</span>
                     </td>
                     <td className={this.state.viewerPosition == '10' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 10</span><br />
                       <span className="cell-text-container">{this.state.view10.model}</span><br />
-                      <span>I</span>
+                      <span className="key-text">i</span>
                     </td>
                     <td className={this.state.viewerPosition == '14' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 14</span><br />
                       <span className="cell-text-container">{this.state.view14.model}</span><br />
-                      <span> O</span>
+                      <span className="key-text"> o</span>
                     </td>
                   </tr>
                   <tr>
                     <td className={this.state.viewerPosition == '3' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container"> Device 3 </span> <br />
                       <span className="cell-text-container">{this.state.view3.model}</span><br />
-                      <span> H</span>
+                      <span className="key-text"> h</span>
                     </td>
                     <td className={this.state.viewerPosition == '7' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 7</span><br />
                       <span className="cell-text-container">{this.state.view7.model}</span><br />
-                      <span>J</span>
+                      <span className="key-text">j</span>
                     </td>
                     <td className={this.state.viewerPosition == '11' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 11</span><br />
                       <span className="cell-text-container">{this.state.view11.model}</span><br />
-                      <span>K</span>
+                      <span className="key-text">k</span>
                     </td>
                     <td className={this.state.viewerPosition == '15' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 15</span><br />
                       <span className="cell-text-container">{this.state.view15.model}</span><br />
-                      <span> L</span>
+                      <span className="key-text"> l</span>
                     </td>
                   </tr>
                   <tr>
                     <td className={this.state.viewerPosition == '4' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">STB 4</span><br />
                       <span className="cell-text-container">{this.state.view4.model}</span><br />
-                      <span>N</span>
+                      <span className="key-text">n</span>
                     </td>
                     <td className={this.state.viewerPosition == '8' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 8</span><br />
                       <span className="cell-text-container">{this.state.view8.model}</span><br />
-                      <span>M</span>
+                      <span className="key-text">m</span>
                     </td>
                     <td className={this.state.viewerPosition == '12' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 12</span> <br />
                       <span className="cell-text-container">{this.state.view12.model}</span><br />
-                      <span>,</span>
+                      <span className="key-text">,</span>
                     </td>
                     <td className={this.state.viewerPosition == '16' ? 'letter lightblue-bg': 'letter'}>
                       <span className="cell-text-container">Device 16</span><br />
                       <span className="cell-text-container">{this.state.view16.model}</span><br />
-                      <span>.</span>
+                      <span className="key-text">.</span>
                     </td>
                   </tr>
                   <tr>
                     <td colSpan="4" className={this.state.slot == '1-16' ? 'letter lightblue-bg': 'letter'}>
                       <h1>All 16 Slots</h1>
-                      <span>/</span>
+                      <span className="key-text">/</span>
                     </td>
                   </tr>
                 </tbody>
