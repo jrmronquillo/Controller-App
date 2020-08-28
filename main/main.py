@@ -2293,7 +2293,7 @@ def jsonTest(configNum):
 
 @app.route('/setCookie/', methods = ['POST', 'GET'])
 def setCookie():
-    resp = make_response(render_template('redesign.html'))
+    resp = make_response(render_template('celeste.html'))
     resp.set_cookie('myCookie', 'testUSER')
     return resp
 
@@ -2335,7 +2335,7 @@ def testingPage2():
              '/<string:cell5>/<string:cell6>/<string:cell7>/<string:cell8>'
              '/<string:cell9>/<string:cell10>/<string:cell11>/<string:cell12>'
              '/<string:cell13>/<string:cell14>/<string:cell15>/<string:cell16>/', methods=['GET', 'POST'])
-# @app.route('/setVideo/redesign/<int:configNum>/', methods=['GET', 'POST'])
+# @app.route('/setVideo/celeste/<int:configNum>/', methods=['GET', 'POST'])
 def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                  cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16):
     # todo: sanitize inputs
@@ -2478,13 +2478,13 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
     setLabels(labelArr)
     return 'config labels executed'
 
-@app.route('/redesign/multiview/setGrid/<string:gridConfig>/')
+@app.route('/celeste/multiview/setGrid/<string:gridConfig>/')
 def multiviewAPI(gridConfig):
     status = setGrid(gridConfig)
     print('status:'+status)
     return "multiviewAPI return "+status+gridConfig
 
-@app.route('/redesign/setSolo/<string:mode>')
+@app.route('/celeste/setSolo/<string:mode>')
 def setSoloConfig(mode):
     # true or false
     # only run if input is valid
@@ -2498,7 +2498,7 @@ def setSoloConfig(mode):
     # configMultiviewer(mode)
     return Message
 
-@app.route('/redesign/setSoloPosition/<string:position>')
+@app.route('/celeste/setSoloPosition/<string:position>')
 def setSoloPosition(position):
     offsetPos = int(position)-1
     validPos = ['0','1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -2511,12 +2511,12 @@ def setSoloPosition(position):
     else:
         return 'setSoloPosition executed - invalid position entered: '+position
 
-@app.route('/redesign/labelsMode/<string:mode>')
+@app.route('/celeste/labelsMode/<string:mode>')
 def labelsMode(mode):
     labelsDisplay(mode)
     return 'labels mode executed'
 
-@app.route('/redesign/audioMeters/<string:mode>')
+@app.route('/celeste/audioMeters/<string:mode>')
 def audioMetersDisplay(mode):
     audioMeters(mode)
     return 'audioMeters executed'
@@ -3059,8 +3059,8 @@ def automation():
 def reactTest():
     return render_template('reactTest.html')
 
-@app.route('/redesign/', methods=['GET', 'POST'])
-def redesign():
+@app.route('/celeste/', methods=['GET', 'POST'])
+def celeste():
     # print 'get request made???'
 
     if request.method == 'POST':
@@ -3068,9 +3068,9 @@ def redesign():
         postData =  request.form.get('name')
         # print 'post data:' + postData
 
-    return render_template('redesign.html')
+    return render_template('celeste.html')
 
-@app.route('/redesign/command/<string:irnetboxMac>/<string:slot>/<string:action>/', methods=['GET', 'POST'])
+@app.route('/celeste/command/<string:irnetboxMac>/<string:slot>/<string:action>/', methods=['GET', 'POST'])
 def command(irnetboxMac, slot, action):
     print('command script executed!')
     # print irnetboxMac
@@ -3108,14 +3108,14 @@ def command(irnetboxMac, slot, action):
         # keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
         # keySendv2("00-80-A3-A9-E3-6A", action, '1-16')
         # keySendv2("00-80-A3-A9-E3-7A", val, '1-16')
-        return render_template('redesign.html', errorMessage='')
+        return render_template('celeste.html', errorMessage='')
     else:
         print( "invalid mac, slot, or action was used")
         print(irnetboxMac)
         print(action)
         print(slot)
 
-        return render_template('redesign.html', errorMessage='Invalid MAC, command or slot number used')
+        return render_template('celeste.html', errorMessage='Invalid MAC, command or slot number used')
 
     
 
@@ -3157,9 +3157,9 @@ def command(irnetboxMac, slot, action):
         
 
 
-@app.route('/redesign-mock')
-def redesign_mock():
-    return render_template('redesign-mock.html')
+@app.route('/celeste-mock')
+def celeste_mock():
+    return render_template('celeste-mock.html')
 
 
 @app.route('/sampleWebkitApp')
