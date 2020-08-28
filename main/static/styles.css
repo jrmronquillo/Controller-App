@@ -1,4 +1,5 @@
 
+ @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
  table, tr, th, td{
   border-collapse: collapse;
   padding: .1rem !important;
@@ -434,7 +435,14 @@ td {
 .transparency_test_text{
   color:white;
   font-size: 10em;
+  font-family: 'Dancing Script', cursive;
   opacity: .8;
+}
+
+.transparency_test_subtext{
+  color:white; 
+  font-family: 'Dancing Script', cursive; 
+  font-size: 1.5em;
 }
 
 .transparency_test_item1{
