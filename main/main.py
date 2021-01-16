@@ -48,8 +48,8 @@ cors = CORS(app, resources={r"/rssTest": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 
-CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+#CLIENT_ID = json.loads(
+#    open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Catalog Application"
 
 

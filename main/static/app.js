@@ -1,6 +1,8 @@
 'use strict';
 
+
 const e = React.createElement;
+alert(configs.host_ip);
 
 class Search extends React.Component {
   constructor(props){
@@ -135,6 +137,7 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      host_ip: configs.host_ip,
       availableRacks: [],
       deviceData: null,
       dataLoaded: false,
@@ -323,7 +326,7 @@ class Main extends React.Component {
     /**
      * load device info into app
      */
-    fetch('http://localhost:3000/deviceInfo/')
+    fetch('http://'+this.state.host_ip+'/deviceInfo')  
       .then(function(response){
         if(response.status>=400){
           throw new Error('Bad Response for the server');
@@ -374,7 +377,7 @@ class Main extends React.Component {
     document.addEventListener('keypress', this.handleKeyPress);
     
    /*
-    fetch('http://localhost:3000/stbs/JSON')
+    fetch('http://'+this.state.host_ip+'/stbs/JSON')
       .then(function(response){
         if(response.status==400){
           throw new Error("Bad Response for the server");
@@ -393,7 +396,7 @@ class Main extends React.Component {
     */
 
     // initial load of data
-    fetch('http://localhost:3000/rssTest')
+    fetch('http://'+this.state.host_ip+'/rssTest')
       .then(function(response){
         console.log('fetch function triggered!');
         if (response.status>= 400) {
@@ -431,7 +434,7 @@ class Main extends React.Component {
 
     // load new data into screenSaverData state every 5 mins
     setInterval(function(){
-      fetch('http://localhost:3000/rssTest')
+      fetch('http://'+this.state.host_ip+'/rssTest')
       .then(function(response){
         console.log('fetch function triggered!');
         if (response.status>= 400) {
@@ -487,7 +490,7 @@ class Main extends React.Component {
 
   getJsonTest(configVal){
     var that = this;
-    fetch('http://localhost:3000/jsonTest/'+configVal+'/')
+    fetch('http://'+this.state.host_ip+'/jsonTest/'+configVal+'/')
       .then(function(response){
         console.log('fetch function triggered!');
         if (response.status>= 400) {
@@ -529,7 +532,7 @@ class Main extends React.Component {
   getItems(){
     $.ajax({ 
     type: 'GET', 
-    url: 'http://localhost:3000/rssTest', 
+    url: 'http://'+this.state.host_ip+'/rssTest', 
     data: { get_param: 'value' }, 
     dataType: 'json',
     success: function (data) { 
@@ -611,14 +614,14 @@ class Main extends React.Component {
     if(this.state.multipleMacs){
       var newArr = this.state.macsInConfig.forEach(function(currVal){
         console.log('------');
-        fetch('http://localhost:3000/redesign/command/'+currVal+'/'+this.state.slot+'/'+this.state.command); 
+        fetch('http://'+this.state.host_ip+'/celeste/command/'+currVal+'/'+this.state.slot+'/'+this.state.command); 
       }, this);
     }
 
     if(this.state.irnetboxMac && this.state.slot && this.state.command){
       console.log('if statement executed');
-      console.log('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
-      fetch('http://localhost:3000/redesign/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
+      console.log('http://'+this.state.host_ip+'/celeste/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
+      fetch('http://'+this.state.host_ip+'/celeste/command/'+this.state.irnetboxMac+'/'+this.state.slot+'/'+this.state.command);
     } else {
       console.log('invalid mac, slot, command');
     }
@@ -626,7 +629,7 @@ class Main extends React.Component {
   }
 
   sendVideoConfigs(){
-    // fetch('http://localhost:3000/setVideo/')
+    // fetch('http://'+this.state.host_ip+'/setVideo/')
   }
 
   sendLabelNames(){
@@ -658,8 +661,8 @@ class Main extends React.Component {
     console.log('labelsArr:'+labelsArr);
         
     if(stbLabelsArr.length == 16){
-      //var commandStr = 'http://localhost:3000/setLabels/'+stbLabelsArr.join('/');
-      var commandStr = 'http://localhost:3000/setLabels/'+labelsArr.join('/');
+      //var commandStr = 'http://'+this.state.host_ip+'/setLabels/'+stbLabelsArr.join('/');
+      var commandStr = 'http://'+this.state.host_ip+'/setLabels/'+labelsArr.join('/');
       console.log(commandStr);
       fetch(commandStr);
     } else{
@@ -693,7 +696,7 @@ class Main extends React.Component {
                         this.state.view16.vidRouteMoniker]
 
 
-    var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+    var setVideoCall = 'http://'+this.state.host_ip+'/setVideo/'+this.state.view1.vidRouteMoniker+'/'
                                                            +this.state.view2.vidRouteMoniker+'/'
                                                            +this.state.view3.vidRouteMoniker+'/'
                                                            +this.state.view4.vidRouteMoniker+'/'
@@ -1263,7 +1266,7 @@ class Main extends React.Component {
     if(multiviewConfig[key]){
       console.log('multiviewConfig[key] detected')
       this.getJsonTest(multiviewConfig[key]);
-      var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+      var setVideoCall = 'http://'+this.state.host_ip+'/setVideo/'+this.state.view1.vidRouteMoniker+'/'
                                                            +this.state.view2.vidRouteMoniker+'/'
                                                            +this.state.view3.vidRouteMoniker+'/'
                                                            +this.state.view4.vidRouteMoniker+'/'
@@ -1298,7 +1301,7 @@ class Main extends React.Component {
 
   setVideoRouteConfig(configKey){
     this.getJsonTest(configKey);
-    var setVideoCall = 'http://localhost:3000/setVideo/'+this.state.view1.vidRouteMoniker+'/'
+    var setVideoCall = 'http://'+this.state.host_ip+'/setVideo/'+this.state.view1.vidRouteMoniker+'/'
                                                          +this.state.view2.vidRouteMoniker+'/'
                                                          +this.state.view3.vidRouteMoniker+'/'
                                                          +this.state.view4.vidRouteMoniker+'/'
@@ -1396,7 +1399,7 @@ class Main extends React.Component {
   setGridCall(gridConfig){
     var validConfigs = ['2x2', '3x3', '4x4']
     if(validConfigs.indexOf(gridConfig) > -1){
-      var setGridCall = 'http://localhost:3000/redesign/multiview/setGrid/'+ gridConfig +'/'
+      var setGridCall = 'http://'+this.state.host_ip+'/redesign/multiview/setGrid/'+ gridConfig +'/'
       console.log(setGridCall);
       fetch(setGridCall);
     }
@@ -1408,8 +1411,8 @@ class Main extends React.Component {
     console.log('toggleSolo triggered!');
     console.log(this.state.soloMode)
 
-    //var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+this.state.soloMode;
-    var setSoloCall = 'http://localhost:3000/redesign/setSolo/'+mode;
+    //var setSoloCall = 'http://'+this.state.host_ip+'/redesign/setSolo/'+this.state.soloMode;
+    var setSoloCall = 'http://'+this.state.host_ip+'/celeste/setSolo/'+mode;
     console.log('setSolo call:'+setSoloCall)
     console.log(validVars.indexOf(mode))
     if(validVars.indexOf(mode)>-1){
@@ -1427,7 +1430,7 @@ class Main extends React.Component {
     var validPositions = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
                           '11', '12', '13', '14', '15', '16'];
 
-    var setSoloPositionCall = 'http://localhost:3000/redesign/setSoloPosition/'+position
+    var setSoloPositionCall = 'http://'+this.state.host_ip+'/celeste/setSoloPosition/'+position
     console.log('setSoloPosition call:'+setSoloPositionCall)
     if(validPositions.indexOf(position)>-1){
       fetch(setSoloPositionCall);
@@ -1436,13 +1439,13 @@ class Main extends React.Component {
   }
 
   setLabelsMode(labelsMode){
-    var setLabelsModeCall = 'http://localhost:3000/redesign/labelsMode/'+labelsMode
+    var setLabelsModeCall = 'http://'+this.state.host_ip+'/redesign/labelsMode/'+labelsMode
     fetch(setLabelsModeCall);
   }
 
   setAudioMeters(mode){
     console.log('setAudioMeters function executed')
-    var setAudioMetersCall = 'http://localhost:3000/redesign/audioMeters/'+mode
+    var setAudioMetersCall = 'http://'+this.state.host_ip+'/redesign/audioMeters/'+mode
     console.log(setAudioMetersCall);
     fetch(setAudioMetersCall);
   }
