@@ -11,13 +11,13 @@ This is a user interface to a python script/API that will ultimately let the use
 https://www.vagrantup.com/downloads
 
 
-## Install Virtualbox 6.1.18
+### Install Virtualbox 6.1.18
 https://www.virtualbox.org/wiki/Downloads
 
-# clone repo
+### Clone repo
 git clone https://github.com/jrmronquillo/controller-app.git
 
-# setup
+# Setup
   ```
   cd controller-app
   vagrant up
@@ -25,13 +25,10 @@ git clone https://github.com/jrmronquillo/controller-app.git
   cd ..
   cd ..
   cd vagrant
-  ```
-2. python3
-```
-python3 main.py
+  python3 main.py
 ```
 
-3. Front-end on local machine
+### Check Front-end on browser from local machine
 
 http://localhost:5000/
 
@@ -39,12 +36,12 @@ http://localhost:5000/
 
 
 
-Resources
+## Resources
 -----
 Udacity (https://www.udacity.com/)
 
 
-Troubleshooting
+## Troubleshooting
 ----
 1. If the python API takes unreasonably long to respond, the web app will appear stuck and does not notify the user that there is an error case.
 
