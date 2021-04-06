@@ -6,18 +6,18 @@ Introduction
 This is a user interface to a python script/API that will ultimately let the user remotely send IR commands to 1-16 devices simultaneously or individually. The concepts used to develop this app were primarily an application of skills learned Udacity's Full Stack Web Developer course.
 
 
-Installation (Mac OS)
-##Install Vagrant v2.2.14
+## Installation (Mac OS)
+### Install Vagrant v2.2.14
 https://www.vagrantup.com/downloads
 
 
-##Install Virtualbox 6.1.18
+## Install Virtualbox 6.1.18
 https://www.virtualbox.org/wiki/Downloads
 
-#clone repo
+# clone repo
 git clone https://github.com/jrmronquillo/controller-app.git
 
-#setup
+# setup
   ```
   cd controller-app
   vagrant up
