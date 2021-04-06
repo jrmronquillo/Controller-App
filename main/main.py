@@ -6,7 +6,7 @@ from database_setup import Base, Stb, RackSlot
 from flask import session as login_session
 import random
 import string
-# import urllib2 
+# import urllib2
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -30,10 +30,10 @@ import subprocess
 import re       # regex library
 
 # used for setting cors headers
-from flask_cors import CORS 
+from flask_cors import CORS
 
 from handlers.decorators import (support_jsonp, login_required, category_exists, item_exists,
-                                 user_created_category, user_created_item, jsonp, 
+                                 user_created_category, user_created_item, jsonp,
                                  testcase_exists, clear_db, update_DB_with_files)
 # separate config file to distinguish between test and production configurations
 import testConfig
@@ -72,14 +72,14 @@ def takeScreenshot(scriptName = 'test', imageName = 'test'):
     screenshotName = imageName
     completeCommand = str(command) + "%s%s%s%s"  % (path, screenshotName, localtime, ".png")
     #print completeCommand
-    
+
     # with configs:
     p = subprocess.Popen(completeCommand, shell=True)
-    
 
 
-            
-        
+
+
+
 
 def setVideo(config):
     # config variable designed be a dictionary of video routes
@@ -97,8 +97,8 @@ def setVideo(config):
            "5":"132", "6":"133", "7":"134", "8":"135",
                    "9":"136", "10":"137", "11":"138", "12":"139",
                    "13":"140", "14":"141", "15":"142", "16":"143"}
-    
-    
+
+
 
     rs = []
     racks = []
@@ -115,13 +115,13 @@ def setVideo(config):
         for l in slots:
             rs.append(k+l)
     #print rs
-    
+
     # generate message to to send to video router
-    routerInputs = []   
+    routerInputs = []
     for key, value in config.items():
         #print key
         #print value
-        
+
         #----
         # issue was found with value data info on racks 14+ are not matching the proper video routes using the rack
         # representation logic from above
@@ -177,17 +177,17 @@ def setVideo(config):
 
     # connect to video route and multiviewer
     # video route
-    
+
     #-----
     tn = telnetlib.Telnet("10.23.223.202", "9990")
-    
+
 
 
     # send generated message to video router
-    
+
     # tn.write("VIDEO OUTPUT ROUTING:\n")
     tn.write(("VIDEO OUTPUT ROUTING:\n").encode('ascii'))
-    for index,route in enumerate(routerInputs):       
+    for index,route in enumerate(routerInputs):
         print(type(route))
         print(route)
         tn.write(route.encode('ascii'))
@@ -205,7 +205,7 @@ def setLabels(labelArr):
     #print'setLabels backend function:'
     #print labelArr
     stbModels = {"r3s1":"H44-500", "r3s2":"HR54-700", "r3s3":"HR54-500",
-                 "r3s4":"HR54-200", "r3s5":"HR44-700", 
+                 "r3s4":"HR54-200", "r3s5":"HR44-700",
                  "r3s6":"HR44-500", "r3s7":"HR44-200",
                  "r3s8":"HR34-700", "r2s1":"C51-100",
                  "r2s2":"C41-500", "r2s3":"C41-700",
@@ -237,7 +237,7 @@ def setLabels(labelArr):
         tnMV.write(("\n").encode('ascii'))
     tnMV.write(("\n").encode('ascii'))
     # multiviewer
-    
+
 
     return "set labels executed!!"
 
@@ -248,16 +248,16 @@ def labelsDisplay(labelsMode):
     labelsModeStr = str(labelsMode)
     if labelsModeStr in validModes:
         # set labels config
-        print(labelsModeStr) 
+        print(labelsModeStr)
         tn.write("CONFIGURATION:\n")
         # tn.write("Display labels: "+ labelsModeStr +"\n")
         tn.write("Display labels: "+labelsModeStr+"\n")
-        tn.write("\n") 
+        tn.write("\n")
         tn.close()
         print("labelsDisplay executed")
         return "labels display executed"
     else:
-        print "invalid mode"
+        print("invalid mode")
         return "invalid mode"
 
 def audioMeters(audioMode):
@@ -267,11 +267,11 @@ def audioMeters(audioMode):
     audioModeStr = str(audioMode)
     if audioModeStr in validModes:
         # set labels config
-        print(audioModeStr) 
+        print(audioModeStr)
         tn.write("CONFIGURATION:\n")
         # tn.write("Display labels: "+ labelsModeStr +"\n")
         tn.write("Display audio meters: "+audioModeStr+"\n")
-        tn.write("\n") 
+        tn.write("\n")
         tn.close()
         print("audioMeters executed")
         return "audioMeters executed"
@@ -305,7 +305,7 @@ def configMultiviewer(mode):
     return "config multiviewer!"
 
 def setSolo(position):
-    #print position 
+    #print position
     tn = telnetlib.Telnet("10.23.223.93", "9990")
     tn.write("VIDEO OUTPUT ROUTING:\n")
     # 16 position
@@ -324,11 +324,11 @@ def keySendv2(rack,key,slot):
     TCP_PORT = 40000
     BUFFER_SIZE = 1024
     MESSAGE = 'MAC="' + rack + '" dataset="RC71" signal="' + key + '" output="' + slot + '" \n'
-    
+
     # telnet needs bytes and not string, so using line below to convert MESSAGE str to bytes
     # bytesMessage = bytes(MESSAGE, 'utf-8')
     bytesMessage = bytes(MESSAGE);
-    
+
     # MESSAGE = MAC = A03 dataset="RC71" signal="menu" output = "1-16" \n
     # Open socket, send message, close scoket
     p = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -336,7 +336,7 @@ def keySendv2(rack,key,slot):
     p.connect((TCP_IP, TCP_PORT))
     # p.send(MESSAGE)
 
-    # send bytesMessages instead of str MESSAGE 
+    # send bytesMessages instead of str MESSAGE
     p.send(bytesMessage)
     data = p.recv(BUFFER_SIZE)
     p.close()
@@ -356,9 +356,9 @@ def rssFeedConverter():
     # print len(data['entries'])
     for article in data['entries']:
         article.title + ":" + article.link
-    
+
     return data['entries']
-     
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('home.html')
@@ -370,7 +370,7 @@ def controller_beta():
 
 
 @app.route('/rssTest')
-@support_jsonp 
+@support_jsonp
 def rssTest():
     #print rssFeedConverter()
     fullData= rssFeedConverter()
@@ -379,19 +379,19 @@ def rssTest():
         #print item.title
         testArr.append(item.title)
     # testArr = ['test', 'test2']
-    
+
     return jsonify(title=testArr)
-    
+
     # return jsonify(fakeData=configArr[int(configNum)-1])
 
 
 @app.route('/deviceInfo/')
 def deviceInfo():
     # return hardcoded stb info below
-    #"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
-    #             "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
-    #             "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
-    #             "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+    #"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68",
+    #             "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A",
+    #             "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79",
+    #             "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37",
     #             "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
     #             "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
     #             "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
@@ -484,7 +484,7 @@ def deviceInfo():
                         'model':'',
                         'vidRouteMoniker':'',
                         'port':'',
-                    }, 
+                    },
                 },
         'A01': {
                 'macAddr': '00-80-A3-A9-E3-68',
@@ -733,7 +733,7 @@ def deviceInfo():
                         'model':'',
                         'vidRouteMoniker':'r3s16',
                         'port':'',
-                    },   
+                    },
             },
         'A04':{
                 'macAddr': '00-80-A3-A9-DA-67',
@@ -2172,7 +2172,7 @@ def jsonTest(configNum):
         },
 
         {
-           '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'}, 
+           '1': {'macAddr': '00-80-A3-9E-67-34', 'slot': '5', 'model': 'H44-100', 'vidRouteMoniker':'r3s1'},
            '2': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '2', 'model': 'HR54-700', 'vidRouteMoniker':'r3s2'},
            '3': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '3', 'model': 'HR54-500', 'vidRouteMoniker': 'r3s3'},
            '4': {'macAddr': '00-80-A3-A9-E3-7A', 'slot': '4', 'model': 'HR54-200', 'vidRouteMoniker': 'r3s4'},
@@ -2187,12 +2187,12 @@ def jsonTest(configNum):
            '13': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '5', 'model': 'C61-700(HR54R1-700)', 'vidRouteMoniker': 'r2s5'},
            '14': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '6', 'model': 'C61w-700(HR54R1-700)', 'vidRouteMoniker': 'r2s6'},
            '15': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '7', 'model': 'C51-500(HR54-500)', 'vidRouteMoniker': 'r2s7'},
-           '16': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '8', 'model': 'C41-700(HR54-200)', 'vidRouteMoniker': 'r2s8'},   
+           '16': {'macAddr': '00-80-A3-A9-E3-6A', 'slot': '8', 'model': 'C41-700(HR54-200)', 'vidRouteMoniker': 'r2s8'},
         },
 
         #rack A09
         {
-            '1': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '1', 'model': 'HR44-200', 'vidRouteMoniker':'r6s1'}, 
+            '1': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '1', 'model': 'HR44-200', 'vidRouteMoniker':'r6s1'},
            '2': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r6s2'},
            '3': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r6s3'},
            '4': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r6s4'},
@@ -2207,11 +2207,11 @@ def jsonTest(configNum):
            '13': {'macAddr': '00-80-A3-9E-67-37', 'slot': '5', 'model': 'null', 'vidRouteMoniker': 'r7s5'},
            '14': {'macAddr': '00-80-A3-9E-67-37', 'slot': '6', 'model': 'null', 'vidRouteMoniker': 'r7s6'},
            '15': {'macAddr': '00-80-A3-9E-67-37', 'slot': '7', 'model': 'null', 'vidRouteMoniker': 'r7s7'},
-           '16': {'macAddr': '00-80-A3-9E-67-37', 'slot': '8', 'model': 'null', 'vidRouteMoniker': 'r7s8'}, 
+           '16': {'macAddr': '00-80-A3-9E-67-37', 'slot': '8', 'model': 'null', 'vidRouteMoniker': 'r7s8'},
         },
 
         {
-           '1': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '1', 'model': 'HR54-200', 'vidRouteMoniker':'r9s1'}, 
+           '1': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '1', 'model': 'HR54-200', 'vidRouteMoniker':'r9s1'},
            '2': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '2', 'model': 'Client', 'vidRouteMoniker':'r9s2'},
            '3': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '3', 'model': 'client', 'vidRouteMoniker': 'r9s3'},
            '4': {'macAddr': '00-80-A3-A9-E3-78', 'slot': '4', 'model': 'client', 'vidRouteMoniker': 'r9s4'},
@@ -2226,11 +2226,11 @@ def jsonTest(configNum):
            '13': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '13', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
            '14': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '14', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
            '15': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '15', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
-           '16': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'}, 
+           '16': {'macAddr': '00-80-A3-9D-86-D5', 'slot': '16', 'model': 'null', 'vidRouteMoniker': 'r9s12'},
         },
 
         {
-           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r6s1'}, 
+           '1': {'macAddr': '00-80-A3-9D-86-D6', 'slot': '1', 'model': 'new', 'vidRouteMoniker':'r6s1'},
            '2': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '2', 'model': 'new', 'vidRouteMoniker':'r9s2'},
            '3': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '3', 'model': 'new', 'vidRouteMoniker': 'r9s3'},
            '4': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '4', 'model': 'new', 'vidRouteMoniker': 'r9s4'},
@@ -2245,11 +2245,11 @@ def jsonTest(configNum):
            '13': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '13', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
            '14': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '14', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
            '15': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '15', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
-           '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'new', 'vidRouteMoniker': 'r9s12'}, 
+           '16': {'macAddr': '00-80-A3-9E-67-3A', 'slot': '16', 'model': 'new', 'vidRouteMoniker': 'r9s12'},
         },
         # config 6
         {
-           '1': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '1', 'model': 'r4s1', 'vidRouteMoniker':'r4s1'}, 
+           '1': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '1', 'model': 'r4s1', 'vidRouteMoniker':'r4s1'},
            '2': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '2', 'model': 'r4s2', 'vidRouteMoniker':'r4s2'},
            '3': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '3', 'model': 'r4s3', 'vidRouteMoniker': 'r4s3'},
            '4': {'macAddr': '00-80-A3-A9-DA-67', 'slot': '4', 'model': 'r4s4', 'vidRouteMoniker': 'r4s4'},
@@ -2268,7 +2268,7 @@ def jsonTest(configNum):
         },
         # config 7 - rack b12; rack b11
         {
-           '1': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'h25-100', 'vidRouteMoniker':'r13s1'}, 
+           '1': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '1', 'model': 'h25-100', 'vidRouteMoniker':'r13s1'},
            '2': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '2', 'model': 'h25-500', 'vidRouteMoniker':'r13s2'},
            '3': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '3', 'model': 'h25-700', 'vidRouteMoniker': 'r13s3'},
            '4': {'macAddr': '00-80-A3-9D-86-D0', 'slot': '4', 'model': 'empty', 'vidRouteMoniker': 'r13s4'},
@@ -2312,7 +2312,7 @@ def getCookie():
 @app.route('/check', methods=['GET', 'POST'])
 def check():
     conn = httplib2.Http('www.google.com')  # I used here HTTP not HTTPS for simplify
-    conn.request('HEAD', '/')  # Just send a HTTP HEAD request 
+    conn.request('HEAD', '/')  # Just send a HTTP HEAD request
     res = conn.getresponse()
 
     if res.status == 200:
@@ -2343,14 +2343,14 @@ def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
     #
     vidPositionArr = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                       cell9, cell10, cell11, cell12, cell13, cell14, cell15, cell16]
-    print "vidPositionArr: "
-    print vidPositionArr
+    print("vidPositionArr: ")
+    print(vidPositionArr)
     vidPositionDict = {}
     for i in vidPositionArr:
         if i != 'null':
             vidPositionDict[str(vidPositionArr.index(i)+1)] = i
-    print "vidPositionDict:"
-    print vidPositionDict  
+    print("vidPositionDict:")
+    print(vidPositionDict)
 
     physicalPosition = {
                             'r3s1':'H44-500',
@@ -2394,10 +2394,10 @@ def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                     "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"
             },
 
-        '4': {   
+        '4': {
                     "1":"r13s1", "2":"r13s2", "3":"r13s3", "4":"r13s4",
                     "5":"r13s5", "6":"r13s6", "7":"r13s7", "8":"r13s8",
                     "9":"r14s1", "10":"r14s2", "11":"r14s3", "12":"r14s4",
@@ -2408,9 +2408,9 @@ def configVideo2(cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8,
                     "5":"r15s5", "6":"r15s6", "7":"r15s7", "8":"r15s8",
                     "9":"r16s1", "10":"r16s2", "11":"r16s3", "12":"r16s4",
                     "13":"r16s5", "14":"r16s6", "15":"r16s7", "16":"r16s8"
-            }, 
+            },
     }
-    
+
 
     if str(1) in dictionary1:
         # print dictionary1[str(configNum)]
@@ -2442,7 +2442,7 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
             # print 'stb input qualified!'
             # print stb
             print(regexStatus)
-    
+
 
     # store url input strings into an array/list
     # store parameters in a dictionary because that is what the setLabels() functions uses.
@@ -2462,7 +2462,7 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
             '2':{},
             '3':{},
             '4':{'1':'H24-100', '2': 'H24-200', '3': 'H24-700', '4': 'H25-100',
-                 '5':'HR24-100', '6':'H25-700', '7':'H25-500', '8': 'HR24-200', 
+                 '5':'HR24-100', '6':'H25-700', '7':'H25-500', '8': 'HR24-200',
                  '9': 'H21-100F', '10':'H21-200', '11':'H23-600', '12': 'HR20-100',
                  '13': 'HR20-700', '14': 'HR21-100', '15': 'HR22-100F', '16':'HR24-500'},
             '5': {}
@@ -2474,7 +2474,7 @@ def configLabels(stb1='', stb2='', stb3='', stb4='', stb5='', stb6='', stb7='', 
     #    return 'configLabels initiated'
     #else:
     #    return 'error with configLabels'
-    
+
     setLabels(labelArr)
     return 'config labels executed'
 
@@ -2543,21 +2543,21 @@ def configVideo():
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
                     "5":"r3s5", "6":"r3s6", "7":"r3s7", "8":"r3s8",
                     "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
-                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"   
+                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"
     }
 
     quadConf = {
                     "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"
     }
 
     b12 = {
         "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"  
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"
     }
 
     if request.method == 'POST':
@@ -2589,7 +2589,7 @@ def configVideo():
             # print "configMutliviewer attempted!"
         else:
             print("error with multiviewerProfile")
-        
+
         #print "solo config:"
         #print soloConfig
         acceptedInput = [
@@ -2606,7 +2606,7 @@ def configVideo():
         return render_template('set_video.html')
 
 # simulated data for video router and multiviewer configs,
-# in the future will move to a database or some external API  
+# in the future will move to a database or some external API
 def defaultConf():
     return {
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
@@ -2627,7 +2627,7 @@ def allserversConf():
                     "1":"r3s1", "2":"r3s2", "3":"r3s3", "4":"r3s4",
                     "5":"r3s5", "6":"r3s6", "7":"r3s7", "8":"r3s8",
                     "9":"r1s1", "10":"r1s2", "11":"r1s3", "12":"r1s4",
-                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"   
+                    "13":"r1s5", "14":"r1s6", "15":"r1s7", "16":"r1s8"
     }
 
 def quadConf():
@@ -2635,7 +2635,7 @@ def quadConf():
                     "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"   
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"
     }
 
 def b12():
@@ -2643,12 +2643,12 @@ def b12():
         "1":"r3s8", "2":"r2s15", "3":"r3s5", "4":"r2s10",
                     "5":"r2s14", "6":"r2s16", "7":"r2s9", "8":"r2s11",
                     "9":"r3s1", "10":"r2s2", "11":"r3s2", "12":"r2s5",
-                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"  
+                    "13":"r2s1", "14":"r2s3", "15":"r2s4", "16":"r2s6"
     }
 
 def stbModels():
     return {"r3s1":"H44-500", "r3s2":"HR54-700", "r3s3":"HR54-500",
-                 "r3s4":"HR54-200", "r3s5":"HR44-700", 
+                 "r3s4":"HR54-200", "r3s5":"HR44-700",
                  "r3s6":"HR44-500", "r3s7":"HR44-200",
                  "r3s8":"HR34-700", "r2s1":"C51-100",
                  "r2s2":"C41-500", "r2s3":"C41-700",
@@ -2695,11 +2695,11 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
     #print "button_set:"
     #print button_set
     #print "quad:"
-    #print quad 
-    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
-                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
-                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
-                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+    #print quad
+    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68",
+                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A",
+                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79",
+                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37",
                  "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
                  "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
                  "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
@@ -2715,10 +2715,10 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
                         "f":"333", "g":"4", "h":"44", "i":"444",
                         "j":"5", "k":"55", "l":"555", "m":"6", "n":"66",
                         "o":"666", "p":"7", "q":"77", "r":"777",
-                        "s":"7777", "t":"8", "u":"88", "v":"888", 
+                        "s":"7777", "t":"8", "u":"88", "v":"888",
                         "w":"9", "x":"99", "y":"999", "z":"9999"
                         }
-    
+
     #if button_set == "letters":
     #    return render_template("controller_main_letters.html", button_set=button_set, quad=quad)
     #elif button_set == "numbers":
@@ -2738,7 +2738,7 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
             return render_template('controller_main.html', button_set=button_set, quad=quad, viewConfigMode=viewConfigMode)
 
 
-    
+
 
     if request.method == 'POST':
         #print viewConfigMode
@@ -2793,8 +2793,8 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
 
         # set view with rack slot info
 
-        
-        
+
+
         # change multiviewer configuration
         acceptedInput = [
                          "0","1", "2", "3", "4", "5", "6", "7", "8",
@@ -2816,10 +2816,10 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
             if quad != "true":
                 print("No valid Rack Selected")
                 flash("Please select Rack")
-                return render_template('controller_main.html', button=button_set, quad=quad, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)  
+                return render_template('controller_main.html', button=button_set, quad=quad, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
 
         test=request.form.to_dict()
-        
+
 
         # Validation for slot id
         if slot_id != "0":
@@ -2833,13 +2833,13 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
         # print "var1:"
         # print var1
         alphaVar = test.get('name2', '')
-        
+
         keyword = test.get('keyword', '')
         # print keyword
         #------
         # print "quad mode:" + str(quad)
-      
-        # check for keyword flag 
+
+        # check for keyword flag
         if keyword:
             # print keyword
             check=""
@@ -2865,7 +2865,7 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
                     # print "last number command sent:"+testArrayItem
                     check = testArrayItem
             pass
-        
+
 
         if var1:
             # print 'detected value in var1'
@@ -2895,16 +2895,16 @@ def testB(button_set="main", rack_id="0", slot_id="0", quad='noQuad', scriptMode
                     takeScreenshot()
         elif alphaVar:
             # print 'name2 contents: '+ alphaVar
-          
+
             if alphaVar in t9_trans:
                 # print 'valid letter input found, translating to t9'
                 for i in t9_trans.get(alphaVar):
                     keySendv2(selectedRack, i, slotVar)
-                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict) 
+                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
             else:
                 message = 'invalid input detected, command was not sent'
                 # print message
-                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)    
+                return render_template('controller_main.html', button_set=button_set, quad=quad, rack_id=rack_id, slot_id=slot_id, error=message, viewConfigMode=viewConfigMode, viewRacks=viewRackDict, viewSlots=viewSlotDict)
         else:
             message = 'Error with Post Data Input'
             # print 'Error with Post Data Input'
@@ -2922,10 +2922,10 @@ def dev():
 @app.route('/keySendTest')
 @app.route('/keysendTest/', methods=['GET', 'POST'])
 def keySendTest():
-    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
-                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
-                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
-                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68",
+                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A",
+                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79",
+                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37",
                  "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
                  "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
                  "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
@@ -2971,7 +2971,7 @@ def reporting():
     # print "data:"+str(data)
     # using current time to pass into jinja template, so that it can be used to append
     # img url to make it unique and therefore avoid the img-caching issue
-    # print datetime.datetime.now().time()  
+    # print datetime.datetime.now().time()
     for item in data:
         print(item.id)
         print(item.data)
@@ -3021,12 +3021,12 @@ def screenshot():
             screenshotName = data['name']
             completeCommand = str(command) + "%s%s"  % (screenshotName, ".png")
             # print completeCommand
-            
+
             # with configs:
             p = subprocess.Popen(completeCommand, shell=True)
         else:
             p = subprocess.Popen(defaultCommand, shell=True)
-            
+
         output = p
         # print output
         return render_template('screenshot.html', output=output)
@@ -3036,7 +3036,7 @@ def screenshot():
 
 
 
-    
+
 
 
 
@@ -3080,10 +3080,10 @@ def command(irnetboxMac, slot, action):
     # a) Solo - Rack and Slot
     # b) All Clients
     # Command to Send
-    mac_list = ['00-80-A3-A9-E3-7A', "00-80-A3-A2-D9-13", "00-80-A3-A9-E3-68", 
-                 "00-80-A3-A9-E3-6A", "00-80-A3-A9-E3-7A", 
-                 "00-80-A3-A9-DA-67", "00-80-A3-A9-E3-79", 
-                 "00-80-A3-A9-E3-78", "00-80-A3-9E-67-37", 
+    mac_list = ['00-80-A3-A9-E3-7A', "00-80-A3-A2-D9-13", "00-80-A3-A9-E3-68",
+                 "00-80-A3-A9-E3-6A", "00-80-A3-A9-E3-7A",
+                 "00-80-A3-A9-DA-67", "00-80-A3-A9-E3-79",
+                 "00-80-A3-A9-E3-78", "00-80-A3-9E-67-37",
                  "00-80-A3-9D-86-D5", "00-80-A3-9E-67-34",
                  "00-80-A3-9E-67-27", "00-80-A3-9D-86-CF",
                  "00-80-A3-9E-67-35", "00-20-4A-BD-C5-1D",
@@ -3094,15 +3094,15 @@ def command(irnetboxMac, slot, action):
                  "00-20-4A-DF-64-55", "00-80-A3-A1-7C-3C",
                  "00-80-A3-A2-48-5C", "00-20-4A-DF-65-A0",
                  "00-80-A3-9E-67-3A"]
-    
-    command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow', 
-                    'rightArrow', 'upArrow', 'downArrow', 'red', 'prev', 
+
+    command_list = ['menu', 'guide', 'info', 'exit', 'select', 'leftArrow',
+                    'rightArrow', 'upArrow', 'downArrow', 'red', 'prev',
                     'dash','rewind', 'play', 'fastforward', 'chanup', 'record',
                     'chandown', '0','1','2','3','4','5','6','7','8','9', 'back', 'pause', 'enter', 'blue']
 
     slot_list = ['0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16', '1-16']
 
-    if(irnetboxMac in mac_list and slot in slot_list and action in command_list): 
+    if(irnetboxMac in mac_list and slot in slot_list and action in command_list):
         # print 'valid command/slotNumber/mac'
         keySendv2(irnetboxMac, action, slot)
         # keySendv2(viewerPositions[viewerPosition][0], action, viewerPositions[viewerPosition][1])
@@ -3117,12 +3117,12 @@ def command(irnetboxMac, slot, action):
 
         return render_template('celeste.html', errorMessage='Invalid MAC, command or slot number used')
 
-    
 
-    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68", 
-                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A", 
-                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79", 
-                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37", 
+
+    rack_macs = {"0":"00-80-A3-A2-D9-13", "1":"00-80-A3-A9-E3-68",
+                 "2":"00-80-A3-A9-E3-6A", "3":"00-80-A3-A9-E3-7A",
+                 "4":"00-80-A3-A9-DA-67", "5":"00-80-A3-A9-E3-79",
+                 "6":"00-80-A3-A9-E3-78", "7":"00-80-A3-9E-67-37",
                  "8":"00-80-A3-9D-86-D5", "9":"00-80-A3-9E-67-34",
                  "10":"00-80-A3-9E-67-27", "11":"00-80-A3-9D-86-CF",
                  "12":"00-80-A3-9E-67-35", "13":"00-20-4A-BD-C5-1D",
@@ -3153,8 +3153,8 @@ def command(irnetboxMac, slot, action):
                     "16": [rack_macs["2"], "6"]
                     }
     # print viewerPositions[viewerPosition][0]
-  
-        
+
+
 
 
 @app.route('/celeste-mock')
